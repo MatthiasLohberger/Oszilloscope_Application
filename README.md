@@ -1,0 +1,5 @@
+# Oszilloscope_Application
+
+
+Android_Applikation_for_Bluetooth_Communikation_with_Oszilloskope
+...
