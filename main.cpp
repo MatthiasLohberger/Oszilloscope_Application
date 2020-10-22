@@ -1,11 +1,25 @@
 #include "mainwindow.h"
-
 #include <QApplication>
+#include <QDebug>
+
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QApplication app(argc, argv);
+    app.setPalette(Qt::darkGray);
+
+    MainWindow window;
+    //window.resize();
+    window.show();
+
+    //window.start();
+
+    qDebug() << "Hello World";
+    qDebug() << "(Test)";
+
+
+    bool ok = app.exec();
+
+
+    return ok;
 }
