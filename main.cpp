@@ -1,6 +1,10 @@
 #include "mainwindow.h"
+
 #include <QApplication>
 #include <QDebug>
+
+#include "bluetooth_connection.h"
+
 
 
 int main(int argc, char *argv[])
@@ -17,6 +21,15 @@ int main(int argc, char *argv[])
     qDebug() << "Hello World";
     qDebug() << "(Test)";
 
+    bluetooth_connection Bt;
+    bool BtStatus;
+    BtStatus=Bt.RetrLocalDevInfo();
+
+    if(BtStatus == true){
+        qDebug() << "Punkt 2 erreicht!";
+        Bt.startDeviceDiscovery();
+        qDebug() << "Punkt 3 erreicht!";
+    }
 
     bool ok = app.exec();
 

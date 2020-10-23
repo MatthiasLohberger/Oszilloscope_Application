@@ -1,8 +1,11 @@
 #include <QDebug>
 #include "bluetooth_connection.h"
 
+#include <QObject>
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
+
+
 
 bluetooth_connection::bluetooth_connection()        //Konstruktor
 {
@@ -29,6 +32,7 @@ bool bluetooth_connection::RetrLocalDevInfo(){
         QList<QBluetoothAddress> remotes;
         remotes = localDevice.connectedDevices();
     }
+    qDebug() << "Punkt 1 erreicht!";
     return true;
 }
 
@@ -37,26 +41,29 @@ bool bluetooth_connection::RetrLocalDevInfo(){
 
 void bluetooth_connection::startDeviceDiscovery(){
     // Create a discovery agent and connect to its signals
-    QBluetoothDeviceDiscoveryAgent *discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
-    connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+    QBluetoothDeviceDiscoveryAgent *discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+    QObject::connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)), this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
 
     // Start a discovery
     discoveryAgent->start();
 
     //...
+
+    qDebug() << "Punkt 3 erreicht!";
 }
 
 
 
 void bluetooth_connection::deviceDiscovered(const QBluetoothDeviceInfo &device){
+    qDebug() << "Punkt 4 erreicht!";
+
     qDebug() << "Found new device:" << device.name() << '(' << device.address().toString() << ')';
+
+    qDebug() << "Punkt 5 erreicht!";
 }
 
 
 
-bool bluetooth_connection::connect(){
 
-    return true;
-}
 
 
