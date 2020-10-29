@@ -14,10 +14,15 @@ public:
     bool RetrLocalDevInfo();        // Retrieving Local Device Information
     void startDeviceDiscovery();    // Scanning for Bluetooth Devices
 
+    void set_remoteService(QBluetoothDeviceInfo remoteService);
+
 public Q_SLOTS:
     void deviceDiscovered(const QBluetoothDeviceInfo &device);
 
     //bool connect();
+
+private:
+    QBluetoothDeviceInfo remoteService; //mit Set Methode durch if abfrage in device discovered setzen wenn == Boardname
 };
 
 
