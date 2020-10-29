@@ -18,18 +18,33 @@ int main(int argc, char *argv[])
 
     //window.start();
 
-    qDebug() << "Hello World";
-    qDebug() << "(Test)";
+    qDebug() << "Application Start: Hello World!";
+
+
 
     bluetooth_connection Bt;
+    Bt.setUpBluetooth(Bt);
+
+
+
+
+
+
     bool BtStatus;
     BtStatus=Bt.RetrLocalDevInfo();
 
     if(BtStatus == true){
-        qDebug() << "Punkt 2 erreicht!";
+        //qDebug() << "Punkt 2 erreicht!";
         Bt.startDeviceDiscovery();
-        qDebug() << "Punkt 3 erreicht!";
+        //qDebug() << "Punkt 3 erreicht!";
     }
+
+
+
+
+
+
+
 
     bool ok = app.exec();
 
