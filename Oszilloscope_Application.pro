@@ -13,12 +13,14 @@ CONFIG += c++11
 
 SOURCES += \
     bluetooth_connection.cpp \
+    commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
 
 HEADERS += \
     bluetooth_connection.h \
+    commandline_eas_board.h \
     mainwindow.h \
     qcustomplot.h
 
