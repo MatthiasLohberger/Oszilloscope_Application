@@ -8,6 +8,7 @@ CommandLine_EAS_Board::CommandLine_EAS_Board()
 }
 
 
+
 void CommandLine_EAS_Board::setDefault(){
     CommandLine.Vertical = 'V';
     //CommandLine.EntranceArea =

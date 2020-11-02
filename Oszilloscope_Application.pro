@@ -13,6 +13,7 @@ CONFIG += c++11
 
 SOURCES += \
     bluetooth_connection.cpp \
+    bluetooth_window.cpp \
     commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,11 +21,13 @@ SOURCES += \
 
 HEADERS += \
     bluetooth_connection.h \
+    bluetooth_window.h \
     commandline_eas_board.h \
     mainwindow.h \
     qcustomplot.h
 
 FORMS += \
+    bluetooth_window.ui \
     mainwindow.ui
 
 # Default rules for deployment.

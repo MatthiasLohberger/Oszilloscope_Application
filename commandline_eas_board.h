@@ -1,4 +1,4 @@
-#ifndef COMMANDLINE_EAS_BOARD_H
+ #ifndef COMMANDLINE_EAS_BOARD_H
 #define COMMANDLINE_EAS_BOARD_H
 
 #include <QByteArray>
@@ -27,6 +27,20 @@ private:
 public:
     CommandLine_EAS_Board();
 
+    struct ConfigDataShow {
+
+        int EntranceArea;
+
+        int N_Low;
+        int N_High;
+
+        int TriggerThresholdLow;
+        int TriggerThresholdHigh;
+        char TriggerMode;
+        char TriggerEdge;
+
+    };
+
     void setDefault();
     void convert();
 
@@ -35,6 +49,8 @@ public:
     void setTriggerThreshold(int TriggerThreshold);         // Aufteilen in High und Low Teil, unsigned int
     void setTriggerMode(char Mode);                         // A, N oder S
     void setTriggerEdge(char Edge);                         // p oder n
+
+
 
     //get Fnkt
 
