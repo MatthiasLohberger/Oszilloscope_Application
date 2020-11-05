@@ -42,7 +42,7 @@ public:
     };
 
     void setDefault();
-    void convert();
+    void convertToByteArray();
 
     void setEntranceArea(int EntranceArea);                 // Eingangsbereiche kodiert mit Zahlen 1 - 4
     void setN(int N);                                       // Aufteilen in High und Low Teil

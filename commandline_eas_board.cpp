@@ -4,27 +4,40 @@ CommandLine_EAS_Board::CommandLine_EAS_Board()
 {
     setDefault();
     CommandLine_Byte.resize(9);
-    convert();
+    convertToByteArray();
 }
 
 
 
 void CommandLine_EAS_Board::setDefault(){
     CommandLine.Vertical = 'V';
-    //CommandLine.EntranceArea =
+    CommandLine.EntranceArea = 1;
     CommandLine.Horizontal = 'H';
-    //CommandLine.N_Low =
-    //CommandLine.N_High =
+    CommandLine.N_Low = 1;
+    CommandLine.N_High = 0;
     CommandLine.Trigger = 'T';
-    //CommandLine.TriggerThresholdLow =
-    //CommandLine.TriggerThresholdHigh =
+    CommandLine.TriggerThresholdLow = 0;
+    CommandLine.TriggerThresholdHigh = 8;
     CommandLine.TriggerMode = 'A';
     CommandLine.TriggerEdge = 'p';
+
+
+
+    //fehlt!!!!!!!!!!!!!!!!!
+
+    //convertToByteArray()
+    //convertToString() evtl
+    //etc
+
+    //update oszi
+    //uptade Anzeigen (BtWin und Oszi-/MainWin
+
+    //mit Signals uns Slots arbeiten
 }
 
 
 
-void CommandLine_EAS_Board::convert(){
+void CommandLine_EAS_Board:: convertToByteArray(){
     //CommandLine_Byte[0] =
     //CommandLine_Byte[1] =
     //CommandLine_Byte[2] =

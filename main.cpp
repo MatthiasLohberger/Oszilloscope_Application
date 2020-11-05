@@ -1,7 +1,10 @@
-#include "mainwindow.h"
-
 #include <QApplication>
 #include <QDebug>
+
+
+#include "mainwindow.h"
+#include "bluetooth_window.h"
+
 
 #include "bluetooth_connection.h"
 
@@ -12,9 +15,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setPalette(Qt::darkGray);
 
-    MainWindow window;
+    //MainWindow window;
+    bluetooth_window BtWindow;
     //window.resize();
-    window.show();
+    //window.show();
+
+    BtWindow.show();
 
     //window.start();
 
@@ -22,13 +28,9 @@ int main(int argc, char *argv[])
 
 
 
+
     bluetooth_connection Bt;
     Bt.setUpBluetooth(Bt);
-
-
-
-
-
 
     bool BtStatus;
     BtStatus=Bt.RetrLocalDevInfo();

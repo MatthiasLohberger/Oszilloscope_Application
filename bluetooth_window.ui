@@ -27,18 +27,18 @@
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
     <item>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="LableInputBuffer">
       <property name="text">
        <string>Input Buffer: </string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLCDNumber" name="lcdNumber"/>
+     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="closeButton">
    <property name="geometry">
     <rect>
      <x>780</x>
@@ -65,24 +65,24 @@
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
     <item>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="LableBtDevice">
       <property name="text">
        <string>Bluetooth Device: </string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox"/>
+     <widget class="QComboBox" name="BtDeviceSelect"/>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="resetButton">
       <property name="text">
        <string>Reset</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="ConnectButton">
       <property name="text">
        <string>Connect</string>
       </property>
@@ -90,7 +90,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="Title">
    <property name="geometry">
     <rect>
      <x>23</x>
@@ -123,14 +123,14 @@
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_DataTelegram">
          <property name="text">
           <string>Data Telegram: </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_V">
          <property name="text">
           <string> 'V'</string>
          </property>
@@ -144,7 +144,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_2"/>
+        <widget class="QTextEdit" name="textEdit_EntranceArea"/>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
@@ -154,7 +154,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="label_H">
          <property name="text">
           <string> 'H'</string>
          </property>
@@ -168,7 +168,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QTextEdit" name="textEdit_N_Low"/>
        </item>
        <item>
         <widget class="QLabel" name="label_12">
@@ -178,7 +178,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_3"/>
+        <widget class="QTextEdit" name="textEdit_N_High"/>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
@@ -188,7 +188,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_15">
+        <widget class="QLabel" name="label_T">
          <property name="text">
           <string> 'T'</string>
          </property>
@@ -202,7 +202,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_5"/>
+        <widget class="QTextEdit" name="textEdit_TriggerLow"/>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
@@ -212,7 +212,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_4"/>
+        <widget class="QTextEdit" name="textEdit_TriggerHigh"/>
        </item>
        <item>
         <widget class="QLabel" name="label_8">
@@ -222,7 +222,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_7"/>
+        <widget class="QTextEdit" name="textEdit_Triggermode"/>
        </item>
        <item>
         <widget class="QLabel" name="label_14">
@@ -232,20 +232,20 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_6"/>
+        <widget class="QTextEdit" name="textEdit_TriggerEdge"/>
        </item>
       </layout>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="SendButton">
       <property name="text">
        <string>Send</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="DefaultButton">
       <property name="text">
        <string>Default</string>
       </property>
