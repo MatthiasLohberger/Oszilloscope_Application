@@ -2,6 +2,7 @@
 #define COMMANDLINE_EAS_BOARD_H
 
 #include <QByteArray>
+#include <QString>
 
 class CommandLine_EAS_Board
 {
@@ -10,23 +11,43 @@ private:
         char Vertical;              //QString besser?
         int EntranceArea;
         char Horizontal;
-        int N_Low;
-        int N_High;
+        // hier unsigned richtig:       ???????
+        unsigned int N; //Aufspalten in High und Low Byte
+
         char Trigger;
-        int TriggerThresholdLow;
-        int TriggerThresholdHigh;
+
+        unsigned int TriggerThreshold ; //Aufspalten in High und Low Byte
+
         char TriggerMode;
         char TriggerEdge;
 
     };
 
-    ConfigData CommandLine;
-    QByteArray CommandLine_Byte;
+    struct ConfigDataString {
+        //QString Vertical;
+        QString EntranceArea;
+        //QString Horizontal;
+        QString N_Low;
+        QString N_High;
+        //QString Trigger;
+        QString TriggerThresholdLow;
+        QString TriggerThresholdHigh;
+        QString TriggerMode;
+        QString TriggerEdge;
+
+    };
+
+
+
+    ConfigData CommandLine;                     // CommandLine in int und char
+    QByteArray CommandLine_Byte;                // CommandLine in QByte zum versenden über Bt
+    ConfigDataString CommandLine_String;        // CommandLine als Strings zur Anzeige im Bt Window
 
 
 public:
     CommandLine_EAS_Board();
 
+    /*
     struct ConfigDataShow {
 
         int EntranceArea;
@@ -40,9 +61,15 @@ public:
         char TriggerEdge;
 
     };
+    */
 
-    void setDefault();
+
+
+    void setDefaultValues();
     void convertToByteArray();
+    void convertToString();
+
+    ByteStruct ValueToHighAndLowByte(int x);                // X=1 -> N berechnet, x = 2 -> Trigger berechnet
 
     void setEntranceArea(int EntranceArea);                 // Eingangsbereiche kodiert mit Zahlen 1 - 4
     void setN(int N);                                       // Aufteilen in High und Low Teil

@@ -4,8 +4,7 @@
 
 #include "mainwindow.h"
 #include "bluetooth_window.h"
-
-
+#include "commandline_eas_board.h"
 #include "bluetooth_connection.h"
 
 
@@ -15,8 +14,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setPalette(Qt::darkGray);
 
+    CommandLine_EAS_Board Oszi_ConfigData;
+
     //MainWindow window;
-    bluetooth_window BtWindow;
+    bluetooth_window BtWindow(nullptr, Oszi_ConfigData);
     //window.resize();
     //window.show();
 

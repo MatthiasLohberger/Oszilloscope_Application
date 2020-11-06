@@ -38,7 +38,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="closeButton">
+  <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
      <x>780</x>
@@ -144,7 +144,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_EntranceArea"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_EntranceArea">
+         <property name="plainText">
+          <string> </string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
@@ -168,7 +172,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_N_Low"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_N_Low">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_12">
@@ -178,7 +186,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_N_High"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_N_High">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
@@ -202,7 +214,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_TriggerLow"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_TriggerLow">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
@@ -212,7 +228,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_TriggerHigh"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_TriggerHigh">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_8">
@@ -222,7 +242,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_Triggermode"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_TriggerMode">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_14">
@@ -232,7 +256,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEdit_TriggerEdge"/>
+        <widget class="QPlainTextEdit" name="plainTextEdit_TriggerEdge">
+         <property name="plainText">
+          <string/>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

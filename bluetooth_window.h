@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "commandline_eas_board.h"
+
 namespace Ui {
 class bluetooth_window;
 }
@@ -14,7 +16,7 @@ class bluetooth_window : public QDialog
 
 
 public:
-    explicit bluetooth_window(QWidget *parent = nullptr);
+    explicit bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziConfigData);
     ~bluetooth_window();
 
     void connected();
