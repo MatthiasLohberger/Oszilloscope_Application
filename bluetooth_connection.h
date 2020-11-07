@@ -4,6 +4,7 @@
 #include <qwidget.h>
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QBluetoothServiceInfo>
+#include <QBluetoothSocket>
 
 class bluetooth_connection : public QWidget
 {
@@ -31,8 +32,9 @@ public Q_SLOTS:
 
 private:
     QBluetoothDeviceInfo EAS_Board;     //remoteService mit Info über Name und UUID von EAS Board
+
 };
 
 
 #endif // BLUETOOTH_CONNECTION_H
-n<<<<<<<
+

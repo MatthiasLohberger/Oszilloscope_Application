@@ -26,11 +26,17 @@ bluetooth_window::bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziC
     connect(ui->plainTextEdit_TriggerEdge, &QPlainTextEdit::textChanged, this, &bluetooth_window::NewValue_TriggerEdge);
     connect(ui->plainTextEdit_TriggerMode, &QPlainTextEdit::textChanged, this, &bluetooth_window::NewValue_TriggerMode);
 
-    // [Construct UI]
-
-    //Standartwerte anzeigen
+    // [Construct UI] End
 
 
+    // [Standartwerte anzeigen]
+    ui->plainTextEdit_EntranceArea->setPlainText(OsziConfigData.getDataString().EntranceArea);
+    ui->plainTextEdit_N_High->setPlainText(OsziConfigData.getDataString().N_Low);
+    ui->plainTextEdit_N_Low->setPlainText(OsziConfigData.getDataString().N_High);
+    ui->plainTextEdit_TriggerHigh->setPlainText(OsziConfigData.getDataString().TriggerThresholdHigh);
+    ui->plainTextEdit_TriggerLow->setPlainText(OsziConfigData.getDataString().TriggerThresholdLow);
+    ui->plainTextEdit_TriggerEdge->setPlainText(OsziConfigData.getDataString().TriggerEdge);
+    ui->plainTextEdit_TriggerMode->setPlainText(OsziConfigData.getDataString().TriggerMode);
 
 
 
@@ -50,12 +56,82 @@ bluetooth_window::bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziC
 
 
 
-//[~Denstruktor]
+//[~Destruktor]
 bluetooth_window::~bluetooth_window()
 {
     delete ui;
 }
 //[~Denstruktor] End
+
+
+
+
+//[Slot Funktionen] Buttons Pressed/Selected
+
+void bluetooth_window::ConnectButtonPressed(){
+    //Connect to Bt Device
+}
+
+
+void bluetooth_window::SendButtonPressed(){
+    //Send to Bt Device
+}
+
+
+void bluetooth_window::DefaultButtonPressed(){
+    //Default
+}
+
+
+void bluetooth_window::CloseButtonPressed(){
+    //Close Bt Win bzw Show Main/Oszi Win
+}
+
+
+void bluetooth_window::BtDeviceSelected(){
+    //Name in Var speichern, UUID etc. herausfinden und auf connect pressed warten
+    //Namen anzeigen
+}
+//[Slot Funktionen] Buttons Pressed/Selected   End
+
+
+
+//[Slot Funktionen] NewValues for ConfigFrame
+
+void bluetooth_window::NewValue_EntranceArea(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_N_High(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_N_Low(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_TriggerHigh(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_TriggerLow(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_TriggerEdge(){
+    //set new Value
+}
+
+
+void bluetooth_window::NewValue_TriggerMode(){
+    //set new Value
+}
+//[Slot Funktionen] NewValues for ConfigFrame  End
 
 
 

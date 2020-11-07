@@ -94,7 +94,7 @@ void bluetooth_connection::setUpBluetooth(bluetooth_connection &Bt){
 
 //__________________________________________________________________________________________________________________________
 
-
+/*
 void bluetooth_connection::startClient(const QBluetoothServiceInfo &remoteService){
     if (socket)
         return;*
@@ -112,5 +112,5 @@ void bluetooth_connection::startClient(const QBluetoothServiceInfo &remoteServic
             this, &ChatClient::onSocketErrorOccurred);
 
 }
-
+*/
 
