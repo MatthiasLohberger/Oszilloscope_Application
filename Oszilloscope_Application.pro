@@ -14,6 +14,7 @@ CONFIG += c++11
 SOURCES += \
     bluetooth_connection.cpp \
     bluetooth_window.cpp \
+    btwindow.cpp \
     commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -22,12 +23,14 @@ SOURCES += \
 HEADERS += \
     bluetooth_connection.h \
     bluetooth_window.h \
+    btwindow.h \
     commandline_eas_board.h \
     mainwindow.h \
     qcustomplot.h
 
 FORMS += \
     bluetooth_window.ui \
+    btwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -35,4 +38,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-ANDROID_ABIS = armeabi-v7a arm64-v8a
+ANDROID_ABIS = arm64-v8a

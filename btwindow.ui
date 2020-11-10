@@ -1,60 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>bluetooth_window</class>
- <widget class="QDialog" name="bluetooth_window">
+ <class>BtWindow</class>
+ <widget class="QWidget" name="BtWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>862</width>
-    <height>414</height>
+    <width>900</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
-  <widget class="QGroupBox" name="horizontalGroupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>280</y>
-     <width>221</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="TitleBox_3">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <item>
-     <widget class="QLabel" name="LableInputBuffer">
-      <property name="text">
-       <string>Input Buffer: </string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QPushButton" name="CloseButton">
-   <property name="geometry">
-    <rect>
-     <x>780</x>
-     <y>20</y>
-     <width>61</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Close</string>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="BluetoothDeviceBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>27</x>
      <y>50</y>
      <width>821</width>
      <height>61</height>
@@ -90,23 +52,10 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="Title">
-   <property name="geometry">
-    <rect>
-     <x>23</x>
-     <y>10</y>
-     <width>341</width>
-     <height>55</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>EAS Oszilloscope</string>
-   </property>
-  </widget>
   <widget class="QGroupBox" name="DataBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>27</x>
      <y>130</y>
      <width>821</width>
      <height>141</height>
@@ -281,22 +230,58 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="CloseButton">
+   <property name="geometry">
+    <rect>
+     <x>787</x>
+     <y>20</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="horizontalGroupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>27</x>
+     <y>280</y>
+     <width>221</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="TitleBox_3">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item>
+     <widget class="QLabel" name="LableInputBuffer">
+      <property name="text">
+       <string>Input Buffer: </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="Title">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>10</y>
+     <width>341</width>
+     <height>55</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EAS Oszilloscope</string>
+   </property>
+  </widget>
  </widget>
- <tabstops>
-  <tabstop>CloseButton</tabstop>
-  <tabstop>ConnectButton</tabstop>
-  <tabstop>resetButton</tabstop>
-  <tabstop>BtDeviceSelect</tabstop>
-  <tabstop>DefaultButton</tabstop>
-  <tabstop>SendButton</tabstop>
-  <tabstop>plainTextEdit_EntranceArea</tabstop>
-  <tabstop>plainTextEdit_N_Low</tabstop>
-  <tabstop>plainTextEdit_N_High</tabstop>
-  <tabstop>plainTextEdit_TriggerLow</tabstop>
-  <tabstop>plainTextEdit_TriggerHigh</tabstop>
-  <tabstop>plainTextEdit_TriggerMode</tabstop>
-  <tabstop>plainTextEdit_TriggerEdge</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -1,4 +1,4 @@
-#include <QApplication>
+ #include <QApplication>
 #include <QDebug>
 
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     CommandLine_EAS_Board Oszi_ConfigData;
 
     //MainWindow window;
-    bluetooth_window BtWindow(nullptr, Oszi_ConfigData);
+    bluetooth_window BtWindow();
     //window.resize();
     //window.show();
 

@@ -16,7 +16,8 @@ class bluetooth_window : public QDialog
 
 
 public:
-    explicit bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziConfigData);
+    //explicit bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziConfigData);
+    explicit bluetooth_window(QDialog *parent = nullptr);
     ~bluetooth_window();
 
     void connected();

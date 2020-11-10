@@ -3,7 +3,7 @@
 
 
 //[Konstruktor]
-bluetooth_window::bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziConfigData) :
+bluetooth_window::bluetooth_window(QDialog *parent) :
     QDialog(parent),                        //Init Liste
     ui(new Ui::bluetooth_window)
 {
@@ -41,7 +41,7 @@ bluetooth_window::bluetooth_window(QWidget *parent, CommandLine_EAS_Board &OsziC
 
 
 
-    //local oder default adapter für Bt auswählen
+    // local oder default adapter für Bt auswählen
 
     // Bt Server
 
