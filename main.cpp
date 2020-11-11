@@ -1,12 +1,12 @@
- #include <QApplication>
+#include <QApplication>
 #include <QDebug>
 
 
 #include "mainwindow.h"
-#include "bluetooth_window.h"
+//#include "bluetooth_window.h"
 #include "commandline_eas_board.h"
-#include "bluetooth_connection.h"
-
+//#include "bluetooth_connection.h"
+#include "btwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -16,20 +16,31 @@ int main(int argc, char *argv[])
 
     CommandLine_EAS_Board Oszi_ConfigData;
 
+    BtWindow BluetoothWindow;
+    BluetoothWindow.getDataForPlainTextWidget(Oszi_ConfigData);
+    BluetoothWindow.show();
+
+
+
+
+
+
+
     //MainWindow window;
-    bluetooth_window BtWindow();
     //window.resize();
     //window.show();
-
-    BtWindow.show();
-
     //window.start();
 
-    qDebug() << "Application Start: Hello World!";
+
+    //~bluetooth_window BtWindow();
+    //~BtWindow.show();
 
 
 
+    //qDebug() << "Application Start: Hello World!";
 
+
+    /*
     bluetooth_connection Bt;
     Bt.setUpBluetooth(Bt);
 
@@ -41,8 +52,7 @@ int main(int argc, char *argv[])
         Bt.startDeviceDiscovery();
         //qDebug() << "Punkt 3 erreicht!";
     }
-
-
+    */
 
 
 

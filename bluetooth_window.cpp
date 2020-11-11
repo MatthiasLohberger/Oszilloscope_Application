@@ -30,6 +30,7 @@ bluetooth_window::bluetooth_window(QDialog *parent) :
 
 
     // [Standartwerte anzeigen]
+    /*
     ui->plainTextEdit_EntranceArea->setPlainText(OsziConfigData.getDataString().EntranceArea);
     ui->plainTextEdit_N_High->setPlainText(OsziConfigData.getDataString().N_Low);
     ui->plainTextEdit_N_Low->setPlainText(OsziConfigData.getDataString().N_High);
@@ -37,7 +38,7 @@ bluetooth_window::bluetooth_window(QDialog *parent) :
     ui->plainTextEdit_TriggerLow->setPlainText(OsziConfigData.getDataString().TriggerThresholdLow);
     ui->plainTextEdit_TriggerEdge->setPlainText(OsziConfigData.getDataString().TriggerEdge);
     ui->plainTextEdit_TriggerMode->setPlainText(OsziConfigData.getDataString().TriggerMode);
-
+    */
 
 
 
@@ -61,7 +62,7 @@ bluetooth_window::~bluetooth_window()
 {
     delete ui;
 }
-//[~Denstruktor] End
+//[~Destruktor] End
 
 
 
