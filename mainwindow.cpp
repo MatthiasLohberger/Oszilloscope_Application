@@ -20,3 +20,8 @@ MainWindow::~MainWindow()
 void MainWindow::showBluetoothWindow(){
     BluetoothWindow.show();
 }
+
+
+// ------------------------------------------------------------------------------------
+
+

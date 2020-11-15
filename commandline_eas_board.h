@@ -1,4 +1,4 @@
- #ifndef COMMANDLINE_EAS_BOARD_H
+#ifndef COMMANDLINE_EAS_BOARD_H
 #define COMMANDLINE_EAS_BOARD_H
 
 #include <QByteArray>

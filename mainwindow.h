@@ -23,7 +23,7 @@ private:
     Ui::MainWindow *ui;
 
     BtWindow BluetoothWindow;
-    ConfigData OsziConfigData;
+    CommandLine_EAS_Board OsziConfigData;
 
 public slots:
 
