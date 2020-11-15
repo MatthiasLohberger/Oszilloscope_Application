@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>447</height>
+    <width>1900</width>
+    <height>1200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QGroupBox" name="BluetoothDeviceBox">
    <property name="geometry">
     <rect>
-     <x>27</x>
-     <y>50</y>
-     <width>821</width>
-     <height>61</height>
+     <x>20</x>
+     <y>70</y>
+     <width>1431</width>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="TitleBox">
@@ -52,13 +52,54 @@
     </item>
    </layout>
   </widget>
+  <widget class="QGroupBox" name="horizontalGroupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>670</y>
+     <width>571</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(0, 0, 0);</string>
+   </property>
+   <layout class="QHBoxLayout" name="TitleBox_3">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item>
+     <widget class="QLabel" name="LableInputBuffer">
+      <property name="text">
+       <string>Input Buffer: </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="Title">
+   <property name="geometry">
+    <rect>
+     <x>23</x>
+     <y>10</y>
+     <width>341</width>
+     <height>55</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EAS Oszilloscope</string>
+   </property>
+  </widget>
   <widget class="QGroupBox" name="DataBox">
    <property name="geometry">
     <rect>
-     <x>27</x>
-     <y>130</y>
-     <width>821</width>
-     <height>141</height>
+     <x>20</x>
+     <y>290</y>
+     <width>1871</width>
+     <height>341</height>
     </rect>
    </property>
    <property name="title">
@@ -233,52 +274,14 @@
   <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
-     <x>787</x>
+     <x>1740</x>
      <y>20</y>
-     <width>61</width>
+     <width>131</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>Close</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="horizontalGroupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>27</x>
-     <y>280</y>
-     <width>221</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="TitleBox_3">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <item>
-     <widget class="QLabel" name="LableInputBuffer">
-      <property name="text">
-       <string>Input Buffer: </string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="Title">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>10</y>
-     <width>341</width>
-     <height>55</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>EAS Oszilloscope</string>
    </property>
   </widget>
  </widget>

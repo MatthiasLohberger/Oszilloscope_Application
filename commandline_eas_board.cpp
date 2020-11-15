@@ -6,10 +6,11 @@
 CommandLine_EAS_Board::CommandLine_EAS_Board()
 {
     setDefaultValues();
-    CommandLine_Byte.resize(9);
-    convertToByteArray();
 
-    convertToString();
+    //CommandLine_Byte.resize(9);     //richtige Größe ??????????????
+    //convertToByteArray();
+
+    //convertToString();    // -> in der set Default enthalten
 }
 // [Constructor] End
 
@@ -21,15 +22,24 @@ CommandLine_EAS_Board::CommandLine_EAS_Board()
 void CommandLine_EAS_Board::setDefaultValues(){
 
     CommandLine.EntranceArea = 1;
+
     CommandLine.N = 1;
+
     CommandLine.TriggerThreshold = 2050;    //LowByte eig 0x02 und High eig 0x08
+
     CommandLine.TriggerMode = 'A';
     CommandLine.TriggerEdge = 'p';
 
+
+
+
     convertToString();
 
-    //!!!!!   fehlt:    !!!!!!
 
+
+
+    //!!!!!   fehlt:    !!!!!!
+    //!
     // convertToByteArray()
     // etc
     // update oszi
@@ -61,17 +71,17 @@ void CommandLine_EAS_Board:: convertToByteArray(){
 
 
 void CommandLine_EAS_Board::convertToString(){
-   unsigned int *hPtr1, *hPtr2;
+   //unsigned int *hPtr1, *hPtr2;
 
     CommandLine_String.EntranceArea.setNum(CommandLine.EntranceArea, 16);
 
-    hPtr1 = ValueToHighAndLowByte(1);     //1 -> N Wird berechnet
-    CommandLine_String.N_Low.setNum(hPtr1[0], 16);
-    CommandLine_String.N_High.setNum(hPtr1[1], 16);
+//    hPtr1 = ValueToHighAndLowByte(1);     //1 -> N Wird berechnet
+//    CommandLine_String.N_Low.setNum(hPtr1[0], 16);
+//    CommandLine_String.N_High.setNum(hPtr1[1], 16);
 
-    hPtr2 = ValueToHighAndLowByte(2);     //2 -> Trigger Threshold Wird berechnet
-    CommandLine_String.TriggerThresholdLow.setNum(hPtr2[0], 16);
-    CommandLine_String.TriggerThresholdHigh.setNum(hPtr2[0], 16);
+//    hPtr2 = ValueToHighAndLowByte(2);     //2 -> Trigger Threshold wird berechnet
+//    CommandLine_String.TriggerThresholdLow.setNum(hPtr2[0], 16);
+//    CommandLine_String.TriggerThresholdHigh.setNum(hPtr2[1], 16);
 
     CommandLine_String.TriggerMode = CommandLine.TriggerMode;
     CommandLine_String.TriggerEdge = CommandLine.TriggerEdge;

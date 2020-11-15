@@ -21,7 +21,7 @@ public:
     ~BtWindow();
 
     void connected();
-    CommandLine_EAS_Board getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData);
+
 
 
 private:
@@ -46,11 +46,15 @@ public slots:
     void NewValue_TriggerEdge();
     void NewValue_TriggerMode();
 
+    void getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData);
+
 
 private slots:
 
 
 signals:
+    void newValues();
+
 
 
 };

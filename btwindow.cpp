@@ -16,7 +16,7 @@ BtWindow::BtWindow(QWidget *parent) :
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BtWindow::ConnectButtonPressed);
     connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
     connect(ui->DefaultButton, &QPushButton::clicked, this, &BtWindow::DefaultButtonPressed);
-    connect(ui->CloseButton, &QPushButton::clicked, this, &BtWindow::ConnectButtonPressed);
+    connect(ui->CloseButton, &QPushButton::clicked, this, &BtWindow::CloseButtonPressed);
 
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geschlossener Zustand
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geöffneter Zustand
@@ -34,11 +34,13 @@ BtWindow::BtWindow(QWidget *parent) :
 
     // [Standartwerte anzeigen]
 
+
+
     ui->plainTextEdit_EntranceArea->setPlainText(CommandLineStringRef.EntranceArea);
-    ui->plainTextEdit_N_High->setPlainText(CommandLineStringRef.N_Low);
-    ui->plainTextEdit_N_Low->setPlainText(CommandLineStringRef.N_High);
-    ui->plainTextEdit_TriggerHigh->setPlainText(CommandLineStringRef.TriggerThresholdHigh);
-    ui->plainTextEdit_TriggerLow->setPlainText(CommandLineStringRef.TriggerThresholdLow);
+    ui->plainTextEdit_N_High->setPlainText("Test");
+    ui->plainTextEdit_N_Low->setPlainText("Test");
+    ui->plainTextEdit_TriggerHigh->setPlainText("Test");
+    ui->plainTextEdit_TriggerLow->setPlainText("Test");
     ui->plainTextEdit_TriggerEdge->setPlainText(CommandLineStringRef.TriggerEdge);
     ui->plainTextEdit_TriggerMode->setPlainText(CommandLineStringRef.TriggerMode);
 
@@ -87,6 +89,7 @@ void BtWindow::DefaultButtonPressed(){
 
 void BtWindow::CloseButtonPressed(){
     //Close Bt Win bzw Show Main/Oszi Win
+    this->hide();
 }
 
 
@@ -140,8 +143,7 @@ void BtWindow::NewValue_TriggerMode(){
 //[Slot Funktionen] NewValues for ConfigFrame  End---------------------------------------------------------
 
 
-
-CommandLine_EAS_Board BtWindow::getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData){
+void BtWindow::getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData){
     CommandLineStringRef = OsziConfigData.getDataString();
 }
 
