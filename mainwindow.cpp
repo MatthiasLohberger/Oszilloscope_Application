@@ -7,18 +7,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->BtSettingsButton, &QToolButton::clicked, this, &MainWindow::showBluetoothWindow);
+    //connect(ui->BtSettingsButton, &QToolButton::clicked, this, &MainWindow::showBluetoothWindow);
+    connect(ui->BtSettingsButton, SIGNAL(clicked), this, SIGNAL(BtSettingsButtonPressed));
 }
+
+
+
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-
-
-void MainWindow::showBluetoothWindow(){
-    BluetoothWindow.show();
 }
 
 

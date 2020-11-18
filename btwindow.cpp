@@ -143,10 +143,22 @@ void BtWindow::NewValue_TriggerMode(){
 //[Slot Funktionen] NewValues for ConfigFrame  End---------------------------------------------------------
 
 
-void BtWindow::getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData){
+void BtWindow::newDataForPlainTextWidget(CommandLine_EAS_Board &OsziConfigData){
     CommandLineStringRef = OsziConfigData.getDataString();
+
+    ui->plainTextEdit_EntranceArea->setPlainText(CommandLineStringRef.EntranceArea);
+    ui->plainTextEdit_N_High->setPlainText("Test");
+    ui->plainTextEdit_N_Low->setPlainText("Test");
+    ui->plainTextEdit_TriggerHigh->setPlainText("Test");
+    ui->plainTextEdit_TriggerLow->setPlainText("Test");
+    ui->plainTextEdit_TriggerEdge->setPlainText(CommandLineStringRef.TriggerEdge);
+    ui->plainTextEdit_TriggerMode->setPlainText(CommandLineStringRef.TriggerMode);
 }
 
+
+void BtWindow::showBluetoothWindow(){
+    this->show();
+}
 
 
 

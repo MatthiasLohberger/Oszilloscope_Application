@@ -46,14 +46,14 @@ public slots:
     void NewValue_TriggerEdge();
     void NewValue_TriggerMode();
 
-    void getDataForPlainTextWidget(CommandLine_EAS_Board OsziConfigData);
-
-
-private slots:
+    //auskodiert:
+    void newDataForPlainTextWidget(CommandLine_EAS_Board &OsziConfigData);
+    void showBluetoothWindow();
 
 
 signals:
     void newValues();
+
 
 
 

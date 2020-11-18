@@ -1,6 +1,7 @@
 #ifndef COMMANDLINE_EAS_BOARD_H
 #define COMMANDLINE_EAS_BOARD_H
 
+#include <QObject>
 #include <QByteArray>
 #include <QString>
 
@@ -37,8 +38,10 @@ struct ConfigDataString {
 
 
 
-class CommandLine_EAS_Board
+class CommandLine_EAS_Board: public QObject
 {
+     Q_OBJECT
+
 private:
 
     ConfigData CommandLine;                     // CommandLine in int und char
@@ -47,14 +50,17 @@ private:
 
 
 public:
-    CommandLine_EAS_Board();
+    //Konstruktor
+    CommandLine_EAS_Board(QObject *parent = nullptr);
 
+    //set Attributes
     void setDefaultValues();
     void convertToByteArray();
     void convertToString();
 
     unsigned int* ValueToHighAndLowByte(int x);                // X=1 -> N berechnet, x = 2 -> Trigger berechnet
 
+    // set single values
     void setEntranceArea(int EntranceArea);                 // Eingangsbereiche kodiert mit Zahlen 1 - 4
     void setN(unsigned int N);                                       // Aufteilen in High und Low Teil
     void setTriggerThreshold(unsigned int TriggerThreshold);         // Aufteilen in High und Low Teil, unsigned int
@@ -64,6 +70,14 @@ public:
     //get Fnkt
     ConfigData getData();
     ConfigDataString getDataString();
+
+
+public slots:
+
+
+signals:
+    void newConfigData();
+
 };
 
 #endif // COMMANDLINE_EAS_BOARD_H

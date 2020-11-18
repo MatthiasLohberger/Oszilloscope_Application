@@ -17,6 +17,7 @@ SOURCES += \
     commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
+    oscilloscope.cpp \
     qcustomplot.cpp
 
 HEADERS += \
@@ -24,6 +25,7 @@ HEADERS += \
     btwindow.h \
     commandline_eas_board.h \
     mainwindow.h \
+    oscilloscope.h \
     qcustomplot.h
 
 FORMS += \

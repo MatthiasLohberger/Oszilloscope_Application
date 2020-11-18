@@ -3,7 +3,7 @@
 
 
 // [Construktor]
-CommandLine_EAS_Board::CommandLine_EAS_Board()
+CommandLine_EAS_Board::CommandLine_EAS_Board(QObject *parent) : QObject(parent)
 {
     setDefaultValues();
 
@@ -35,6 +35,7 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
     convertToString();
 
+    emit newConfigData();       //Signal aussenden
 
 
 

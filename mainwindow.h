@@ -22,11 +22,13 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    BtWindow BluetoothWindow;
-    CommandLine_EAS_Board OsziConfigData;
+
 
 public slots:
 
-    void showBluetoothWindow();
+
+signals:
+    void BtSettingsButtonPressed();
+
 };
 #endif // MAINWINDOW_H

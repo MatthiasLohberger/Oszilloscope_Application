@@ -8,6 +8,8 @@
 #include<QByteArray>
 #include<QString>
 
+#include "oscilloscope.h"
+
 
 
 int main(int argc, char *argv[])
@@ -15,7 +17,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setPalette(Qt::darkGray);
 
-    MainWindow window;
+
+
+
+/*
+    //MainWindow window;
     //window.resize();
 
     //window.show();
@@ -23,16 +29,18 @@ int main(int argc, char *argv[])
     //window.start();
 
 #ifdef Q_OS_ANDROID
-    window.showMaximized();
+    //window.showMaximized();
 #else
-    window.show();
+    //window.show();
 #endif
-
-
 
     //ConfigData OsziConfigData;            // -> done
     // BtWindow BluetoothWindow;            // -> done
     // BluetoothWindow.show();
+*/
+
+    Oscilloscope o;
+    o.showOscilloscopeMainWindow();
 
 
 
@@ -41,8 +49,6 @@ int main(int argc, char *argv[])
     // Test Konsolenausgabe
     qDebug() << "Hello World";
     qDebug() << "(Test)";
-
-
 
 
     // Bluetooth Test
