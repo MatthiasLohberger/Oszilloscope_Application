@@ -75,8 +75,9 @@ public:
 public slots:
 
 
+
 signals:
-    void newConfigData();
+    void newConfigData(ConfigDataString &);
 
 };
 

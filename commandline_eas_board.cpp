@@ -5,7 +5,7 @@
 // [Construktor]
 CommandLine_EAS_Board::CommandLine_EAS_Board(QObject *parent) : QObject(parent)
 {
-    setDefaultValues();
+    //setDefaultValues();
 
     //CommandLine_Byte.resize(9);     //richtige Größe ??????????????
     //convertToByteArray();
@@ -35,7 +35,7 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
     convertToString();
 
-    emit newConfigData();       //Signal aussenden
+    emit newConfigData(CommandLine_String);       //Signal aussenden
 
 
 

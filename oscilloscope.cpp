@@ -2,12 +2,21 @@
 
 Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 {
-    connect(&OsziMainWindow, SIGNAL(BtSettingsButtonPressed),
-            &BluetoothWindow, SLOT(showBluetoothWindow));
+
+    connect(&OsziMainWindow, SIGNAL(BtSettingsButtonPressed()),
+            &BluetoothWindow, SLOT(showBluetoothWindow()));
     // Zurückwechseln mit hide im BTWin direkt
 
-    connect(&OsziConfigData, SIGNAL(newConfigData),
-            &BluetoothWindow, SLOT(newDataForPlainTextWidget(&OsziConfigData)));
+    connect(&OsziConfigData, SIGNAL(newConfigData(ConfigDataString &)),
+            &BluetoothWindow, SLOT(newDataForPlainTextWidget(ConfigDataString &)));
+
+
+
+
+
+
+    OsziConfigData.setDefaultValues();
+
 
 
 

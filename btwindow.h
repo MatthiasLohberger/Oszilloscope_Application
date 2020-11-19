@@ -47,7 +47,8 @@ public slots:
     void NewValue_TriggerMode();
 
     //auskodiert:
-    void newDataForPlainTextWidget(CommandLine_EAS_Board &OsziConfigData);
+    void newDataForPlainTextWidget(ConfigDataString &);
+
     void showBluetoothWindow();
 
 

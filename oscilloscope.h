@@ -18,7 +18,9 @@ public:
 private:
     BtWindow BluetoothWindow;
     MainWindow OsziMainWindow;
+
     CommandLine_EAS_Board OsziConfigData;
+
 
 public slots:
 
