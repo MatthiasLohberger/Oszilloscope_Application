@@ -83,7 +83,7 @@ public:
 
 
 public slots:
-
+   void DefaultValues();
 
 
 signals:

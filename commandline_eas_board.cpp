@@ -84,36 +84,37 @@ TwoBytes CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
     //unsigned int hArrayInt[1];
     TwoBytes hByte;
     int size, i;
-qDebug() << "x: " << x;
+
+    //qDebug() << "x: " << x;
     switch(x){                           // X=1 -> N berechnet, x = 2 -> Trigger berechnet
         case 1: hValue = CommandLine.N; break;
         case 2: hValue = CommandLine.TriggerThreshold; break;
     }
-    qDebug() << "Wert: " << hValue;
+    //qDebug() << "Wert: " << hValue;
 
     if(hValue <= 255){                          // Highbyte == 0
            hArray[0].setNum(hValue, 2);         // Low Byte
            hArray[1].setNum(00000000, 2);       // High Byte
 
-           qDebug() << "Wert <= 255, LowByte: " << hArray[0];
-           qDebug() << "Wert <= 255, HighByte: " << hArray[1];
+           //qDebug() << "Wert <= 255, LowByte: " << hArray[0];
+           //qDebug() << "Wert <= 255, HighByte: " << hArray[1];
     }
     else if (hValue > 255){
             hString.setNum(hValue, 2);
             size = hString.size();
-            qDebug() << "Size HString (binär Zahl): " << size;
+            //qDebug() << "Size HString (binär Zahl): " << size;
 
 
             for (i=size-8; i<=size-1; i++){
                 hArray[0].append(hString.data()[i]);        //Low Byte
             }
-            qDebug() << "Wert > 255, LowByte: " << hArray[0];
+            //qDebug() << "Wert > 255, LowByte: " << hArray[0];
 
 
             for (i=0; i<size-8; i++){
                 hArray[1].append(hString.data()[i]);        //Highbyte
             }
-            qDebug() << "Wert > 255, HighByte: " << hArray[1];
+            //qDebug() << "Wert > 255, HighByte: " << hArray[1];
      }
 
     //hier ggf HighByte mit Nullen auffüllen
@@ -134,8 +135,8 @@ qDebug() << "x: " << x;
             qDebug() << "Wieder als Int: " << y;
             */
 
-    qDebug() << "StructInhalt Testfnkt. , LowByte: " << hByte.ByteLow;
-    qDebug() << "StructInhalt Testfnkt. , HighByte: " << hByte.ByteHigh;
+    //qDebug() << "StructInhalt Testfnkt. , LowByte: " << hByte.ByteLow;
+    //qDebug() << "StructInhalt Testfnkt. , HighByte: " << hByte.ByteHigh;
 
     return hByte;
 }
@@ -168,6 +169,23 @@ void CommandLine_EAS_Board:: convertToByteArray(){
 
 
 //----------------------------------------------------------------------------------------
+//[Slots]
+
+void CommandLine_EAS_Board::DefaultValues(){
+    qDebug() << "Default ValuesSlot";
+    setDefaultValues();
+}
+
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------
+
 
 
 

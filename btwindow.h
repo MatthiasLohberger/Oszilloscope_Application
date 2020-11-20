@@ -33,7 +33,7 @@ private:
 public slots:
     void ConnectButtonPressed();
     void SendButtonPressed();
-    void DefaultButtonPressed();
+
     void CloseButtonPressed();
 
     void BtDeviceSelected();        //für comboBox
@@ -46,7 +46,7 @@ public slots:
     void NewValue_TriggerEdge();
     void NewValue_TriggerMode();
 
-    //auskodiert:
+    //fertig kodiert:
     void newDataForPlainTextWidget(ConfigDataString &);
 
     void showBluetoothWindow();
@@ -55,6 +55,7 @@ public slots:
 signals:
     void newValues();
 
+    void DefaultButtonPressed();
 
 
 

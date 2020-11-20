@@ -15,7 +15,7 @@ BtWindow::BtWindow(QWidget *parent) :
 
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BtWindow::ConnectButtonPressed);
     connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
-    connect(ui->DefaultButton, &QPushButton::clicked, this, &BtWindow::DefaultButtonPressed);
+    connect(ui->DefaultButton, SIGNAL(clicked), this, SIGNAL(DefaultButtonPressed));
     connect(ui->CloseButton, &QPushButton::clicked, this, &BtWindow::CloseButtonPressed);
 
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geschlossener Zustand
@@ -79,11 +79,6 @@ void BtWindow::ConnectButtonPressed(){
 
 void BtWindow::SendButtonPressed(){
     //Send to Bt Device
-}
-
-
-void BtWindow::DefaultButtonPressed(){
-    //Default
 }
 
 
@@ -158,7 +153,7 @@ void BtWindow::newDataForPlainTextWidget(ConfigDataString & CommandLineStringRef
 
 
 void BtWindow::showBluetoothWindow(){
-    this->show();
+    this->showFullScreen();
 }
 
 
