@@ -2,7 +2,7 @@
 
 
 
-// [Construktor]
+//---[Construktor]---
 CommandLine_EAS_Board::CommandLine_EAS_Board(QObject *parent) : QObject(parent)
 {
     //setDefaultValues();
@@ -12,26 +12,27 @@ CommandLine_EAS_Board::CommandLine_EAS_Board(QObject *parent) : QObject(parent)
 
     //convertToString();    // -> in der set Default enthalten
 }
-// [Constructor] End
+
+//---[Constructor] End---
 
 
 
 
 
+
+//----------------------------------------------------------------------------------------
+
+
+
+//---[Convert/ Default Functions]---
 
 void CommandLine_EAS_Board::setDefaultValues(){
 
     CommandLine.EntranceArea = 1;
-
     CommandLine.N = 1;
-
     CommandLine.TriggerThreshold = 2050;    //LowByte eig 0x02 und High eig 0x08
-
     CommandLine.TriggerMode = 'A';
     CommandLine.TriggerEdge = 'p';
-
-
-
 
     convertToString();
 
@@ -53,9 +54,97 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
 
 
+void CommandLine_EAS_Board::convertToString(){
+
+    CommandLine_String.EntranceArea.setNum(CommandLine.EntranceArea, 16);
+
+    qDebug() << "TestTestTest";
+    TwoBytes hByte = ValueToHighAndLowByte(1);     //1 -> N Wird berechnet
+    CommandLine_String.N_Low.setNum(hByte.ByteLow, 16);
+    CommandLine_String.N_High.setNum(hByte.ByteHigh, 16);
+
+    hByte = ValueToHighAndLowByte(2);     //2 -> Trigger Threshold wird berechnet
+    CommandLine_String.TriggerThresholdLow.setNum(hByte.ByteLow, 16);
+    CommandLine_String.TriggerThresholdHigh.setNum(hByte.ByteHigh, 16);
+
+    CommandLine_String.TriggerMode = CommandLine.TriggerMode;
+    CommandLine_String.TriggerEdge = CommandLine.TriggerEdge;
+
+}
 
 
-// [Convert Functions]
+
+
+
+
+TwoBytes CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
+    QString hArray[2];
+    QString hString;
+    unsigned int hValue;                // unsigened richtig   ??????
+    //unsigned int hArrayInt[1];
+    TwoBytes hByte;
+    int size, i;
+qDebug() << "x: " << x;
+    switch(x){                           // X=1 -> N berechnet, x = 2 -> Trigger berechnet
+        case 1: hValue = CommandLine.N; break;
+        case 2: hValue = CommandLine.TriggerThreshold; break;
+    }
+    qDebug() << "Wert: " << hValue;
+
+    if(hValue <= 255){                          // Highbyte == 0
+           hArray[0].setNum(hValue, 2);         // Low Byte
+           hArray[1].setNum(00000000, 2);       // High Byte
+
+           qDebug() << "Wert <= 255, LowByte: " << hArray[0];
+           qDebug() << "Wert <= 255, HighByte: " << hArray[1];
+    }
+    else if (hValue > 255){
+            hString.setNum(hValue, 2);
+            size = hString.size();
+            qDebug() << "Size HString (binär Zahl): " << size;
+
+
+            for (i=size-8; i<=size-1; i++){
+                hArray[0].append(hString.data()[i]);        //Low Byte
+            }
+            qDebug() << "Wert > 255, LowByte: " << hArray[0];
+
+
+            for (i=0; i<size-8; i++){
+                hArray[1].append(hString.data()[i]);        //Highbyte
+            }
+            qDebug() << "Wert > 255, HighByte: " << hArray[1];
+     }
+
+    //hier ggf HighByte mit Nullen auffüllen
+
+    //hArrayInt[0] = hArray[0].toInt(nullptr, 2);
+    //hArrayInt[1] = hArray[1].toInt(nullptr, 2);
+    //qDebug() << "Wert wieder als Int, LowByte: " << hArrayInt[0];
+    //qDebug() << "Wert wieder als Int, HighByte: " << hArrayInt[1];
+
+    hByte.ByteLow = hArray[0].toInt(nullptr, 2);
+    hByte.ByteHigh = hArray[1].toInt(nullptr, 2);
+
+            /*
+            hString2.append(ByteH);
+            hString2.append(ByteL);
+            qDebug() << "Wieder zusammengesetzt:   " << hString2;
+            y = hString2.toInt(nullptr, 2);
+            qDebug() << "Wieder als Int: " << y;
+            */
+
+    qDebug() << "StructInhalt Testfnkt. , LowByte: " << hByte.ByteLow;
+    qDebug() << "StructInhalt Testfnkt. , HighByte: " << hByte.ByteHigh;
+
+    return hByte;
+}
+
+
+
+
+
+
 void CommandLine_EAS_Board:: convertToByteArray(){
     //CommandLine_Byte[0] =
     //CommandLine_Byte[1] =
@@ -71,88 +160,20 @@ void CommandLine_EAS_Board:: convertToByteArray(){
 }
 
 
-void CommandLine_EAS_Board::convertToString(){
-   //unsigned int *hPtr1, *hPtr2;
-
-    CommandLine_String.EntranceArea.setNum(CommandLine.EntranceArea, 16);
-
-//    hPtr1 = ValueToHighAndLowByte(1);     //1 -> N Wird berechnet
-//    CommandLine_String.N_Low.setNum(hPtr1[0], 16);
-//    CommandLine_String.N_High.setNum(hPtr1[1], 16);
-
-//    hPtr2 = ValueToHighAndLowByte(2);     //2 -> Trigger Threshold wird berechnet
-//    CommandLine_String.TriggerThresholdLow.setNum(hPtr2[0], 16);
-//    CommandLine_String.TriggerThresholdHigh.setNum(hPtr2[1], 16);
-
-    CommandLine_String.TriggerMode = CommandLine.TriggerMode;
-    CommandLine_String.TriggerEdge = CommandLine.TriggerEdge;
-
-}
-
-
-unsigned int* CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
-    QString hArray[1];
-
-    QString hString;
-    unsigned int hValue;                // unsigened richtig   ??????
-
-    unsigned int hArrayInt[2];
-    unsigned int *hptr = hArrayInt;
-
-    int size, i;
-
-    switch(x){                           // X=1 -> N berechnet, x = 2 -> Trigger berechnet
-        case 1: hValue = CommandLine.N; break;
-        case 2: hValue = CommandLine.TriggerThreshold; break;
-    }
-
-    if(hValue <= 255){                          // Highbyte == 0
-           hArray[0].setNum(hValue, 2);         // Low Byte
-           hArray[1].setNum(00000000, 2);       // Low Byte
-    }
-    else if (hValue > 255){
-
-            hString.setNum(x, 2);
-            size = hString.size();
-
-            for (i=size-8; i<=size-1; i++){
-                hArray[0].append(hString.data()[i]);        //Low Byte
-            }
-
-            for (i=0; i<size-8; i++){
-                hArray[1].append(hString.data()[i]);        //Highbyte
-            }
-     }
-
-    //hier ggf HighByte mit Nullen auffüllen
-
-    hArrayInt[0] = hArray[0].toInt(nullptr, 2);
-    hArrayInt[1] = hArray[1].toInt(nullptr, 2);
-
-
-    //qDebug() << "IntZahl: " << x << "-> binär: " << hString
-    //         << "bzw. ByteLow: " << ByteL << "+" << "ByteHigh: " << ByteH;
-
-            /*
-            hString2.append(ByteH);
-            hString2.append(ByteL);
-            qDebug() << "Wieder zusammengesetzt:   " << hString2;
-            y = hString2.toInt(nullptr, 2);
-            qDebug() << "Wieder als Int: " << y;
-            */
-
-    return hptr;
-}
-// [Convert Functions] End
+//---[Convert Functions] End---
 
 
 
 
 
 
+//----------------------------------------------------------------------------------------
 
 
-// [Set Functions]
+
+
+
+// ---[Set Functions]---
 void CommandLine_EAS_Board::setEntranceArea(int EntranceArea){
     CommandLine.EntranceArea = EntranceArea;
 }
@@ -176,11 +197,19 @@ void CommandLine_EAS_Board::setTriggerMode(QChar Mode){
 void CommandLine_EAS_Board::setTriggerEdge(QChar Edge){
     CommandLine.TriggerEdge = Edge;
 }
-// [Set Functions] End
+// ---[Set Functions] End---
 
 
 
-//[get Fnkt]
+
+
+//----------------------------------------------------------------------------------------
+
+
+
+
+
+//---[get Fnkt]---
 ConfigData CommandLine_EAS_Board::getData(){
     return CommandLine;
 }
@@ -188,3 +217,5 @@ ConfigData CommandLine_EAS_Board::getData(){
 ConfigDataString CommandLine_EAS_Board::getDataString(){
     return CommandLine_String;
 }
+
+//---[get Fnkt] End---

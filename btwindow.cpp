@@ -146,10 +146,10 @@ void BtWindow::NewValue_TriggerMode(){
 void BtWindow::newDataForPlainTextWidget(ConfigDataString & CommandLineStringRef){
 
     ui->plainTextEdit_EntranceArea->setPlainText(CommandLineStringRef.EntranceArea);
-    ui->plainTextEdit_N_High->setPlainText("Test");
-    ui->plainTextEdit_N_Low->setPlainText("Test");
-    ui->plainTextEdit_TriggerHigh->setPlainText("Test");
-    ui->plainTextEdit_TriggerLow->setPlainText("Test");
+    ui->plainTextEdit_N_High->setPlainText(CommandLineStringRef.N_High);
+    ui->plainTextEdit_N_Low->setPlainText(CommandLineStringRef.N_Low);
+    ui->plainTextEdit_TriggerHigh->setPlainText(CommandLineStringRef.TriggerThresholdHigh);
+    ui->plainTextEdit_TriggerLow->setPlainText(CommandLineStringRef.TriggerThresholdLow);
     ui->plainTextEdit_TriggerEdge->setPlainText(CommandLineStringRef.TriggerEdge);
     ui->plainTextEdit_TriggerMode->setPlainText(CommandLineStringRef.TriggerMode);
 }

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QByteArray>
 #include <QString>
+#include<QDebug>
 
 
 struct ConfigData {
@@ -36,6 +37,15 @@ struct ConfigDataString {
 };
 
 
+struct TwoBytes{
+    unsigned int ByteLow;
+    unsigned int ByteHigh;
+};
+
+
+
+// ----------------------------------------------------------------------------------------------------
+
 
 
 class CommandLine_EAS_Board: public QObject
@@ -58,7 +68,7 @@ public:
     void convertToByteArray();
     void convertToString();
 
-    unsigned int* ValueToHighAndLowByte(int x);                // X=1 -> N berechnet, x = 2 -> Trigger berechnet
+    TwoBytes ValueToHighAndLowByte(int);                // X=1 -> N berechnet, x = 2 -> Trigger berechnet
 
     // set single values
     void setEntranceArea(int EntranceArea);                 // Eingangsbereiche kodiert mit Zahlen 1 - 4
