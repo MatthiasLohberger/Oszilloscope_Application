@@ -10,7 +10,8 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(&OsziConfigData, SIGNAL(newConfigData(ConfigDataString &)),
             &BluetoothWindow, SLOT(newDataForPlainTextWidget(ConfigDataString &)));
 
-    connect(&BluetoothWindow, SIGNAL(DefaultButtonPressed), &OsziConfigData, SLOT(DefaultValues));
+    connect(&BluetoothWindow, SIGNAL(DefaultButtonPressed()),
+            &OsziConfigData, SLOT(DefaultValues()));
 
 
 

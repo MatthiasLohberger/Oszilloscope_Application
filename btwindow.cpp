@@ -15,8 +15,10 @@ BtWindow::BtWindow(QWidget *parent) :
 
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BtWindow::ConnectButtonPressed);
     connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
-    connect(ui->DefaultButton, SIGNAL(clicked), this, SIGNAL(DefaultButtonPressed));
-    connect(ui->CloseButton, &QPushButton::clicked, this, &BtWindow::CloseButtonPressed);
+    connect(ui->DefaultButton, SIGNAL(clicked()),
+            this, SIGNAL(DefaultButtonPressed()));
+    connect(ui->CloseButton, SIGNAL(clicked()),
+            this, SLOT(CloseButtonPressed()));
 
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geschlossener Zustand
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geöffneter Zustand
