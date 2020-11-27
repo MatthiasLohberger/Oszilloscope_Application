@@ -14,19 +14,23 @@ CONFIG += c++11
 SOURCES += \
     bluetooth_connection.cpp \
     btwindow.cpp \
+    chatclient.cpp \
     commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
     oscilloscope.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    remoteselector.cpp
 
 HEADERS += \
     bluetooth_connection.h \
     btwindow.h \
+    chatclient.h \
     commandline_eas_board.h \
     mainwindow.h \
     oscilloscope.h \
-    qcustomplot.h
+    qcustomplot.h \
+    remoteselector.h
 
 FORMS += \
     btwindow.ui \

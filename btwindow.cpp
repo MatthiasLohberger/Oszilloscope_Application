@@ -12,7 +12,7 @@ BtWindow::BtWindow(QWidget *parent) :
 
 
 
-
+    // connect(ui->SearchButton, SIGNAL(), this, SLOT())
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BtWindow::ConnectButtonPressed);
     connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
     connect(ui->DefaultButton, SIGNAL(clicked()),
@@ -23,13 +23,14 @@ BtWindow::BtWindow(QWidget *parent) :
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geschlossener Zustand
     //connect(ui->BtDeviceSelect, QComboBox:: ...);  //geöffneter Zustand
 
-    connect(ui->plainTextEdit_EntranceArea, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_EntranceArea);
-    connect(ui->plainTextEdit_N_High, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_N_High);
-    connect(ui->plainTextEdit_N_Low, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_N_Low);
-    connect(ui->plainTextEdit_TriggerHigh, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_TriggerHigh);
-    connect(ui->plainTextEdit_TriggerLow, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_TriggerLow);
-    connect(ui->plainTextEdit_TriggerEdge, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_TriggerEdge);
-    connect(ui->plainTextEdit_TriggerMode, &QPlainTextEdit::textChanged, this, &BtWindow::NewValue_TriggerMode);
+
+    connect(ui->lineEdit_EntranceArea, SIGNAL(textChanged), this, SLOT(NewValue_EntranceArea));
+    connect(ui->lineEdit_N_High, SIGNAL(textChanged), this, SLOT(NewValue_N_High));
+    connect(ui->lineEdit_N_Low, SIGNAL(textChanged), this, SLOT(NewValue_N_Low));
+    connect(ui->lineEdit_TriggerHigh, SIGNAL(textChanged), SLOT(NewValue_TriggerHigh));
+    connect(ui->lineEdit_TriggerLow, SIGNAL(textChanged), SLOT(NewValue_TriggerLow));
+    connect(ui->lineEdit_TriggerEdge, SIGNAL(textChanged), SLOT(NewValue_TriggerEdge));
+    connect(ui->lineEdit_TriggerMode, SIGNAL(textChanged), this, SLOT(NewValue_TriggerMode));
 
     // [Construct UI] End
 
@@ -37,7 +38,7 @@ BtWindow::BtWindow(QWidget *parent) :
     // [Standartwerte anzeigen]
 
 
-
+    /*
     ui->plainTextEdit_EntranceArea->setPlainText(CommandLineStringRef.EntranceArea);
     ui->plainTextEdit_N_High->setPlainText("Test");
     ui->plainTextEdit_N_Low->setPlainText("Test");
@@ -45,7 +46,7 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->plainTextEdit_TriggerLow->setPlainText("Test");
     ui->plainTextEdit_TriggerEdge->setPlainText(CommandLineStringRef.TriggerEdge);
     ui->plainTextEdit_TriggerMode->setPlainText(CommandLineStringRef.TriggerMode);
-
+    */
 
 
 
@@ -142,13 +143,24 @@ void BtWindow::NewValue_TriggerMode(){
 
 void BtWindow::newDataForPlainTextWidget(ConfigDataString & CommandLineStringRef){
 
-    ui->plainTextEdit_EntranceArea->setPlainText(CommandLineStringRef.EntranceArea);
-    ui->plainTextEdit_N_High->setPlainText(CommandLineStringRef.N_High);
-    ui->plainTextEdit_N_Low->setPlainText(CommandLineStringRef.N_Low);
-    ui->plainTextEdit_TriggerHigh->setPlainText(CommandLineStringRef.TriggerThresholdHigh);
-    ui->plainTextEdit_TriggerLow->setPlainText(CommandLineStringRef.TriggerThresholdLow);
-    ui->plainTextEdit_TriggerEdge->setPlainText(CommandLineStringRef.TriggerEdge);
-    ui->plainTextEdit_TriggerMode->setPlainText(CommandLineStringRef.TriggerMode);
+    ui->lineEdit_EntranceArea->setText(CommandLineStringRef.EntranceArea);
+    ui->lineEdit_N_High->setText(CommandLineStringRef.N_High);
+    ui->lineEdit_N_Low->setText(CommandLineStringRef.N_Low);
+    ui->lineEdit_TriggerHigh->setText(CommandLineStringRef.TriggerThresholdHigh);
+    ui->lineEdit_TriggerLow->setText(CommandLineStringRef.TriggerThresholdLow);
+    ui->lineEdit_TriggerEdge->setText(CommandLineStringRef.TriggerEdge);
+    ui->lineEdit_TriggerMode->setText(CommandLineStringRef.TriggerMode);
+
+    /*
+    qDebug() << CommandLineStringRef.EntranceArea;
+    qDebug() << CommandLineStringRef.N_High;
+    qDebug() << CommandLineStringRef.N_Low;
+    qDebug() << CommandLineStringRef.TriggerThresholdHigh;
+    qDebug() << CommandLineStringRef.TriggerThresholdLow;
+    qDebug() << CommandLineStringRef.TriggerEdge;
+    qDebug() << CommandLineStringRef.TriggerMode;
+    */
+
 }
 
 
@@ -159,8 +171,43 @@ void BtWindow::showBluetoothWindow(){
 }
 
 
+/*
+x.append("0x");     // zur verdeutlichung, dass ausgegebene Zahl hex ist
+x.append(CommandLineStringRef.EntranceArea);
+ui->lineEdit_EntranceArea->setText(x);
+x.clear();
 
+x.append("0x");
+x.append(CommandLineStringRef.N_High);
+ui->lineEdit_N_High->setText(x);
+x.clear();
 
+x.append("0x");
+x.append(CommandLineStringRef.N_Low);
+ui->lineEdit_N_Low->setText(x);
+x.clear();
+
+x.append("0x");
+x.append(CommandLineStringRef.N_Low);
+ui->lineEdit_TriggerHigh->setText(CommandLineStringRef.TriggerThresholdHigh);
+x.clear();
+
+x.append("0x");
+x.append(CommandLineStringRef.TriggerThresholdLow);
+ui->lineEdit_TriggerLow->setText(x);
+x.clear();
+
+x.append("0x");
+x.append(CommandLineStringRef.TriggerEdge);
+ui->lineEdit_TriggerEdge->setText(x);
+x.clear();
+
+x.append("0x");
+x.append(CommandLineStringRef.TriggerMode);
+ui->lineEdit_TriggerMode->setText(x);
+x.clear();
+
+*/
 
 
 
