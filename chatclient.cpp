@@ -74,11 +74,11 @@ void ChatClient::startClient(const QBluetoothServiceInfo &remoteService)
     socket->connectToService(remoteService);
     qDebug() << "ConnectToService done";
 
-    connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
+    //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
-    connect(socket, &QBluetoothSocket::disconnected, this, &ChatClient::disconnected);
-    connect(socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
-            this, &ChatClient::onSocketErrorOccurred);
+    //connect(socket, &QBluetoothSocket::disconnected, this, &ChatClient::disconnected);
+    //connect(socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
+     //       this, &ChatClient::onSocketErrorOccurred);
 
 }
 //! [startClient]
@@ -90,6 +90,12 @@ void ChatClient::stopClient()
     socket = nullptr;
 }
 //! [stopClient]
+
+
+/*
+
+
+
 
 //! [readSocket]
 void ChatClient::readSocket()
@@ -113,6 +119,7 @@ void ChatClient::sendMessage(const QString &message)
 }
 //! [sendMessage]
 
+
 void ChatClient::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 {
     if (error == QBluetoothSocket::NoSocketError)
@@ -124,6 +131,14 @@ void ChatClient::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 
     emit socketErrorOccurred(errorString);
 }
+
+
+
+
+
+*/
+
+
 
 //! [connected]
 void ChatClient::connected()

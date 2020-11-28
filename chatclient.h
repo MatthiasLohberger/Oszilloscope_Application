@@ -73,18 +73,18 @@ public:
     void stopClient();
 
 public slots:
-    void sendMessage(const QString &message);
+    //void sendMessage(const QString &message);
 
 signals:
-    void messageReceived(const QString &sender, const QString &message);
+    //void messageReceived(const QString &sender, const QString &message);
     void connected(const QString &name);
-    void disconnected();
-    void socketErrorOccurred(const QString &errorString);
+    //void disconnected();
+    //void socketErrorOccurred(const QString &errorString);
 
 private slots:
-    void readSocket();
+    //void readSocket();
     void connected();
-    void onSocketErrorOccurred(QBluetoothSocket::SocketError);
+    //void onSocketErrorOccurred(QBluetoothSocket::SocketError);
 
 private:
     QBluetoothSocket *socket = nullptr;

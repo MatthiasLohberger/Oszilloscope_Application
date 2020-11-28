@@ -37,7 +37,7 @@
      <widget class="QComboBox" name="BtDeviceSelect"/>
     </item>
     <item>
-     <widget class="QPushButton" name="resetButton">
+     <widget class="QPushButton" name="SearchButton">
       <property name="text">
        <string>Search</string>
       </property>

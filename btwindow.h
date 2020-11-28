@@ -22,6 +22,8 @@ public:
 
     void connected();
 
+    QString HexNumAsString(QString StringNum);
+
 
 
 private:
@@ -36,25 +38,31 @@ public slots:
 
     void CloseButtonPressed();
 
-    void BtDeviceSelected();        //für comboBox
+    void NewValuesToSet();          // muss alle Werte auslesen
 
-    void NewValue_EntranceArea();
-    void NewValue_N_High();
-    void NewValue_N_Low();
-    void NewValue_TriggerHigh();
-    void NewValue_TriggerLow();
-    void NewValue_TriggerEdge();
-    void NewValue_TriggerMode();
+
+
+
 
     //fertig kodiert:
+
     void newDataForPlainTextWidget(ConfigDataString &);
 
     void showBluetoothWindow();
 
 
+
+
+private slots:
+    void startDeviceSearch();    // Scanning for Bluetooth Devices
+    void ConnectToDevice();      // Mit Gerät verbinden
+
+
+    // fertig kodiert:
+
+
 signals:
     void newValues();
-
     void DefaultButtonPressed();
 
 

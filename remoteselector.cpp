@@ -49,24 +49,24 @@
 ****************************************************************************/
 
 #include "remoteselector.h"
-#include "ui_remoteselector.h"
+//#include "ui_remoteselector.h"
 
 #include <QtBluetooth/qbluetoothlocaldevice.h>
 #include <QtBluetooth/qbluetoothservicediscoveryagent.h>
 
 QT_USE_NAMESPACE
 
-RemoteSelector::RemoteSelector(const QBluetoothAddress &localAdapter, QWidget *parent)
+RemoteSelector::RemoteSelector(const QBluetoothAddress &localAdapter, QWidget *parent)                  //Ui und QDiaglog weg
     :   QDialog(parent), ui(new Ui::RemoteSelector)
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
 
     m_discoveryAgent = new QBluetoothServiceDiscoveryAgent(localAdapter);
 
     connect(m_discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
             this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
-    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
-    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
+    //connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+    //connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
 }
 
 RemoteSelector::~RemoteSelector()
@@ -77,11 +77,11 @@ RemoteSelector::~RemoteSelector()
 
 void RemoteSelector::startDiscovery(const QBluetoothUuid &uuid)
 {
-    ui->status->setText(tr("Scanning..."));
+    //ui->status->setText(tr("Scanning..."));
     if (m_discoveryAgent->isActive())
         m_discoveryAgent->stop();
 
-    ui->remoteDevices->clear();
+    //ui->remoteDevices->clear();
 
     m_discoveryAgent->setUuidFilter(uuid);
     m_discoveryAgent->start(QBluetoothServiceDiscoveryAgent::FullDiscovery);
@@ -95,10 +95,17 @@ void RemoteSelector::stopDiscovery()
     }
 }
 
+
+
+/*
 QBluetoothServiceInfo RemoteSelector::service() const
 {
     return m_service;
 }
+*/
+
+
+
 
 void RemoteSelector::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
 {
@@ -131,14 +138,15 @@ void RemoteSelector::serviceDiscovered(const QBluetoothServiceInfo &serviceInfo)
                                                              serviceInfo.serviceName()));
 
     m_discoveredServices.insert(item, serviceInfo);
-    ui->remoteDevices->addItem(item);
+    //ui->remoteDevices->addItem(item);
 }
 
 void RemoteSelector::discoveryFinished()
 {
-    ui->status->setText(tr("Select the chat service to connect to."));
+    //ui->status->setText(tr("Select the chat service to connect to."));
 }
 
+/*
 void RemoteSelector::on_remoteDevices_itemActivated(QListWidgetItem *item)
 {
     qDebug() << "got click" << item->text();
@@ -153,3 +161,4 @@ void RemoteSelector::on_cancelButton_clicked()
 {
     reject();
 }
+*/
