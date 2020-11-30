@@ -13,14 +13,26 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 18pt &quot;Calibri&quot;;
+background-color: rgb(215, 215, 215);
+color: rgb(0, 0, 0);
+
+ 
+</string>
+  </property>
   <widget class="QGroupBox" name="BluetoothDeviceBox">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>70</y>
+     <y>120</y>
      <width>2101</width>
-     <height>181</height>
+     <height>201</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(0, 0, 0);
+background-color: rgb(195, 195, 195);</string>
    </property>
    <layout class="QHBoxLayout" name="TitleBox">
     <property name="sizeConstraint">
@@ -56,7 +68,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>670</y>
+     <y>850</y>
      <width>571</width>
      <height>151</height>
     </rect>
@@ -85,9 +97,15 @@
     <rect>
      <x>23</x>
      <y>10</y>
-     <width>341</width>
+     <width>491</width>
      <height>55</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 8pt &quot;MS Shell Dlg 2&quot;;
+font: 18pt &quot;Calibri&quot;;
+text-decoration: underline;
+text-decoration: underline;</string>
    </property>
    <property name="text">
     <string>EAS Oszilloscope</string>
@@ -97,10 +115,15 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>290</y>
+     <y>450</y>
      <width>2171</width>
      <height>341</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(0, 0, 0);
+color: rgb(0, 0, 0);
+background-color: rgb(195, 195, 195);</string>
    </property>
    <property name="title">
     <string>Data Telegram:</string>
@@ -108,6 +131,11 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0" colspan="2">
      <widget class="QGroupBox" name="DataTelegramBox">
+      <property name="styleSheet">
+       <string notr="true"> 
+ 
+background-color: rgb(185, 185, 185);</string>
+      </property>
       <layout class="QHBoxLayout" name="TitleBox_2">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
@@ -134,7 +162,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_EntranceArea"/>
+        <widget class="QLineEdit" name="lineEdit_EntranceArea">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
@@ -158,7 +190,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_N_Low"/>
+        <widget class="QLineEdit" name="lineEdit_N_Low">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_12">
@@ -168,7 +204,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_N_High"/>
+        <widget class="QLineEdit" name="lineEdit_N_High">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
@@ -192,7 +232,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerLow"/>
+        <widget class="QLineEdit" name="lineEdit_TriggerLow">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
@@ -202,7 +246,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerHigh"/>
+        <widget class="QLineEdit" name="lineEdit_TriggerHigh">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_8">
@@ -212,7 +260,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerMode"/>
+        <widget class="QLineEdit" name="lineEdit_TriggerMode">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_14">
@@ -222,7 +274,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerEdge"/>
+        <widget class="QLineEdit" name="lineEdit_TriggerEdge">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(195, 195, 195);</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

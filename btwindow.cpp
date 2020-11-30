@@ -9,8 +9,6 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
-
     // [Construct UI]
     connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startDeviceSearch()));
     //connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToDevice()));
