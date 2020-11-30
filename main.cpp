@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     qDebug() << "Hello World";
     qDebug() << "(Test)";
 
-
+    /*
     // Bluetooth Test
     bluetooth_connection Bt;
     bool BtStatus;
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     QString string;
     string.fromUtf8(Byte);
     qDebug() << "TestTestTest: " << string;
-
+*/
     bool ok = app.exec();
 
 

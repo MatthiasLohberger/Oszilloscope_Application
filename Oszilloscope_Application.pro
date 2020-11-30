@@ -12,25 +12,23 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    bluetooth_connection.cpp \
+    BluetoothDeviceFinder.cpp \
+    BluetoothSocket.cpp \
     btwindow.cpp \
-    chatclient.cpp \
     commandline_eas_board.cpp \
     main.cpp \
     mainwindow.cpp \
     oscilloscope.cpp \
-    qcustomplot.cpp \
-    remoteselector.cpp
+    qcustomplot.cpp
 
 HEADERS += \
-    bluetooth_connection.h \
+    BluetoothDeviceFinder.h \
+    BluetoothSocket.h \
     btwindow.h \
-    chatclient.h \
     commandline_eas_board.h \
     mainwindow.h \
     oscilloscope.h \
-    qcustomplot.h \
-    remoteselector.h
+    qcustomplot.h
 
 FORMS += \
     btwindow.ui \

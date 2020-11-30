@@ -2,8 +2,17 @@
 #define BTWINDOW_H
 
 #include <QWidget>
+#include <QList>
+
+#include<QBluetoothDeviceInfo>
+#include<QBluetoothAddress>
+#include<QBluetoothLocalDevice>
+//#include<QBluetoothHostInfo>
 
 #include "commandline_eas_board.h"
+#include"BluetoothSocket.h"
+#include"BluetoothDeviceFinder.h"
+
 
 
 
@@ -31,6 +40,16 @@ private:
 
     ConfigDataString CommandLineStringRef;
 
+    struct BtDeviceInfo{
+        QString Name;
+        QBluetoothDeviceInfo BtDevice;
+    };
+
+    QList<BtDeviceInfo> DiscoveredDevicesList;
+    QBluetoothLocalDevice localDevice;
+    QString localDeviceName;
+    BluetoothDeviceFinder bluetoothDeviceFinder;
+
 
 public slots:
     void ConnectButtonPressed();
@@ -38,7 +57,7 @@ public slots:
 
     void CloseButtonPressed();
 
-    void NewValuesToSet();          // muss alle Werte auslesen
+    void NewValuesToSet(QString text);          // muss alle Werte auslesen
 
 
 
@@ -55,8 +74,8 @@ public slots:
 
 private slots:
     void startDeviceSearch();    // Scanning for Bluetooth Devices
-    void ConnectToDevice();      // Mit Gerät verbinden
-
+    //void ConnectToDevice();      // Mit Gerät verbinden
+    void ShowNewBtDevice(const QBluetoothDeviceInfo &);
 
     // fertig kodiert:
 

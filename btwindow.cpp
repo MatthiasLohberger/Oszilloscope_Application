@@ -1,6 +1,6 @@
 #include "btwindow.h"
 #include "ui_btwindow.h"
-
+#include<QDebug>
 
 //[Konstruktor]
 BtWindow::BtWindow(QWidget *parent) :
@@ -11,9 +11,9 @@ BtWindow::BtWindow(QWidget *parent) :
 
 
 
-
-    connect(ui->SearchButton,  SIGNAL(clicked),   this, SLOT(startDeviceSearch()));
-    connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToDevice()));
+    // [Construct UI]
+    connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startDeviceSearch()));
+    //connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToDevice()));
     //connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
@@ -21,21 +21,39 @@ BtWindow::BtWindow(QWidget *parent) :
 
 
 
-    connect(ui->lineEdit_EntranceArea, SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_N_High,       SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_N_Low,        SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_TriggerHigh,  SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_TriggerLow,   SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_TriggerEdge,  SIGNAL(textChanged), this, SLOT(NewValuesToSet));
-    connect(ui->lineEdit_TriggerMode,  SIGNAL(textChanged), this, SLOT(NewValuesToSet));
+    connect(ui->lineEdit_EntranceArea, SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_N_High,       SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_N_Low,        SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_TriggerHigh,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_TriggerLow,   SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_TriggerEdge,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
+    connect(ui->lineEdit_TriggerMode,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
 
     // [Construct UI] End
 
 
+    //For Bluetooth Connection
 
-    // local oder default adapter für Bt auswählen
+    // Check if Bluetooth is available on this device
+    if (localDevice.isValid()) {
 
-    // Get local device name
+        // Turn Bluetooth on
+        localDevice.powerOn();
+
+        // Read local device name
+        localDeviceName = localDevice.name();
+
+        // Make it visible to others
+        localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+
+        // Get connected devices
+        QList<QBluetoothAddress> remotes;
+        remotes = localDevice.connectedDevices();
+    }
+
+
+
+
 
 
 
@@ -72,10 +90,10 @@ void BtWindow::CloseButtonPressed(){
 }
 
 
-void BtWindow::BtDeviceSelected(){
-    //Name in Var speichern, UUID etc. herausfinden und auf connect pressed warten
-    //Namen anzeigen
-}
+
+
+
+
 //[Slot Funktionen] Buttons Pressed/Selected   End
 
 
@@ -84,11 +102,23 @@ void BtWindow::BtDeviceSelected(){
 
 
 
+
+
+
+
 //[Slot Funktionen] NewValues for ConfigFrame
 
-void BtWindow::NewValuesToSet(){
+void BtWindow::NewValuesToSet(QString text){
+    QString HilfUseless = text;
 
+    // Alle QTestEdit Felder händtisch auslesen
 }
+
+
+
+
+
+
 
 //[Slot Funktionen] NewValues for ConfigFrame  End---------------------------------------------------------
 
@@ -142,6 +172,52 @@ QString BtWindow::HexNumAsString(QString StringNum){
 
 void BtWindow::showBluetoothWindow(){
     this->showFullScreen();
+}
+
+
+
+void BtWindow::ShowNewBtDevice(const QBluetoothDeviceInfo &NewBtDevice){
+    int size;
+    BtDeviceInfo NewDevice;
+    NewDevice.BtDevice = NewBtDevice;
+
+   qDebug() << "Found new device:" << NewDevice.BtDevice.name() << '(' << NewDevice.BtDevice.address().toString() << ')';
+
+
+    if (NewDevice.BtDevice.name().isEmpty()){                           // Überprüfung, ob Name vorhanden ist
+        QBluetoothAddress address = NewDevice.BtDevice.address();
+        NewDevice.Name = address.toString();
+    }
+    else{
+        NewDevice.Name = NewDevice.BtDevice.name();
+    }
+
+
+    DiscoveredDevicesList.append(NewDevice);
+    size = DiscoveredDevicesList.size();
+
+    ui->BtDeviceSelect->addItem(DiscoveredDevicesList.at(size-1).Name);
+}
+
+
+
+
+
+void BtWindow::startDeviceSearch(){
+    ui->SearchButton->setEnabled(false);
+
+    qDebug() << "Start Discovery";
+    //const QBluetoothAddress adapter = localDevice.address();
+    //BluetoothDeviceFinder HBluetoothDeviceFinder(adapter);
+    //bluetoothDeviceFinder = HBluetoothDeviceFinder;
+
+    connect(&bluetoothDeviceFinder, SIGNAL(ShowDeviceDiscovered(const QBluetoothDeviceInfo)),
+            this, SLOT(ShowNewBtDevice(const QBluetoothDeviceInfo)));
+
+    bluetoothDeviceFinder.startDiscovery();
+
+
+
 }
 
 
