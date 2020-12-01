@@ -8,8 +8,8 @@
 //#include <QtBluetooth/qbluetoothuuid.h>
 
 #include<QBluetoothAddress>
-#include<QBluetoothDeviceInfo>
-#include<QBluetoothDeviceDiscoveryAgent>
+#include<QBluetoothServiceInfo>
+#include<QBluetoothServiceDiscoveryAgent>
 #include<QBluetoothUuid>
 
 QT_FORWARD_DECLARE_CLASS(QBluetoothServiceDiscoveryAgent)
@@ -20,32 +20,32 @@ QT_USE_NAMESPACE
 
 QT_END_NAMESPACE
 
-class BluetoothDeviceFinder : public QObject
+class BluetoothServiceFinder : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit BluetoothDeviceFinder(QObject *parent = nullptr);
-    ~BluetoothDeviceFinder();
+    explicit BluetoothServiceFinder(QObject *parent = nullptr);
+    ~BluetoothServiceFinder();
 
     void startDiscovery();
     void stopDiscovery();
-    QBluetoothDeviceInfo service() const;
+    //QBluetoothServiceInfo service() const;
 
 private:
 
-    QBluetoothDeviceDiscoveryAgent *discoveryAgent;
+    QBluetoothServiceDiscoveryAgent *discoveryAgent;
     //QBluetoothDeviceInfo m_service;
     //QMap<QListWidgetItem *, QBluetoothServiceInfo> m_discoveredServices;
 
 private slots:
-    void deviceDiscovered(const QBluetoothDeviceInfo &deviceInfo);
+    void ServiceDiscovered(const QBluetoothServiceInfo &serviceInfo);
     void discoveryFinished();
     //void on_remoteDevices_itemActivated(QListWidgetItem *item);
     //void on_cancelButton_clicked();
 
 signals:
-    void ShowDeviceDiscovered(const QBluetoothDeviceInfo &deviceInfo);
+    void ShowServiceDiscovered(const QBluetoothServiceInfo &serviceInfo);
 };
 
 #endif // REMOTESELECTOR_H

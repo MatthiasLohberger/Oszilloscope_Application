@@ -10,8 +10,8 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // [Construct UI]
-    connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startDeviceSearch()));
-    //connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToDevice()));
+    connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startServiceSearch()));
+    connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToService()));
     //connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
@@ -48,15 +48,9 @@ BtWindow::BtWindow(QWidget *parent) :
         QList<QBluetoothAddress> remotes;
         remotes = localDevice.connectedDevices();
     }
-
-
-
-
-
-
-
-
 }
+
+
 
 
 
@@ -68,14 +62,23 @@ BtWindow::~BtWindow()
 
 
 
+
+
+
+
+
+
+
+
 // Andere Methoden ---------------------------------------------------------
 
 //[Slot Funktionen] Buttons Pressed/Selected
 
+/*
 void BtWindow::ConnectButtonPressed(){
     //Connect to Bt Device
 }
-
+*/
 
 void BtWindow::SendButtonPressed(){
     //Send to Bt Device
@@ -174,24 +177,31 @@ void BtWindow::showBluetoothWindow(){
 
 
 
-void BtWindow::ShowNewBtDevice(const QBluetoothDeviceInfo &NewBtDevice){
+
+
+//------------------------------------------------------------------------------------------------
+// [Functions for Searching and Connecting to Bluetooth Devices]
+
+
+
+void BtWindow::ShowNewBtService(const QBluetoothServiceInfo &NewBtService){
     int size;
-    BtDeviceInfo NewDevice;
-    NewDevice.BtDevice = NewBtDevice;
+    BtServiceInfo NewService;
+    NewService.BtService = NewBtService;
 
-   qDebug() << "Found new device:" << NewDevice.BtDevice.name() << '(' << NewDevice.BtDevice.address().toString() << ')';
+   qDebug() << "Found new device:" << NewService.BtService.device().name() << '('
+            << NewService.BtService.device().address().toString() << ')';
 
 
-    if (NewDevice.BtDevice.name().isEmpty()){                           // Überprüfung, ob Name vorhanden ist
-        QBluetoothAddress address = NewDevice.BtDevice.address();
-        NewDevice.Name = address.toString();
+    if (NewService.BtService.device().name().isEmpty()){                           // Überprüfung, ob Name vorhanden ist
+        QBluetoothAddress address = NewService.BtService.device().address();
+        NewService.Name = address.toString();
+    } else{
+        NewService.Name = NewService.BtService.device().name();
     }
-    else{
-        NewDevice.Name = NewDevice.BtDevice.name();
-    }
 
 
-    DiscoveredDevicesList.append(NewDevice);
+    DiscoveredDevicesList.append(NewService);
     size = DiscoveredDevicesList.size();
 
     ui->BtDeviceSelect->addItem(DiscoveredDevicesList.at(size-1).Name);
@@ -201,7 +211,7 @@ void BtWindow::ShowNewBtDevice(const QBluetoothDeviceInfo &NewBtDevice){
 
 
 
-void BtWindow::startDeviceSearch(){
+void BtWindow::startServiceSearch(){
     ui->SearchButton->setEnabled(false);
 
     qDebug() << "Start Discovery";
@@ -209,18 +219,60 @@ void BtWindow::startDeviceSearch(){
     //BluetoothDeviceFinder HBluetoothDeviceFinder(adapter);
     //bluetoothDeviceFinder = HBluetoothDeviceFinder;
 
-    connect(&bluetoothDeviceFinder, SIGNAL(ShowDeviceDiscovered(const QBluetoothDeviceInfo)),
-            this, SLOT(ShowNewBtDevice(const QBluetoothDeviceInfo)));
+    connect(&bluetoothServiceFinder, SIGNAL(ShowServiceDiscovered(const QBluetoothServiceInfo)),
+            this, SLOT(ShowNewBtService(const QBluetoothServiceInfo)));
 
-    bluetoothDeviceFinder.startDiscovery();
-
-
+    bluetoothServiceFinder.startDiscovery();
 
 }
 
 
 
+void BtWindow::ConnectToService(){
+    int i= 0;
+    QString SeletedServiceName = ui->BtDeviceSelect->currentText();
 
+    ui->ConnectButton->setEnabled(false);
+    ui->BtDeviceSelect->hidePopup();
+    bluetoothServiceFinder.stopDiscovery();
+
+
+    if(SeletedServiceName.isEmpty()){
+        ui->SearchButton->setEnabled(true);
+        ui->ConnectButton->setEnabled(true);
+        qDebug() << "No device found/selected!";
+        return;
+    }
+
+    while(DiscoveredDevicesList[i].Name != SeletedServiceName){
+        i++;
+        if(i == DiscoveredDevicesList.size()){
+            qDebug() << "No such device in the discovery List!";
+            return;
+        }
+    }
+    qDebug() << "Connect cklicked!";
+    qDebug() << "Trying to connect to selected Device: " << DiscoveredDevicesList[i].Name;
+
+    bluetoothSocket.startClient(DiscoveredDevicesList[i].BtService);
+
+
+
+
+    ui->ConnectButton->setText("Connected");
+}
+
+
+
+
+
+//------------------------------------------------------------------------------------------------
+// [Functions for Bluetooth Communication]
+
+
+void sendConfigdata(){
+
+}
 
 
 

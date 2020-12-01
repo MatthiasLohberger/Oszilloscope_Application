@@ -4,14 +4,14 @@
 #include <QWidget>
 #include <QList>
 
-#include<QBluetoothDeviceInfo>
+//#include<QBluetoothDeviceInfo>
 #include<QBluetoothAddress>
 #include<QBluetoothLocalDevice>
 //#include<QBluetoothHostInfo>
 
 #include "commandline_eas_board.h"
 #include"BluetoothSocket.h"
-#include"BluetoothDeviceFinder.h"
+#include"BluetoothServiceFinder.h"
 
 
 
@@ -40,19 +40,21 @@ private:
 
     ConfigDataString CommandLineStringRef;
 
-    struct BtDeviceInfo{
+    struct BtServiceInfo{
         QString Name;
-        QBluetoothDeviceInfo BtDevice;
+        QBluetoothServiceInfo BtService;
     };
 
-    QList<BtDeviceInfo> DiscoveredDevicesList;
+    QList<BtServiceInfo> DiscoveredDevicesList;
     QBluetoothLocalDevice localDevice;
     QString localDeviceName;
-    BluetoothDeviceFinder bluetoothDeviceFinder;
+    BluetoothServiceFinder bluetoothServiceFinder;
+
+    BluetoothSocket bluetoothSocket;
 
 
 public slots:
-    void ConnectButtonPressed();
+    //void ConnectButtonPressed();
     void SendButtonPressed();
 
     void CloseButtonPressed();
@@ -73,11 +75,15 @@ public slots:
 
 
 private slots:
-    void startDeviceSearch();    // Scanning for Bluetooth Devices
-    //void ConnectToDevice();      // Mit Gerät verbinden
-    void ShowNewBtDevice(const QBluetoothDeviceInfo &);
+    void sendConfigData();
 
     // fertig kodiert:
+
+    void startServiceSearch();    // Scanning for Bluetooth Devices
+    void ConnectToService();      // Mit Gerät verbinden
+    void ShowNewBtService(const QBluetoothServiceInfo &);
+
+
 
 
 signals:

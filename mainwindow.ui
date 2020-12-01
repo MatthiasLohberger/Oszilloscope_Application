@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(139, 139, 139);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QCustomPlot" name="QCustomPlotTestW" native="true">
     <property name="geometry">
@@ -22,6 +25,9 @@
       <width>1641</width>
       <height>901</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0, 0, 127);</string>
     </property>
    </widget>
    <widget class="QDial" name="dial">

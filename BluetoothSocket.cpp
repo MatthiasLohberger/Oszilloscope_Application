@@ -1,4 +1,4 @@
-#include "BluetoothSocket.h"
+ #include "BluetoothSocket.h"
 
 #include <QtCore/qmetaobject.h>
 
@@ -7,10 +7,19 @@ BluetoothSocket::BluetoothSocket(QObject *parent)
 {
 }
 
+
+
+
+
+
 BluetoothSocket::~BluetoothSocket()
 {
     stopClient();
 }
+
+
+
+
 
 //! [startClient]
 void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
@@ -23,6 +32,7 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "Create socket";
     socket->connectToService(remoteService);
     qDebug() << "ConnectToService done";
+    qDebug() << "Service: " << remoteService.serviceName();
 
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
@@ -33,6 +43,9 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
 }
 //! [startClient]
 
+
+
+
 //! [stopClient]
 void BluetoothSocket::stopClient()
 {
@@ -42,10 +55,12 @@ void BluetoothSocket::stopClient()
 //! [stopClient]
 
 
+
+
+
+
+
 /*
-
-
-
 
 //! [readSocket]
 void BluetoothSocket::readSocket()
@@ -61,6 +76,8 @@ void BluetoothSocket::readSocket()
 }
 //! [readSocket]
 
+
+
 //! [sendMessage]
 void BluetoothSocket::sendMessage(const QString &message)
 {
@@ -68,6 +85,8 @@ void BluetoothSocket::sendMessage(const QString &message)
     socket->write(text);
 }
 //! [sendMessage]
+
+
 
 
 void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
@@ -82,11 +101,10 @@ void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
     emit socketErrorOccurred(errorString);
 }
 
-
-
-
-
 */
+
+
+
 
 
 

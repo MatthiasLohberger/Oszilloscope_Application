@@ -1,4 +1,4 @@
-#include "BluetoothDeviceFinder.h"
+#include "BluetoothServiceFinder.h"
 
 #include <QtBluetooth/qbluetoothlocaldevice.h>
 #include <QtBluetooth/qbluetoothservicediscoveryagent.h>
@@ -9,13 +9,13 @@ QT_USE_NAMESPACE
 
 
 
-BluetoothDeviceFinder::BluetoothDeviceFinder(QObject *parent)                  //Ui und QDiaglog weg
+BluetoothServiceFinder::BluetoothServiceFinder(QObject *parent)                  //Ui und QDiaglog weg
     :   QObject(parent)
 {   
-    discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+    discoveryAgent = new QBluetoothServiceDiscoveryAgent();
 
-    connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-            this, SIGNAL(ShowDeviceDiscovered(const QBluetoothDeviceInfo)));
+    connect(discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)),
+            this, SIGNAL(ShowServiceDiscovered(const QBluetoothServiceInfo)));
     //connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
     //connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(discoveryFinished()));
 }
@@ -27,7 +27,7 @@ BluetoothDeviceFinder::BluetoothDeviceFinder(QObject *parent)                  /
 
 
 
-BluetoothDeviceFinder::~BluetoothDeviceFinder()
+BluetoothServiceFinder::~BluetoothServiceFinder()
 {
 
     delete discoveryAgent;
@@ -40,7 +40,7 @@ BluetoothDeviceFinder::~BluetoothDeviceFinder()
 
 
 
-void BluetoothDeviceFinder::startDiscovery()
+void BluetoothServiceFinder::startDiscovery()
 {
     //ui->status->setText(tr("Scanning..."));
 
@@ -62,7 +62,7 @@ void BluetoothDeviceFinder::startDiscovery()
 
 
 
-void BluetoothDeviceFinder::stopDiscovery()
+void BluetoothServiceFinder::stopDiscovery()
 {
     if (discoveryAgent){
         discoveryAgent->stop();
@@ -85,7 +85,7 @@ QBluetoothServiceInfo RemoteSelector::service() const
 
 
 
-void BluetoothDeviceFinder::deviceDiscovered(const QBluetoothDeviceInfo &deviceInfo)
+void BluetoothServiceFinder::ServiceDiscovered(const QBluetoothServiceInfo &serviceInfo)
 {
 #if 0
     qDebug() << "Discovered service on"
@@ -120,7 +120,7 @@ void BluetoothDeviceFinder::deviceDiscovered(const QBluetoothDeviceInfo &deviceI
     //ui->remoteDevices->addItem(item);
     */
 
-    emit ShowDeviceDiscovered(deviceInfo);
+    emit ShowServiceDiscovered(serviceInfo);
 }
 
 
@@ -132,7 +132,7 @@ void BluetoothDeviceFinder::deviceDiscovered(const QBluetoothDeviceInfo &deviceI
 
 
 
-void BluetoothDeviceFinder::discoveryFinished()
+void BluetoothServiceFinder::discoveryFinished()
 {
     //ui->status->setText(tr("Select the chat service to connect to."));
 }
@@ -143,7 +143,7 @@ void BluetoothDeviceFinder::discoveryFinished()
 
 
 /*
-void BluetoothDeviceFinder::on_remoteDevices_itemActivated(QListWidgetItem *item)
+void BluetoothServiceFinder::on_remoteDevices_itemActivated(QListWidgetItem *item)
 {
     qDebug() << "got click" << item->text();
     m_service = m_discoveredServices.value(item);
@@ -160,7 +160,7 @@ void BluetoothDeviceFinder::on_remoteDevices_itemActivated(QListWidgetItem *item
 
 
 
-void BluetoothDeviceFinder::on_cancelButton_clicked()
+void BluetoothServiceFinder::on_cancelButton_clicked()
 {
     reject();
 }
