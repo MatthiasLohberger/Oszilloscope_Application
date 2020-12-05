@@ -12,7 +12,7 @@ BtWindow::BtWindow(QWidget *parent) :
     // [Construct UI]
     connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startServiceSearch()));
     connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToService()));
-    //connect(ui->SendButton, &QPushButton::clicked, this, &BtWindow::SendButtonPressed);
+    connect(ui->SendButton, SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
 
@@ -79,10 +79,6 @@ void BtWindow::ConnectButtonPressed(){
     //Connect to Bt Device
 }
 */
-
-void BtWindow::SendButtonPressed(){
-    //Send to Bt Device
-}
 
 
 void BtWindow::CloseButtonPressed(){
@@ -257,9 +253,10 @@ void BtWindow::ConnectToService(){
     bluetoothSocket.startClient(DiscoveredDevicesList[i].BtService);
 
 
-
-
     ui->ConnectButton->setText("Connected");
+
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
+            this, SIGNAL(newDataToPlotReceived(const QByteArray &)));
 }
 
 
@@ -270,8 +267,8 @@ void BtWindow::ConnectToService(){
 // [Functions for Bluetooth Communication]
 
 
-void sendConfigdata(){
-
+void BtWindow::SocketWrite(const QByteArray &message){
+    bluetoothSocket.sendMessage(message);
 }
 
 

@@ -33,6 +33,8 @@ public:
 
     QString HexNumAsString(QString StringNum);
 
+    void SocketWrite(const QByteArray &message);
+
 
 
 private:
@@ -55,7 +57,7 @@ private:
 
 public slots:
     //void ConnectButtonPressed();
-    void SendButtonPressed();
+
 
     void CloseButtonPressed();
 
@@ -75,7 +77,7 @@ public slots:
 
 
 private slots:
-    void sendConfigData();
+    //void sendConfigData();
 
     // fertig kodiert:
 
@@ -89,7 +91,9 @@ private slots:
 signals:
     void newValues();
     void DefaultButtonPressed();
+    void SendButtonPressed();
 
+    void newDataToPlotReceived(const QByteArray &);
 
 
 };

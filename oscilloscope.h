@@ -12,8 +12,10 @@ class Oscilloscope : public QObject
     Q_OBJECT
 public:
     explicit Oscilloscope(QObject *parent = nullptr);
-
+    ~Oscilloscope();
     void showOscilloscopeMainWindow();
+
+    bool checkHeader(const QByteArray &);
 
 private:
     BtWindow BluetoothWindow;
@@ -21,9 +23,15 @@ private:
 
     CommandLine_EAS_Board OsziConfigData;
 
+    QByteArray ReceiveBuffer;
+
 
 public slots:
 
+void SendMessage();
+void ReceiveData(const QByteArray &);
+
+//void StartOscilloscope();
 
 signals:
 

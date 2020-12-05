@@ -29,6 +29,7 @@ public slots:
 
 signals:
     void BtSettingsButtonPressed();
+    void SendButtonPressed();
 
 };
 #endif // MAINWINDOW_H

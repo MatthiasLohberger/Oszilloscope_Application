@@ -1,10 +1,13 @@
  #include "BluetoothSocket.h"
 
+#include <QByteArray>
 #include <QtCore/qmetaobject.h>
 
 BluetoothSocket::BluetoothSocket(QObject *parent)
     :   QObject(parent)
 {
+
+
 }
 
 
@@ -34,6 +37,9 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "ConnectToService done";
     qDebug() << "Service: " << remoteService.serviceName();
 
+    // gehört eig in start Funktion des BluetoothThreads
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
     //connect(socket, &QBluetoothSocket::disconnected, this, &ChatClient::disconnected);
@@ -60,7 +66,7 @@ void BluetoothSocket::stopClient()
 
 
 
-/*
+
 
 //! [readSocket]
 void BluetoothSocket::readSocket()
@@ -68,26 +74,34 @@ void BluetoothSocket::readSocket()
     if (!socket)
         return;
 
-    while (socket->canReadLine()) {
-        QByteArray line = socket->readLine();
-        emit messageReceived(socket->peerName(),
-                             QString::fromUtf8(line.constData(), line.length()));
+    qDebug() << "New Data avialable!";
+
+    while(socket->bytesAvailable() < 4108){
     }
+    qDebug() << "Enough data ready to read!";
+    //while (socket->canReadLine()) {
+        QByteArray received = socket->read(4108);
+        //emit messageReceived(socket->peerName(),
+        //                     QString::fromUtf8(line.constData(), line.length()));
+    //}
+    qDebug() << "Data read!";
+    emit newDataReceived(received);
 }
 //! [readSocket]
 
 
 
 //! [sendMessage]
-void BluetoothSocket::sendMessage(const QString &message)
+void BluetoothSocket::sendMessage(const QByteArray &message)
 {
-    QByteArray text = message.toUtf8() + '\n';
-    socket->write(text);
+
+    socket->write(message);
+    qDebug() << "Message sent to EAS Borad!";
 }
 //! [sendMessage]
 
 
-
+/*
 
 void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 {

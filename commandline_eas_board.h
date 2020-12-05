@@ -9,18 +9,22 @@
 
 struct ConfigData {
 
-    const QChar Vertical = 'V';              //QString besser?
+    char Vertical = 'V';              //QString besser?
     int EntranceArea;
 
-    const QChar Horizontal = 'H';
+    char Horizontal = 'H';
     unsigned int N;                         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
+    unsigned int N_Low;
+    unsigned int N_High;
 
-
-    const QChar Trigger = 'T';
+    char Trigger = 'T';
     unsigned int TriggerThreshold ;         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
+    unsigned int TriggerThreshold_Low;
+    unsigned int TriggerThreshold_High;
 
-    QChar TriggerMode;
-    QChar TriggerEdge;
+
+    char TriggerMode;
+    char TriggerEdge;
 };
 
 struct ConfigDataString {
@@ -55,7 +59,7 @@ class CommandLine_EAS_Board: public QObject
 private:
 
     ConfigData CommandLine;                     // CommandLine in int und char
-    QByteArray CommandLine_Byte;                // CommandLine in QByte zum versenden über Bt
+    //QByteArray CommandLine_Byte;                // CommandLine in QByte zum versenden über Bt
     ConfigDataString CommandLine_String;        // CommandLine als Strings zur Anzeige im Bt Window
 
 
@@ -74,8 +78,8 @@ public:
     void setEntranceArea(int EntranceArea);                 // Eingangsbereiche kodiert mit Zahlen 1 - 4
     void setN(unsigned int N);                                       // Aufteilen in High und Low Teil
     void setTriggerThreshold(unsigned int TriggerThreshold);         // Aufteilen in High und Low Teil, unsigned int
-    void setTriggerMode(QChar Mode);                         // A, N oder S
-    void setTriggerEdge(QChar Edge);                         // p oder n
+    void setTriggerMode(char Mode);                         // A, N oder S
+    void setTriggerEdge(char Edge);                         // p oder n
 
     //get Fnkt
     ConfigData getData();
@@ -91,5 +95,15 @@ signals:
 
 };
 
+
+
+
+struct UIntHeader{
+    QByteArray element3 = "";
+    QByteArray element5 = "";
+    QByteArray element6 = "";
+    QByteArray element8 = "";
+    QByteArray element9 = "";
+};
 #endif // COMMANDLINE_EAS_BOARD_H
 

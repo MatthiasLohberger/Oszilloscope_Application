@@ -127,6 +127,16 @@ TwoBytes CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
     hByte.ByteLow = hArray[0].toInt(nullptr, 2);
     hByte.ByteHigh = hArray[1].toInt(nullptr, 2);
 
+    switch(x){
+        case 1:
+            CommandLine.N_Low = hByte.ByteLow;
+            CommandLine.N_High = hByte.ByteHigh;
+            break;
+        case 2:
+            CommandLine.TriggerThreshold_Low = hByte.ByteLow;
+            CommandLine.TriggerThreshold_High = hByte.ByteHigh;
+            break;
+    }
             /*
             hString2.append(ByteH);
             hString2.append(ByteL);
@@ -207,12 +217,12 @@ void CommandLine_EAS_Board::setTriggerThreshold(unsigned int TriggerThreshold){
 }
 
 
-void CommandLine_EAS_Board::setTriggerMode(QChar Mode){
+void CommandLine_EAS_Board::setTriggerMode(char Mode){
     CommandLine.TriggerMode = Mode;
 }
 
 
-void CommandLine_EAS_Board::setTriggerEdge(QChar Edge){
+void CommandLine_EAS_Board::setTriggerEdge(char Edge){
     CommandLine.TriggerEdge = Edge;
 }
 // ---[Set Functions] End---
