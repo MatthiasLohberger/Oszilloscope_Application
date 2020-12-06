@@ -9,9 +9,11 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->SendButton->setEnabled(false);
+
     // [Construct UI]
     connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startServiceSearch()));
-    connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectToService()));
+    connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectButtonPressed()));
     connect(ui->SendButton, SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
@@ -86,8 +88,14 @@ void BtWindow::CloseButtonPressed(){
     this->hide();
 }
 
+void BtWindow::setTextConnectButton(){
+    ui->ConnectButton->setText("Connected");
+}
 
 
+void BtWindow::Enable_SendButton(){
+     ui->SendButton->setEnabled(true);
+}
 
 
 
@@ -123,7 +131,6 @@ void BtWindow::NewValuesToSet(QString text){
 void BtWindow::newDataForPlainTextWidget(ConfigDataString & CommandLineStringRef){
     QString string;
 
-
     string = HexNumAsString(CommandLineStringRef.EntranceArea);
     ui->lineEdit_EntranceArea->setText(string);
     string.clear();
@@ -131,21 +138,19 @@ void BtWindow::newDataForPlainTextWidget(ConfigDataString & CommandLineStringRef
     string = HexNumAsString(CommandLineStringRef.N_High);
     ui->lineEdit_N_High->setText(string);
 
-
     string = HexNumAsString(CommandLineStringRef.N_Low);
     ui->lineEdit_N_Low->setText(string);
-     string.clear();
+    string.clear();
 
     string = HexNumAsString(CommandLineStringRef.TriggerThresholdHigh);
     ui->lineEdit_TriggerHigh->setText(string);
-     string.clear();
+    string.clear();
 
     string = HexNumAsString(CommandLineStringRef.TriggerThresholdLow);
     ui->lineEdit_TriggerLow->setText(string);
     string.clear();
 
     ui->lineEdit_TriggerEdge->setText(CommandLineStringRef.TriggerEdge);
-
     ui->lineEdit_TriggerMode->setText(CommandLineStringRef.TriggerMode);
 }
 
@@ -224,7 +229,7 @@ void BtWindow::startServiceSearch(){
 
 
 
-void BtWindow::ConnectToService(){
+void BtWindow::ConnectButtonPressed(){
     int i= 0;
     QString SeletedServiceName = ui->BtDeviceSelect->currentText();
 
@@ -250,26 +255,13 @@ void BtWindow::ConnectToService(){
     qDebug() << "Connect cklicked!";
     qDebug() << "Trying to connect to selected Device: " << DiscoveredDevicesList[i].Name;
 
-    bluetoothSocket.startClient(DiscoveredDevicesList[i].BtService);
+    emit ServiceSelectedForConnection(DiscoveredDevicesList[i].BtService);
 
-
-    ui->ConnectButton->setText("Connected");
-
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
-            this, SIGNAL(newDataToPlotReceived(const QByteArray &)));
 }
 
 
 
 
-
-//------------------------------------------------------------------------------------------------
-// [Functions for Bluetooth Communication]
-
-
-void BtWindow::SocketWrite(const QByteArray &message){
-    bluetoothSocket.sendMessage(message);
-}
 
 
 

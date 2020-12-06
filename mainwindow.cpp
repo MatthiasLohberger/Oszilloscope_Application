@@ -7,11 +7,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->SendButton->setEnabled(false);
+
     //connect(ui->BtSettingsButton, &QToolButton::clicked, this, &MainWindow::showBluetoothWindow);
     connect(ui->BtSettingsButton, SIGNAL(clicked()),
             this, SIGNAL(BtSettingsButtonPressed()));
     connect(ui->SendButton, SIGNAL(clicked()),
-            this, SIGNAL(SendButtonPressed()));
+            this, SIGNAL(SendButton_Pressed()));
 }
 
 
@@ -27,3 +29,6 @@ MainWindow::~MainWindow()
 // ------------------------------------------------------------------------------------
 
 
+void MainWindow::EnableSendButton(){
+    ui->SendButton->setEnabled(true);
+}

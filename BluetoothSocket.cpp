@@ -37,7 +37,6 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "ConnectToService done";
     qDebug() << "Service: " << remoteService.serviceName();
 
-    // gehört eig in start Funktion des BluetoothThreads
     connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
@@ -59,10 +58,6 @@ void BluetoothSocket::stopClient()
     socket = nullptr;
 }
 //! [stopClient]
-
-
-
-
 
 
 
@@ -91,6 +86,9 @@ void BluetoothSocket::readSocket()
 
 
 
+
+
+
 //! [sendMessage]
 void BluetoothSocket::sendMessage(const QByteArray &message)
 {
@@ -99,6 +97,9 @@ void BluetoothSocket::sendMessage(const QByteArray &message)
     qDebug() << "Message sent to EAS Borad!";
 }
 //! [sendMessage]
+
+
+
 
 
 /*
@@ -115,7 +116,7 @@ void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
     emit socketErrorOccurred(errorString);
 }
 
-*/
+
 
 
 
@@ -128,3 +129,7 @@ void BluetoothSocket::connected()
     emit connected(socket->peerName());
 }
 //! [connected]
+*/
+
+
+

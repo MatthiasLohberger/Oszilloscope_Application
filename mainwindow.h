@@ -25,11 +25,11 @@ private:
 
 
 public slots:
-
+    void EnableSendButton();
 
 signals:
     void BtSettingsButtonPressed();
-    void SendButtonPressed();
+    void SendButton_Pressed();
 
 };
 #endif // MAINWINDOW_H

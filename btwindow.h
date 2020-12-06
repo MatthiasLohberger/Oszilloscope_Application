@@ -10,15 +10,14 @@
 //#include<QBluetoothHostInfo>
 
 #include "commandline_eas_board.h"
-#include"BluetoothSocket.h"
-#include"BluetoothServiceFinder.h"
-
-
-
+ #include"BluetoothServiceFinder.h"
 
 namespace Ui {
 class BtWindow;
 }
+
+
+
 
 class BtWindow : public QWidget
 {
@@ -33,15 +32,14 @@ public:
 
     QString HexNumAsString(QString StringNum);
 
-    void SocketWrite(const QByteArray &message);
-
-
 
 private:
+    // For the presentation of the Bluetooth Window
     Ui::BtWindow *ui;
 
     ConfigDataString CommandLineStringRef;
 
+    //For searching new Bluetooth Services
     struct BtServiceInfo{
         QString Name;
         QBluetoothServiceInfo BtService;
@@ -52,49 +50,36 @@ private:
     QString localDeviceName;
     BluetoothServiceFinder bluetoothServiceFinder;
 
-    BluetoothSocket bluetoothSocket;
+
 
 
 public slots:
-    //void ConnectButtonPressed();
-
-
-    void CloseButtonPressed();
 
     void NewValuesToSet(QString text);          // muss alle Werte auslesen
 
-
-
-
-
     //fertig kodiert:
+    void CloseButtonPressed();
+    void ConnectButtonPressed();
+    void Enable_SendButton();
 
+    void setTextConnectButton();
     void newDataForPlainTextWidget(ConfigDataString &);
-
     void showBluetoothWindow();
 
 
-
-
 private slots:
-    //void sendConfigData();
-
     // fertig kodiert:
-
     void startServiceSearch();    // Scanning for Bluetooth Devices
-    void ConnectToService();      // Mit Gerät verbinden
     void ShowNewBtService(const QBluetoothServiceInfo &);
-
-
 
 
 signals:
     void newValues();
     void DefaultButtonPressed();
     void SendButtonPressed();
+    void ServiceSelectedForConnection(const QBluetoothServiceInfo &);
 
-    void newDataToPlotReceived(const QByteArray &);
-
+    //void newDataToPlotReceived(const QByteArray &);
 
 };
 

@@ -1,5 +1,6 @@
 #include "oscilloscope.h"
 
+
 Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 {
 
@@ -13,23 +14,40 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(&BluetoothWindow, SIGNAL(DefaultButtonPressed()),
             &OsziConfigData, SLOT(DefaultValues()));
 
+    connect(this, SIGNAL(ChangeTextConnectButton()),
+            &BluetoothWindow, SLOT(setTextConnectButton()));
 
-    connect(&OsziMainWindow, SIGNAL(SendButtonPressed()),
+
+    connect(&OsziMainWindow, SIGNAL(SendButton_Pressed()),
             this, SLOT(SendMessage()));
     connect(&BluetoothWindow, SIGNAL(SendButtonPressed()),
             this, SLOT(SendMessage()));
 
+    connect(this, SIGNAL(EnableSendOsziMainWindowBtWindow()),
+            &OsziMainWindow, SLOT(EnableSendButton()));
+    connect(this, SIGNAL(EnableSendButtonBtWindow()),
+            &BluetoothWindow, SLOT(Enable_SendButton()));
 
-    connect(&BluetoothWindow, SIGNAL(newDataToPlotReceived(const QByteArray &)),
-                                     this, SLOT(ReceiveData(const QByteArray &)));
 
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
+            this, SLOT(ReceiveData(const QByteArray &)));
+
+    connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
+            this, SLOT(startOscilloscope(const QBluetoothServiceInfo &)));
 
 
     OsziConfigData.setDefaultValues();
 
 }
 
+
+
+
 Oscilloscope::~Oscilloscope(){
+    //PlotThread.quit();
+    BluetoothThread.quit();
+    //PlotThread.wait();
+    BluetoothThread.wait();
 
 }
 
@@ -40,6 +58,37 @@ Oscilloscope::~Oscilloscope(){
 void Oscilloscope::showOscilloscopeMainWindow(){
     OsziMainWindow.showFullScreen();
 }
+
+
+//----------------------------------------------------------------------------
+
+
+void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
+    qDebug() << "Start Oscilloscope!";
+    //starting the threads
+    bluetoothSocket.moveToThread(&BluetoothThread);
+    BluetoothThread.start();
+    qDebug() << "Treads started!";
+
+    //Connect to service (EAS Board)
+    bluetoothSocket.startClient(service);
+
+    emit ChangeTextConnectButton();
+
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
+            this, SLOT(ReceiveData(const QByteArray &)));
+
+    //Kommandline das erste mal senden
+    SendMessage();
+
+    //Plot starten
+
+    //Send buttons enablen in beiden Windows
+    emit EnableSendButtonBtWindow();
+    emit EnableSendOsziMainWindowBtWindow();
+
+}
+
 
 
 //----------------------------------------------------------------------------
@@ -70,7 +119,8 @@ void Oscilloscope::SendMessage(){
      qDebug() << "CommandLine ready to send!";
      qDebug() << "Data Size: " << message.size() << " Byte";
 
-     BluetoothWindow.SocketWrite(message);      //calls the real "socket->write(message);" Fnkt.
+
+     bluetoothSocket.sendMessage(message);  //calls the real Fnkt.
 
 }
 
@@ -103,10 +153,11 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
       UintHeaderElements.element8.append(header.at(8));
       UintHeaderElements.element9.append(header.at(9));
 
-      QByteArray Element1 = "";
-      Element1.append(header.at(0));
+      QByteArray Element0 = "";
+      Element0.append(header.at(0));
+      qDebug() << "First Element: " << Element0.toInt();
 
-    if(     Element1.toInt() == 255
+    if(     Element0.toInt() == 255
 
             /*header.at(0) == 0xFF &&
             header.at(1) == 0xFF   &&
@@ -125,6 +176,7 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
         return false;
     }
 }
+
 
 
 
