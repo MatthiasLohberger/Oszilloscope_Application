@@ -22,6 +22,10 @@ public:
     void startClient(const QBluetoothServiceInfo &remoteService);
     void stopClient();
 
+    QByteArray ReadSocketForSync(int);
+    void connect_readyRead();
+    void disconnect_readyRead();
+
 
 public slots:
     void sendMessage(const QByteArray &message);
@@ -33,7 +37,7 @@ signals:
     //void connected(const QString &name);
     //void disconnected();
     //void socketErrorOccurred(const QString &errorString);
-    void newDataReceived(const QByteArray &);
+    void newDataReceived(QByteArray &);
 
 
 

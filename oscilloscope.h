@@ -21,6 +21,7 @@ public:
     void showOscilloscopeMainWindow();
 
     bool checkHeader(const QByteArray &);
+    QByteArray SocketSynchronisation(QByteArray &message, int);
 
 
 
@@ -37,7 +38,7 @@ private:
 
 public slots:
     void SendMessage();                                     //Sending a message via socket
-    void ReceiveData(const QByteArray &);                   //Receive Data via socket
+    void ReceiveData(QByteArray &);                   //Receive Data via socket
 
     void startOscilloscope(const QBluetoothServiceInfo &);  //Connect to a discovered service via Socket
                                                             //Starting threads for bluetooth transmission and plot

@@ -38,7 +38,7 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
     emit newConfigData(CommandLine_String);       //Signal aussenden
 
-
+    qDebug() << "CommandLine set to Default!";
 
     //!!!!!   fehlt:    !!!!!!
     //!
@@ -58,7 +58,7 @@ void CommandLine_EAS_Board::convertToString(){
 
     CommandLine_String.EntranceArea.setNum(CommandLine.EntranceArea, 16);
 
-    qDebug() << "TestTestTest";
+    qDebug() << "CommandLine convert to QString!";
     TwoBytes hByte = ValueToHighAndLowByte(1);     //1 -> N Wird berechnet
     CommandLine_String.N_Low.setNum(hByte.ByteLow, 16);
     CommandLine_String.N_High.setNum(hByte.ByteHigh, 16);

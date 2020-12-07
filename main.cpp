@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
 
 
     // Test Konsolenausgabe
-    qDebug() << "Hello World";
-    qDebug() << "(Test)";
+    qDebug() << "Welcome to the Bluetooth Oscilloscope Application for the EAS Board of the Hochschule Lanshut!";
+    qDebug() << "Starting Application...";
 
 
     bool ok = app.exec();

@@ -132,4 +132,26 @@ void BluetoothSocket::connected()
 */
 
 
+QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
+    while(socket->bytesAvailable() < PosFirstSyncByte){
+    }
+    //qDebug() << "Read data for synchronisation!";
+
+    QByteArray SyncData = socket->read(PosFirstSyncByte);
+
+    qDebug() << "SyncData read!";
+    return SyncData;
+}
+
+
+void BluetoothSocket::disconnect_readyRead(){
+    disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+}
+
+
+void BluetoothSocket::connect_readyRead(){
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+}
+
+
 

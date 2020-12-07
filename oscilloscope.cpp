@@ -29,8 +29,8 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &BluetoothWindow, SLOT(Enable_SendButton()));
 
 
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
-            this, SLOT(ReceiveData(const QByteArray &)));
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray &)),
+            this, SLOT(ReceiveData(QByteArray &)));
 
     connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
             this, SLOT(startOscilloscope(const QBluetoothServiceInfo &)));
@@ -75,8 +75,8 @@ void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
 
     emit ChangeTextConnectButton();
 
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(const QByteArray &)),
-            this, SLOT(ReceiveData(const QByteArray &)));
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray &)),
+            this, SLOT(ReceiveData(QByteArray &)));
 
     //Kommandline das erste mal senden
     SendMessage();
@@ -126,7 +126,8 @@ void Oscilloscope::SendMessage(){
 
 
 
-void Oscilloscope::ReceiveData(const QByteArray & message){
+void Oscilloscope::ReceiveData(QByteArray &message){
+
     QByteArray header = "";
      for(int i=0; i<=11; i++){
          header.append(message[i]);
@@ -134,17 +135,41 @@ void Oscilloscope::ReceiveData(const QByteArray & message){
     qDebug() << "Header Check: ";
     if(checkHeader(header) == false){
         qDebug() << "Wrong Header received!";
-        return;
+
+
+        int i, PosFirstSyncByte, Pos2ndSyncByte;
+        qDebug() << "-------Start Check-------";
+        qDebug() << "Size of Data: " << message.size();
+        for (i=0; i<= 4107; i++){
+            if(message.at(i) == 0xff){
+                if(PosFirstSyncByte > 0){
+                    Pos2ndSyncByte = i;
+                    qDebug() << "SyncByte2 (0xff) found at position i = "
+                             << Pos2ndSyncByte << " in the received data.";
+                }else {
+                   PosFirstSyncByte = i;
+                    qDebug() << "SyncByte1 (0xff) found at position i = "
+                             << PosFirstSyncByte << " in the received data.";
+                }
+            }
+        }
+        qDebug() << "-------End Check-------";
+
+
+        message = SocketSynchronisation(message, PosFirstSyncByte);
+    } else{
+        qDebug() << "Correct Header received!";
     }
-    qDebug() << "Correct Header received!";
-    ReceiveBuffer = message;
+
+    //ReceiveBuffer = message;
 
 }
 
 
 
+
 bool Oscilloscope::checkHeader(const QByteArray &header){
-      ConfigData CommandLine = OsziConfigData.getData();
+      //ConfigData CommandLine = OsziConfigData.getData();
       UIntHeader UintHeaderElements;
 
       UintHeaderElements.element3.append(header.at(3));
@@ -157,10 +182,10 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
       Element0.append(header.at(0));
       qDebug() << "First Element: " << Element0.toInt();
 
-    if(     Element0.toInt() == 255
+    if(     //Element0.toInt() == 255
 
-            /*header.at(0) == 0xFF &&
-            header.at(1) == 0xFF   &&
+            header.at(0) == 0xff &&
+            header.at(1) == 0xff    /*&&
             header.at(2) == 'V' &&
             UintHeaderElements.element3.toInt() == CommandLine.EntranceArea &&
             header.at(4) == 'H' &&
@@ -176,6 +201,37 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
         return false;
     }
 }
+
+
+
+
+QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirstSyncByte){
+    //Synchronisation through search for the SyncWort
+    bluetoothSocket.disconnect_readyRead();
+
+    message.remove(0, PosFirstSyncByte);
+    if(message.size() != 4108 - PosFirstSyncByte){
+        //?
+    }
+
+    message.append(bluetoothSocket.ReadSocketForSync(PosFirstSyncByte));
+    bluetoothSocket.connect_readyRead();
+
+    QByteArray header = "";
+    for(int i=0; i<=11; i++){
+             header.append(message[i]);
+    }
+    qDebug() << "Header Check: ";
+    if(checkHeader(header) == false){
+        qDebug() << "Wrong Header received!";
+        message.clear();                    // ändern
+    } else{
+        qDebug() << "Correct Header received!";
+    }
+
+    return message;
+}
+
 
 
 
