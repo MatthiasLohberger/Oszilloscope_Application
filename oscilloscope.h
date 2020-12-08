@@ -22,7 +22,7 @@ public:
 
     bool checkHeader(const QByteArray &);
     QByteArray SocketSynchronisation(QByteArray &message, int);
-
+    void displayHeader(QByteArray);
 
 
 private:
@@ -32,15 +32,16 @@ private:
     CommandLine_EAS_Board OsziConfigData;
 
     BluetoothSocket bluetoothSocket;
+    int flag_connect_readyRead;
 
     QByteArray ReceiveBuffer;
 
 
 public slots:
     void SendMessage();                                     //Sending a message via socket
-    void ReceiveData(QByteArray &);                   //Receive Data via socket
+    void ReceiveData(QByteArray);                   //Receive Data via socket
 
-    void startOscilloscope(const QBluetoothServiceInfo &);  //Connect to a discovered service via Socket
+    void startOscilloscope(const QBluetoothServiceInfo &message);  //Connect to a discovered service via Socket
                                                             //Starting threads for bluetooth transmission and plot
 
 

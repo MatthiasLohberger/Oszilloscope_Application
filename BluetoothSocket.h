@@ -37,7 +37,7 @@ signals:
     //void connected(const QString &name);
     //void disconnected();
     //void socketErrorOccurred(const QString &errorString);
-    void newDataReceived(QByteArray &);
+    void newDataReceived(QByteArray);
 
 
 

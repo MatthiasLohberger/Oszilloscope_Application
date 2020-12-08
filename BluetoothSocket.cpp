@@ -139,7 +139,7 @@ QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
 
     QByteArray SyncData = socket->read(PosFirstSyncByte);
 
-    qDebug() << "SyncData read!";
+    qDebug() << "\t\t\\tSyncData read!";
     return SyncData;
 }
 

@@ -29,8 +29,8 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &BluetoothWindow, SLOT(Enable_SendButton()));
 
 
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray &)),
-            this, SLOT(ReceiveData(QByteArray &)));
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+            this, SLOT(ReceiveData(QByteArray)));
 
     connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
             this, SLOT(startOscilloscope(const QBluetoothServiceInfo &)));
@@ -75,8 +75,8 @@ void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
 
     emit ChangeTextConnectButton();
 
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray &)),
-            this, SLOT(ReceiveData(QByteArray &)));
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+            this, SLOT(ReceiveData(QByteArray)));
 
     //Kommandline das erste mal senden
     SendMessage();
@@ -126,50 +126,68 @@ void Oscilloscope::SendMessage(){
 
 
 
-void Oscilloscope::ReceiveData(QByteArray &message){
+void Oscilloscope::ReceiveData(QByteArray message){
+    qDebug() << "+++++++Data Verification+++++++";
 
     QByteArray header = "";
      for(int i=0; i<=11; i++){
          header.append(message[i]);
      }
+
     qDebug() << "Header Check: ";
     if(checkHeader(header) == false){
         qDebug() << "Wrong Header received!";
 
 
-        int i, PosFirstSyncByte, Pos2ndSyncByte;
-        qDebug() << "-------Start Check-------";
-        qDebug() << "Size of Data: " << message.size();
+        int i, PosFirstSyncByte = 0, Pos2ndSyncByte = 0;
+        qDebug() << "\t-------Start SyncWord Search-------";
+        qDebug() << "\tSize of Data: " << message.size();
         for (i=0; i<= 4107; i++){
             if(message.at(i) == 0xff){
                 if(PosFirstSyncByte > 0){
                     Pos2ndSyncByte = i;
-                    qDebug() << "SyncByte2 (0xff) found at position i = "
+                    qDebug() << "\t\tSyncByte2 (0xff) found at position i = "
                              << Pos2ndSyncByte << " in the received data.";
+
+                    QByteArray header_Display = "";
+                     for(int i=PosFirstSyncByte; i<=PosFirstSyncByte+11; i++){
+                         header_Display.append(message[i]);
+                     }
+                    displayHeader(header_Display);
+
+
                 }else {
                    PosFirstSyncByte = i;
-                    qDebug() << "SyncByte1 (0xff) found at position i = "
+                    qDebug() << "\t\tSyncByte1 (0xff) found at position i = "
                              << PosFirstSyncByte << " in the received data.";
                 }
             }
+
         }
-        qDebug() << "-------End Check-------";
+        qDebug() << "\t-------End SyncWord Search-------";
 
 
         message = SocketSynchronisation(message, PosFirstSyncByte);
     } else{
         qDebug() << "Correct Header received!";
     }
-
+    qDebug() << "+++++++End Data Verification+++++++";
+    qDebug() << "Data ready to plot!";
     //ReceiveBuffer = message;
 
+
+    if(flag_connect_readyRead == 1){
+        flag_connect_readyRead = 0;
+        qDebug() << "\t\t******Reconnect socket";
+        bluetoothSocket.connect_readyRead();
+    }
 }
 
 
 
 
 bool Oscilloscope::checkHeader(const QByteArray &header){
-      //ConfigData CommandLine = OsziConfigData.getData();
+      ConfigData CommandLine = OsziConfigData.getData();
       UIntHeader UintHeaderElements;
 
       UintHeaderElements.element3.append(header.at(3));
@@ -180,12 +198,12 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
 
       QByteArray Element0 = "";
       Element0.append(header.at(0));
-      qDebug() << "First Element: " << Element0.toInt();
+      //qDebug() << "First Element: " << Element0.toInt();
 
     if(     //Element0.toInt() == 255
 
             header.at(0) == 0xff &&
-            header.at(1) == 0xff    /*&&
+            header.at(1) == 0xff    &&
             header.at(2) == 'V' &&
             UintHeaderElements.element3.toInt() == CommandLine.EntranceArea &&
             header.at(4) == 'H' &&
@@ -195,7 +213,7 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
             UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_Low &&
             UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_High &&
             header.at(10) == CommandLine.TriggerMode &&
-            header.at(11) == CommandLine.TriggerEdge */ ) {
+            header.at(11) == CommandLine.TriggerEdge  ) {
         return true;
     } else {
         return false;
@@ -208,32 +226,40 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
 QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirstSyncByte){
     //Synchronisation through search for the SyncWort
     bluetoothSocket.disconnect_readyRead();
+    qDebug() << "\t\t********Socket disconnected";
 
     message.remove(0, PosFirstSyncByte);
+    qDebug() << "\t\t\tUnnecessary Data removed";
     if(message.size() != 4108 - PosFirstSyncByte){
         //?
     }
 
     message.append(bluetoothSocket.ReadSocketForSync(PosFirstSyncByte));
-    bluetoothSocket.connect_readyRead();
+    qDebug() << "\t\t\tSyncData appended";
+    flag_connect_readyRead = 1;
 
     QByteArray header = "";
     for(int i=0; i<=11; i++){
              header.append(message[i]);
     }
-    qDebug() << "Header Check: ";
+    qDebug() << "\t\t\tHeader Check after Sync: ";
     if(checkHeader(header) == false){
-        qDebug() << "Wrong Header received!";
+        qDebug() << "\t\t\tStill wrong Header received!";
         message.clear();                    // ändern
     } else{
-        qDebug() << "Correct Header received!";
+        qDebug() << "\t\t\tAfter Sync correct Header received!";
     }
 
     return message;
 }
 
 
+void Oscilloscope::displayHeader(QByteArray header){
 
+     for(int i = 0; i<header.size(); i++){
+         qDebug()  << "\t\t\t\t\tHeader Element " << i << ", Inhalt: " << header.at(i);
+     }
+}
 
 
 
