@@ -6,6 +6,9 @@
 #include <QtBluetooth/qbluetoothserviceinfo.h>
 #include <QtBluetooth/qbluetoothsocket.h>
 
+#include "commandline_eas_board.h"
+
+
 QT_FORWARD_DECLARE_CLASS(QBluetoothSocket)
 
 QT_USE_NAMESPACE
@@ -29,7 +32,7 @@ public:
 
 public slots:
     void sendMessage(const QByteArray &message);
-
+    void SocketSynchronisation();
 
 
 signals:
@@ -41,8 +44,10 @@ signals:
 
 
 
+
 private slots:
     void readSocket();
+    void setDefaultCommanLine(ConfigData);
     //void connected();
     //void onSocketErrorOccurred(QBluetoothSocket::SocketError);
 
@@ -50,6 +55,8 @@ private slots:
 
 private:
     QBluetoothSocket *socket = nullptr;
+
+    ConfigData CommandLineDefault;
 };
 //! [declaration]
 

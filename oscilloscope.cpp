@@ -29,11 +29,19 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &BluetoothWindow, SLOT(Enable_SendButton()));
 
 
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
-            this, SLOT(ReceiveData(QByteArray)));
+    //connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+    //       this, SLOT(ReceiveData(QByteArray)));
 
     connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
             this, SLOT(startOscilloscope(const QBluetoothServiceInfo &)));
+
+    connect(this, SIGNAL(synchronizeSocket()),
+            &bluetoothSocket, SLOT(SocketSynchronisation()));
+
+    connect(this, SIGNAL(sendDefaultCommanLine(ConfigData)),
+            &bluetoothSocket, SLOT(setDefaultCommanLine(ConfigData)));
+
+
 
 
     OsziConfigData.setDefaultValues();
@@ -65,28 +73,34 @@ void Oscilloscope::showOscilloscopeMainWindow(){
 
 void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
     qDebug() << "Start Oscilloscope!";
+    emit sendDefaultCommanLine(OsziConfigData.getData());
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);
     BluetoothThread.start();
     qDebug() << "Treads started!";
 
+
     //Connect to service (EAS Board)
     bluetoothSocket.startClient(service);
 
     emit ChangeTextConnectButton();
-
+/*
     connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
             this, SLOT(ReceiveData(QByteArray)));
+*/
 
     //Kommandline das erste mal senden
     SendMessage();
 
+    emit synchronizeSocket();
+
+/*
     //Plot starten
 
     //Send buttons enablen in beiden Windows
     emit EnableSendButtonBtWindow();
     emit EnableSendOsziMainWindowBtWindow();
-
+*/
 }
 
 
@@ -207,11 +221,11 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
             header.at(2) == 'V' &&
             UintHeaderElements.element3.toInt() == CommandLine.EntranceArea &&
             header.at(4) == 'H' &&
-            UintHeaderElements.element5.toUInt() == CommandLine.N_Low &&
-            UintHeaderElements.element6.toUInt() == CommandLine.N_High &&
+            //UintHeaderElements.element5.toUInt() == CommandLine.N_Low &&
+            //UintHeaderElements.element6.toUInt() == CommandLine.N_High &&
             header.at(7) == 'T' &&
-            UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_Low &&
-            UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_High &&
+            //UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_Low &&
+            //UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_High &&
             header.at(10) == CommandLine.TriggerMode &&
             header.at(11) == CommandLine.TriggerEdge  ) {
         return true;

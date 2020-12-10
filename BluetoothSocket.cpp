@@ -37,7 +37,8 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "ConnectToService done";
     qDebug() << "Service: " << remoteService.serviceName();
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+    // für kommendes connect extra slot
+    //connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
@@ -152,6 +153,199 @@ void BluetoothSocket::disconnect_readyRead(){
 void BluetoothSocket::connect_readyRead(){
     connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 }
+
+
+
+
+
+
+
+
+void BluetoothSocket::SocketSynchronisation(){
+    qDebug() << "SocketSynchronisation!         Socket";
+
+    while(socket->bytesAvailable() < 4108){}
+
+    int flagHeaderComplete = 0;
+    int i = 0, h = 0;
+    int helpInt;
+    QByteArray byte;
+
+
+    while(i <= 4096 || flagHeaderComplete == 0){
+        h = 0;
+
+        byte = socket->read(1);
+        i++;
+        if(byte.at(0) == 0xff){
+            byte.toInt();
+            helpInt = byte[0];
+            qDebug() << "$$$$$$   Possible header start found   $$$$$$";
+            qDebug() << "At Position: " << i;
+            qDebug() << "Header[" << h << "] "<< "/FirstSyncByte = " << helpInt;
+            byte = socket->read(1);
+            i++;
+            h++;
+
+
+            if(byte.at(0) == 0xff){
+                byte.toInt();
+                helpInt = byte[0];
+                qDebug() << "Header[" << h << "] "<< "/SecondSyncByte = " << helpInt;
+                byte = socket->read(1);
+                i++;
+                h++;
+
+
+                if(byte.at(0) == CommandLineDefault.Vertical){
+                    qDebug() << "Header[" << h << "] "<< "/Vertical = " << byte.at(0);
+                    byte = socket->read(1);
+                    i++;
+                    h++;
+
+
+                    if(byte.at(0) == (char)CommandLineDefault.EntranceArea){
+                        byte.toInt();
+                        helpInt = byte[0];
+                        qDebug() << "Header[" << h << "] "<< "/EntranceArea = " << helpInt;
+                        byte = socket->read(1);
+                        i++;
+                        h++;
+
+                        if(byte.at(0) == CommandLineDefault.Horizontal){
+                            qDebug() << "Header[" << h << "] "<< "/Horizontal = " << byte.at(0);
+                            byte = socket->read(1);
+                            i++;
+                            h++;
+
+                            if(byte.at(0) == (char)CommandLineDefault.N_Low){
+                                byte.toInt();
+                                helpInt = byte[0];
+                                qDebug() << "Header[" << h << "] "<< "/N_Low = " << helpInt;
+                                byte = socket->read(1);
+                                i++;
+                                h++;
+
+                                if(byte.at(0) == (char)CommandLineDefault.N_High){
+                                    byte.toInt();
+                                    helpInt = byte[0];
+                                    qDebug() << "Header[" << h << "] "<< "/N_High = " << helpInt;
+                                    byte = socket->read(1);
+                                    i++;
+                                    h++;
+
+                                    if(byte.at(0) == CommandLineDefault.Trigger){
+                                        qDebug() << "Header[" << h << "] "<< "/Trigger = " << byte.at(0);
+                                        byte = socket->read(1);
+                                        i++;
+                                        h++;
+
+                                        if(byte.at(0) == (char)CommandLineDefault.TriggerThreshold_Low){
+                                            byte.toInt();
+                                            helpInt = byte[0];
+                                            qDebug() << "Header[" << h << "] "<< "/TriggerThreshold_Low = " << helpInt;
+                                            byte = socket->read(1);
+                                            i++;
+                                            h++;
+
+                                            if(byte.at(0) == (char)CommandLineDefault.TriggerThreshold_High){
+                                                byte.toInt();
+                                                helpInt = byte[0];
+                                                qDebug() << "Header[" << h << "] "<< "/TriggerThreshold_High = " << helpInt;
+                                                byte = socket->read(1);
+                                                i++;
+                                                h++;
+
+                                                if(byte.at(0) == (char)CommandLineDefault.TriggerMode){
+                                                    byte.toInt();
+                                                    helpInt = byte[0];
+                                                    qDebug() << "Header[" << h << "] "<< "/TriggerMode = " << helpInt;
+                                                    byte = socket->read(1);
+                                                    i++;
+                                                    h++;
+
+                                                    if(byte.at(0) == (char)CommandLineDefault.TriggerEdge){
+                                                        byte.toInt();
+                                                        helpInt = byte[0];
+                                                        qDebug() << "Header[" << h << "] "<< "/TriggerEdge = " << helpInt;
+
+                                                        qDebug() << "$$$$$$   Complete header found   $$$$$$";
+                                                        flagHeaderComplete = 1;
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if(flagHeaderComplete != 0){
+        qDebug() << "Complete header found, starting normal transmission...";
+        socket->read(4096);     // 4108 - 12 (Header schon eingelesen)
+
+        //start normale Übertragung
+        //emit ... (Signal in OScilloscope verknüpfen)
+    }
+    else if(i >= 4096){
+        qDebug() << "No valid header found. Restart app!";
+    } else {
+        qDebug() << "Unknown Error. Restart app!";
+    }
+
+
+}
+
+
+
+
+
+
+
+
+void BluetoothSocket::setDefaultCommanLine(ConfigData CommandLine){
+    CommandLineDefault = CommandLine;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -13,14 +13,14 @@ struct ConfigData {
     int EntranceArea;
 
     char Horizontal = 'H';
-    unsigned int N;                         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
-    unsigned int N_Low;
-    unsigned int N_High;
+    int N;                         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
+    int N_Low;
+    int N_High;
 
     char Trigger = 'T';
-    unsigned int TriggerThreshold ;         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
-    unsigned int TriggerThreshold_Low;
-    unsigned int TriggerThreshold_High;
+    int TriggerThreshold ;         //Aufspalten in High und Low Byte (hier unsigned richtig:       ???????)
+    int TriggerThreshold_Low;
+    int TriggerThreshold_High;
 
 
     char TriggerMode;
@@ -42,8 +42,8 @@ struct ConfigDataString {
 
 
 struct TwoBytes{
-    unsigned int ByteLow;
-    unsigned int ByteHigh;
+    int ByteLow;
+    int ByteHigh;
 };
 
 

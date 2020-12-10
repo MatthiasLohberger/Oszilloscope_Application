@@ -80,7 +80,7 @@ void CommandLine_EAS_Board::convertToString(){
 TwoBytes CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
     QString hArray[2];
     QString hString;
-    unsigned int hValue;                // unsigened richtig   ??????
+    int hValue;                // unsigened richtig   ??????
     //unsigned int hArrayInt[1];
     TwoBytes hByte;
     int size, i;

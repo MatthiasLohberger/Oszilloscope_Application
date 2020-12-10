@@ -49,6 +49,8 @@ signals:
     void ChangeTextConnectButton();
     void EnableSendButtonBtWindow();
     void EnableSendOsziMainWindowBtWindow();
+    void synchronizeSocket();
+    void sendDefaultCommanLine(ConfigData);
 };
 
 #endif // OSCILLOSCOPE_H
