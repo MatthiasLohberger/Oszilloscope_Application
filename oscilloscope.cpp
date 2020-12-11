@@ -113,6 +113,8 @@ void Oscilloscope::SendMessage(){
      QByteArray message;
      ConfigData CommandLine = OsziConfigData.getData();
 
+     qDebug() << "Send Commandline:";
+
      message = "";
      message.append((char)0xFF);
      message.append((char)0xFF);
@@ -125,6 +127,8 @@ void Oscilloscope::SendMessage(){
      message.append((char)CommandLine.N_High);
 
      message.append(CommandLine.Trigger);
+     qDebug() << "TriggerThreshold_Low  = " << CommandLine.TriggerThreshold_Low;
+     qDebug() << "TriggerThreshold_High = " << CommandLine.TriggerThreshold_High;
      message.append((char)CommandLine.TriggerThreshold_Low);
      message.append((char)CommandLine.TriggerThreshold_High);
      message.append(CommandLine.TriggerMode);
