@@ -33,6 +33,8 @@ public:
 public slots:
     void sendMessage(const QByteArray &message);
     void SocketSynchronisation();
+    void connectReadyRead();
+    void setDefaultCommanLine(ConfigData);
 
 
 signals:
@@ -41,13 +43,12 @@ signals:
     //void disconnected();
     //void socketErrorOccurred(const QString &errorString);
     void newDataReceived(QByteArray);
-
+    void StartNormalTransmission();
 
 
 
 private slots:
     void readSocket();
-    void setDefaultCommanLine(ConfigData);
     //void connected();
     //void onSocketErrorOccurred(QBluetoothSocket::SocketError);
 

@@ -3,20 +3,23 @@
 
 Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 {
-
+    // Fensterwechsel
     connect(&OsziMainWindow, SIGNAL(BtSettingsButtonPressed()),
             &BluetoothWindow, SLOT(showBluetoothWindow()));
-    // Zurückwechseln mit hide im BTWin direkt
+                // Zurückwechseln mit hide im BTWin direkt
 
+
+    // Kommandozeile
     connect(&OsziConfigData, SIGNAL(newConfigData(ConfigDataString &)),
             &BluetoothWindow, SLOT(newDataForPlainTextWidget(ConfigDataString &)));
 
+
+    // Buttons und Textausgaben
     connect(&BluetoothWindow, SIGNAL(DefaultButtonPressed()),
             &OsziConfigData, SLOT(DefaultValues()));
 
     connect(this, SIGNAL(ChangeTextConnectButton()),
             &BluetoothWindow, SLOT(setTextConnectButton()));
-
 
     connect(&OsziMainWindow, SIGNAL(SendButton_Pressed()),
             this, SLOT(SendMessage()));
@@ -29,20 +32,28 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &BluetoothWindow, SLOT(Enable_SendButton()));
 
 
-    //connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
-    //       this, SLOT(ReceiveData(QByteArray)));
-
+    // Bluetooth Service Suche
     connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
-            this, SLOT(startOscilloscope(const QBluetoothServiceInfo &)));
+            this, SLOT(SetUpOscilloscope(const QBluetoothServiceInfo &)));
 
+
+    //Bluetooth Socket
     connect(this, SIGNAL(synchronizeSocket()),
             &bluetoothSocket, SLOT(SocketSynchronisation()));
 
     connect(this, SIGNAL(sendDefaultCommanLine(ConfigData)),
             &bluetoothSocket, SLOT(setDefaultCommanLine(ConfigData)));
 
+    connect(this, SIGNAL(connectSocketToReadyRead()),
+            &bluetoothSocket, SLOT(connectReadyRead()));
+
+    connect(&bluetoothSocket, SIGNAL(StartNormalTransmission()),
+            this, SLOT(startOscilloscope()));
 
 
+
+    //connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+    //       this, SLOT(ReceiveData(QByteArray)));
 
     OsziConfigData.setDefaultValues();
 
@@ -60,6 +71,10 @@ Oscilloscope::~Oscilloscope(){
 }
 
 
+
+
+
+
 //----------------------------------------------------------------------------
 
 
@@ -71,9 +86,13 @@ void Oscilloscope::showOscilloscopeMainWindow(){
 //----------------------------------------------------------------------------
 
 
-void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
+
+
+
+void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     qDebug() << "Start Oscilloscope!";
     emit sendDefaultCommanLine(OsziConfigData.getData());
+
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);
     BluetoothThread.start();
@@ -84,28 +103,43 @@ void Oscilloscope::startOscilloscope(const QBluetoothServiceInfo &service){
     bluetoothSocket.startClient(service);
 
     emit ChangeTextConnectButton();
-/*
-    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
-            this, SLOT(ReceiveData(QByteArray)));
-*/
+
 
     //Kommandline das erste mal senden
     SendMessage();
 
     emit synchronizeSocket();
 
-/*
+}
+
+
+
+
+void Oscilloscope::startOscilloscope(){
+    qDebug() << "Starting plot and transmission...";
+
+    connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+            this, SLOT(ReceiveData(QByteArray)));
+
+
     //Plot starten
 
     //Send buttons enablen in beiden Windows
     emit EnableSendButtonBtWindow();
     emit EnableSendOsziMainWindowBtWindow();
-*/
+
+    //Connect Sinal readyRead von socket
+    emit connectSocketToReadyRead();
 }
 
 
-
 //----------------------------------------------------------------------------
+
+
+
+
+
+
 
 //[Slots zum Empfangen über Bluetooth]
 
@@ -144,6 +178,144 @@ void Oscilloscope::SendMessage(){
 
 
 
+
+
+void Oscilloscope::ReceiveData(QByteArray message){
+    qDebug() << "+++++++Data Verification+++++++";
+    qDebug() << "Size of Data: " << message.size();
+
+
+    // Header extrahieren
+    QByteArray header = "";
+     for(int i=0; i<=11; i++){
+         header.append(message[i]);
+     }
+
+    // Header Check
+    qDebug() << "Header Check: ";
+    if(checkHeader(header) == false){
+        qDebug() << "Wrong Header received!";                 
+        //Aufruf Slot für
+                // Plot stoppen
+                // Bluetooth Übertragung stoppen
+                // Plot fenster clearen
+                // rteadyRead und receiveData disconnecten
+                // SocketSynchronsitaion im Bluetooth Socket aufrufen
+
+                // Diese Fnkt nicht mehr weiter ausführen!!!!!
+
+    } else{
+        qDebug() << "Correct Header received!";
+
+
+        qDebug() << "+++++++End Data Verification+++++++";
+        qDebug() << "Data ready to plot!";
+        //ReceiveBuffer = message;
+
+
+
+
+        /*
+        if(flag_connect_readyRead == 1){
+            flag_connect_readyRead = 0;
+            qDebug() << "\t\t******Reconnect socket";
+        .connect_readyRead();
+        }
+        */
+     }
+}
+
+
+
+
+
+
+bool Oscilloscope::checkHeader(const QByteArray &header){
+    ConfigData CommandLine = OsziConfigData.getData();
+
+    if(
+
+            header.at(0) == 0xff &&
+            header.at(1) == 0xff &&
+            header.at(2) == CommandLine.Vertical &&
+            header.at(3) == (char)CommandLine.EntranceArea &&
+            header.at(4) == CommandLine.Horizontal &&
+            header.at(5) == (char)CommandLine.N_Low &&
+            header.at(6) == (char)CommandLine.N_High &&
+            header.at(7) == CommandLine.Trigger &&
+            //header.at(8) == (char)CommandLine.TriggerThreshold_Low &&
+            header.at(8) == (char)0 &&
+            header.at(9) == (char)CommandLine.TriggerThreshold_High &&
+            header.at(10) == CommandLine.TriggerMode &&
+            header.at(11) == CommandLine.TriggerEdge )
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
+
+/*
+QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirstSyncByte){
+    //Synchronisation through search for the SyncWort
+    bluetoothSocket.disconnect_readyRead();
+    qDebug() << "\t\t********Socket disconnected";
+
+    message.remove(0, PosFirstSyncByte);
+    qDebug() << "\t\t\tUnnecessary Data removed";
+    if(message.size() != 4108 - PosFirstSyncByte){
+        //?
+    }
+
+    message.append(bluetoothSocket.ReadSocketForSync(PosFirstSyncByte));
+    qDebug() << "\t\t\tSyncData appended";
+    flag_connect_readyRead = 1;
+
+    QByteArray header = "";
+    for(int i=0; i<=11; i++){
+             header.append(message[i]);
+    }
+    qDebug() << "\t\t\tHeader Check after Sync: ";
+    if(checkHeader(header) == false){
+        qDebug() << "\t\t\tStill wrong Header received!";
+        message.clear();                    // ändern
+    } else{
+        qDebug() << "\t\t\tAfter Sync correct Header received!";
+    }
+
+    return message;
+}
+*/
+
+
+
+
+
+
+
+
+/*
+void Oscilloscope::displayHeader(QByteArray header){
+
+     for(int i = 0; i<header.size(); i++){
+         qDebug()  << "\t\t\t\t\tHeader Element " << i << ", Inhalt: " << header.at(i);
+     }
+}
+*/
+
+
+
+
+
+
+
+
+
+/*
 void Oscilloscope::ReceiveData(QByteArray message){
     qDebug() << "+++++++Data Verification+++++++";
 
@@ -200,86 +372,6 @@ void Oscilloscope::ReceiveData(QByteArray message){
         bluetoothSocket.connect_readyRead();
     }
 }
-
-
-
-
-bool Oscilloscope::checkHeader(const QByteArray &header){
-      ConfigData CommandLine = OsziConfigData.getData();
-      UIntHeader UintHeaderElements;
-
-      UintHeaderElements.element3.append(header.at(3));
-      UintHeaderElements.element5.append(header.at(5));
-      UintHeaderElements.element6.append(header.at(6));
-      UintHeaderElements.element8.append(header.at(8));
-      UintHeaderElements.element9.append(header.at(9));
-
-      QByteArray Element0 = "";
-      Element0.append(header.at(0));
-      //qDebug() << "First Element: " << Element0.toInt();
-
-    if(     //Element0.toInt() == 255
-
-            header.at(0) == 0xff &&
-            header.at(1) == 0xff    &&
-            header.at(2) == 'V' &&
-            UintHeaderElements.element3.toInt() == CommandLine.EntranceArea &&
-            header.at(4) == 'H' &&
-            //UintHeaderElements.element5.toUInt() == CommandLine.N_Low &&
-            //UintHeaderElements.element6.toUInt() == CommandLine.N_High &&
-            header.at(7) == 'T' &&
-            //UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_Low &&
-            //UintHeaderElements.element8.toUInt() == CommandLine.TriggerThreshold_High &&
-            header.at(10) == CommandLine.TriggerMode &&
-            header.at(11) == CommandLine.TriggerEdge  ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-
-
-QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirstSyncByte){
-    //Synchronisation through search for the SyncWort
-    bluetoothSocket.disconnect_readyRead();
-    qDebug() << "\t\t********Socket disconnected";
-
-    message.remove(0, PosFirstSyncByte);
-    qDebug() << "\t\t\tUnnecessary Data removed";
-    if(message.size() != 4108 - PosFirstSyncByte){
-        //?
-    }
-
-    message.append(bluetoothSocket.ReadSocketForSync(PosFirstSyncByte));
-    qDebug() << "\t\t\tSyncData appended";
-    flag_connect_readyRead = 1;
-
-    QByteArray header = "";
-    for(int i=0; i<=11; i++){
-             header.append(message[i]);
-    }
-    qDebug() << "\t\t\tHeader Check after Sync: ";
-    if(checkHeader(header) == false){
-        qDebug() << "\t\t\tStill wrong Header received!";
-        message.clear();                    // ändern
-    } else{
-        qDebug() << "\t\t\tAfter Sync correct Header received!";
-    }
-
-    return message;
-}
-
-
-void Oscilloscope::displayHeader(QByteArray header){
-
-     for(int i = 0; i<header.size(); i++){
-         qDebug()  << "\t\t\t\t\tHeader Element " << i << ", Inhalt: " << header.at(i);
-     }
-}
-
-
-
+*/
 
 

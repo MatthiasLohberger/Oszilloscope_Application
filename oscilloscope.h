@@ -39,10 +39,11 @@ private:
 
 public slots:
     void SendMessage();                                     //Sending a message via socket
-    void ReceiveData(QByteArray);                   //Receive Data via socket
+    void ReceiveData(QByteArray);                           //Receive Data via socket
 
-    void startOscilloscope(const QBluetoothServiceInfo &message);  //Connect to a discovered service via Socket
-                                                            //Starting threads for bluetooth transmission and plot
+    void SetUpOscilloscope(const QBluetoothServiceInfo &service);   //Connect to a discovered service via Socket
+                                                                    //Starting threads for bluetooth transmission and plot
+    void startOscilloscope();
 
 
 signals:
@@ -51,6 +52,7 @@ signals:
     void EnableSendOsziMainWindowBtWindow();
     void synchronizeSocket();
     void sendDefaultCommanLine(ConfigData);
+    void connectSocketToReadyRead();
 };
 
 #endif // OSCILLOSCOPE_H

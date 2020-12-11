@@ -37,8 +37,6 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "ConnectToService done";
     qDebug() << "Service: " << remoteService.serviceName();
 
-    // für kommendes connect extra slot
-    //connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
@@ -291,8 +289,8 @@ void BluetoothSocket::SocketSynchronisation(){
         qDebug() << "Complete header found, starting normal transmission...";
         socket->read(4096);     // 4108 - 12 (Header schon eingelesen)
 
-        //start normale Übertragung
-        //emit ... (Signal in Oscilloscope verknüpfen)
+        //Starten der normalen Übertragung
+        emit StartNormalTransmission();
     }
     else if(i >= 4096){
         qDebug() << "No valid header found. Restart app!";
@@ -306,15 +304,15 @@ void BluetoothSocket::SocketSynchronisation(){
 
 
 
-
-
-
-
 void BluetoothSocket::setDefaultCommanLine(ConfigData CommandLine){
     CommandLineDefault = CommandLine;
 }
 
 
+
+void BluetoothSocket::connectReadyRead(){
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+}
 
 
 
