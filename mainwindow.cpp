@@ -87,3 +87,110 @@ void MainWindow::SetUpPlot(){
 
     // ticks
 }
+
+
+
+
+
+void MainWindow::plot(QByteArray data){
+    QVector<double> x(2048), y(2048);
+    unsigned int yUInt;
+
+    int i, k=0, SampleFactor, T_AD;
+    float xStepSize, yRange;
+    double yDouble, xMin, xDouble;
+    QByteArray hcontainer;
+
+    // 1. allocate mutex or wait until the allocation was sucessful
+    while(mutexPlot.tryLock()){
+
+    }
+
+
+
+    // 2. clear plot bzw unten replot beim ersten plot Teil
+
+
+
+    // 3. read yRange = EntranceArea out
+        // später auslagern in Slot "void scaleAxes(QByteArray CommandLine);"
+    hcontainer[0] = data[3];         // 2nd CommandLine element = EntranceArea
+    hcontainer.toInt();
+    switch(hcontainer.toInt()){
+        case 1: yRange =10;
+        case 2: yRange =3;
+        case 3: yRange =1;
+        case 4: yRange =0.3;
+        //default:
+    }
+
+
+
+    // 4. determine yValues
+    for(i=12; i<4108; i=i+2){
+        yUInt = ((unsigned int) data[i]) + ((unsigned int)data[i+1]<<8);     //QByteArray to unsigned int mit cast erlaubt???
+        yUInt = yUInt & 0x0FFF;                                             // 12 Bit max lenght
+
+        yDouble = yUInt*((2*yRange)/4096) - yRange;
+
+        y[k] = yDouble;                             // Zugriff auf Vektor so ok? oder mit append(...)
+        k++;
+    }
+
+
+
+    // 5. determine corresponding xValues
+    SampleFactor = ((int) data[5]) + ((int) data[6]<<8);          //combine high & low byte   // cast erlaubt? Hilfsvar???
+    T_AD = T_AD0 * SampleFactor;                                // T_AD0 const Attribut von MAinWindos
+    xStepSize = T_AD/2048;
+
+    xMin = (T_AD/2) - T_AD;
+    x[0] = xMin;
+    for(i=1; i<=2048; i++){
+
+        xDouble = xMin + (xStepSize * i);
+
+        x[i] = xDouble;
+    }
+
+
+
+    // 6. Plotten
+    i = 0;
+    QVector<double> xValueMin(1), yValueMin;
+    xValueMin[0] = x[0];
+    yValueMin[0] = y[0];
+    ui->QCPlot->graph(0)->setData(xValueMin, yValueMin);
+    ui->QCPlot->replot();
+        // delay(); ???
+
+    for (i=1; i<2048; i++) {
+        ui->QCPlot->graph(0)->addData(x[i], y[i]);
+        ui->QCPlot->replot();
+            // delay(); ???
+    }
+
+
+
+    // 7. free the mutex
+    mutexPlot.unlock();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

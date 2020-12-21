@@ -21,19 +21,25 @@ public:
     ~MainWindow();
 
     void SetUpPlot();
-    void startPlot();
-    void stopPlot();
-    void clearPlot();
+    //void startPlot();
+    //void stopPlot();
+    //void clearPlot();
+
 
 
 
 private:
     Ui::MainWindow *ui;
 
+    QMutex mutexPlot;
+    const int T_AD0=125;            //Grundsamplezeit in [ns]
 
 
 public slots:
     void EnableSendButton();
+
+    void plot(QByteArray data);
+    // void scaleAxes(QByteArray CommandLine);
 
 signals:
     void BtSettingsButtonPressed();

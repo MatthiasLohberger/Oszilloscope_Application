@@ -1,4 +1,4 @@
-#include "oscilloscope.h"
+ #include "oscilloscope.h"
 
 
 Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
