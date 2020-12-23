@@ -29,7 +29,20 @@ BtWindow::BtWindow(QWidget *parent) :
     connect(ui->lineEdit_TriggerEdge,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
     connect(ui->lineEdit_TriggerMode,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
 
+
+
+
+    ui->lineEdit_EntranceArea->setReadOnly(true);
+    ui->lineEdit_N_High->setReadOnly(true);
+    ui->lineEdit_N_Low->setReadOnly(true);
+    ui->lineEdit_TriggerHigh->setReadOnly(true);
+    ui->lineEdit_TriggerLow->setReadOnly(true);
+    ui->lineEdit_TriggerEdge->setReadOnly(true);
+    ui->lineEdit_TriggerMode->setReadOnly(true);
+
     // [Construct UI] End
+
+
 
 
     //For Bluetooth Connection
