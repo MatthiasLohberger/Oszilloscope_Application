@@ -10,6 +10,12 @@
     <height>1150</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Calibri</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -43,7 +49,7 @@
      <string notr="true"/>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber">
+   <widget class="QLCDNumber" name="CaptureTimeLcdDisplay">
     <property name="geometry">
      <rect>
       <x>1690</x>
@@ -69,7 +75,7 @@ color: rgb(0, 170, 0);</string>
      <number>0</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="CaptureTimePlusButton">
     <property name="geometry">
      <rect>
       <x>2000</x>
@@ -82,7 +88,7 @@ color: rgb(0, 170, 0);</string>
      <string>+</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="CaptureTimeMinusButton">
     <property name="geometry">
      <rect>
       <x>2000</x>
@@ -95,7 +101,7 @@ color: rgb(0, 170, 0);</string>
      <string>-</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_2">
+   <widget class="QLCDNumber" name="TriggerLcdDisplay">
     <property name="geometry">
      <rect>
       <x>1690</x>
@@ -109,7 +115,7 @@ color: rgb(0, 170, 0);</string>
 color: rgb(0, 170, 0);</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="TriggerPlusButton">
     <property name="geometry">
      <rect>
       <x>2000</x>
@@ -122,7 +128,7 @@ color: rgb(0, 170, 0);</string>
      <string>+</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="TriggerPlusButton_2">
     <property name="geometry">
      <rect>
       <x>2000</x>
@@ -135,24 +141,30 @@ color: rgb(0, 170, 0);</string>
      <string>-</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="CaptureTimeLabel">
     <property name="geometry">
      <rect>
       <x>1700</x>
       <y>360</y>
-      <width>291</width>
+      <width>431</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Zeit [ms]</string>
+     <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="EntranceVoltageLabel">
     <property name="geometry">
      <rect>
       <x>1870</x>
-      <y>950</y>
+      <y>960</y>
       <width>321</width>
       <height>61</height>
      </rect>
@@ -161,7 +173,10 @@ color: rgb(0, 170, 0);</string>
      <string>U_eingang [V]</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="TriggerLabel">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1740</x>
@@ -170,11 +185,18 @@ color: rgb(0, 170, 0);</string>
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>11</pointsize>
+      <kerning>false</kerning>
+     </font>
+    </property>
     <property name="text">
      <string>Trigger</string>
     </property>
    </widget>
-   <widget class="QDial" name="dial">
+   <widget class="QDial" name="EntranceVoltageDial">
     <property name="geometry">
      <rect>
       <x>1860</x>
@@ -183,14 +205,47 @@ color: rgb(0, 170, 0);</string>
       <height>231</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"> </string>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>4</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>1</number>
+    </property>
+    <property name="sliderPosition">
+     <number>1</number>
+    </property>
+    <property name="tracking">
+     <bool>true</bool>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="wrapping">
+     <bool>false</bool>
+    </property>
+    <property name="notchTarget">
+     <double>10.000000000000000</double>
+    </property>
+    <property name="notchesVisible">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="SendButton">
     <property name="geometry">
      <rect>
       <x>1640</x>
-      <y>880</y>
+      <y>940</y>
       <width>181</width>
-      <height>101</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -200,7 +255,7 @@ color: rgb(0, 170, 0);</string>
      <string>Send</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="BtSettingsButton_2">
+   <widget class="QToolButton" name="FreezeButton">
     <property name="geometry">
      <rect>
       <x>1640</x>
@@ -211,6 +266,58 @@ color: rgb(0, 170, 0);</string>
     </property>
     <property name="text">
      <string>Freeze</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>1810</x>
+      <y>880</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>±0,3 V</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1830</x>
+      <y>700</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>±1 V</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>2070</x>
+      <y>690</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>±3 V</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>2060</x>
+      <y>880</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>±10 V</string>
     </property>
    </widget>
   </widget>

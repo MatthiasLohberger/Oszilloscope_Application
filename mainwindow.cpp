@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFrame>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,6 +16,19 @@ MainWindow::MainWindow(QWidget *parent)
             this, SIGNAL(BtSettingsButtonPressed()));
     connect(ui->SendButton, SIGNAL(clicked()),
             this, SIGNAL(SendButton_Pressed()));
+
+    connect(ui->CaptureTimePlusButton, SIGNAL(clicked()),
+            this, SLOT(CaptureTimePlusButtonClicked()));
+    connect(ui->CaptureTimeMinusButton, SIGNAL(clicked()),
+            this, SLOT(CaptureTimeMinusButtonClicked()));
+
+
+    //default Values   --> delete later
+    N_SampleFactor = 1;
+    M_new = 1;
+    ui->CaptureTimeLabel->setText("Capture Time [µs]");
+    ui->CaptureTimeLcdDisplay->display(200);
+
 
 
 
@@ -185,6 +199,66 @@ void MainWindow::plot(QByteArray data){
 
 
 
+// ----------------------------------------------------------
+
+
+
+
+
+
+
+
+// Buttons and Displays
+
+void MainWindow::CaptureTimeWidgetManagement(int step){
+    if((M_new==0 && step==-1)||(M_new==16 && step==1)){
+        return;
+    }
+
+
+    M_new = M_new + step;
+
+
+    if(1<=M_new && M_new<= 2){
+        ui->CaptureTimeLabel->setText("Capture Time [µs]");
+    }
+    else if(3<=M_new && M_new<= 11){
+        ui->CaptureTimeLabel->setText("Capture Time [ms]");
+    }
+    else if(12<=M_new && M_new<= 16){
+        ui->CaptureTimeLabel->setText("Capture Time [s]");
+    }
+
+
+    switch (M_new) {
+        case 1: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 2: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 3: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 4: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 5: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 6: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 7: ui->CaptureTimeLcdDisplay->display(20); break;
+        case 8: ui->CaptureTimeLcdDisplay->display(50); break;
+        case 9: ui->CaptureTimeLcdDisplay->display(100); break;
+        case 10: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 11: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 12: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 13: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 14: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 15: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 16: ui->CaptureTimeLcdDisplay->display(20); break;
+
+    }
+}
+
+
+void MainWindow::CaptureTimePlusButtonClicked(){
+        CaptureTimeWidgetManagement(1);
+}
+
+void MainWindow::CaptureTimeMinusButtonClicked(){
+        CaptureTimeWidgetManagement(-1);
+}
 
 
 

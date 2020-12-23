@@ -34,12 +34,26 @@ private:
     QMutex mutexPlot;
     const int T_AD0=125;            //Grundsamplezeit in [ns]
 
+    int N_SampleFactor;
+    int M_new;
+    int M_old;
+    int step_down = -1, step_up = 1;
+
 
 public slots:
     void EnableSendButton();
 
     void plot(QByteArray data);
     // void scaleAxes(QByteArray CommandLine);
+
+
+
+private slots:
+    void CaptureTimeWidgetManagement(int step);
+    void CaptureTimePlusButtonClicked();
+    void CaptureTimeMinusButtonClicked();
+
+
 
 signals:
     void BtSettingsButtonPressed();
