@@ -42,6 +42,9 @@ BtWindow::BtWindow(QWidget *parent) :
 
     // [Construct UI] End
 
+    QFont f("Calibri", 18);
+    f.setCapitalization(QFont::MixedCase);
+    ui->SendButton->setFont(f);
 
 
 

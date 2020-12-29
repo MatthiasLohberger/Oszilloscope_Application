@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QFont f("Calibri", 18);
+    f.setCapitalization(QFont::MixedCase);
+    this->setFont(f);
+
     ui->SendButton->setEnabled(false);
 
     //connect(ui->BtSettingsButton, &QToolButton::clicked, this, &MainWindow::showBluetoothWindow);
@@ -72,11 +76,11 @@ void MainWindow::SetUpPlot(){
     //ui->horizontalFrame->setMidLineWidth(1);
 
 
-    ui->QCPlot->addGraph();
+        //ui->QCPlot->addGraph();
 
     // look(colors, brush, ...)
     ui->QCPlot->setBackground(Qt::darkBlue);
-    ui->QCPlot->addGraph(0)->setPen(QPen(Qt::green));
+        //ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
     //ui->QCustomPlotTestW->addGraph(0)->setBrush()
 
     // axe labels
@@ -110,27 +114,21 @@ void MainWindow::plot(QByteArray data){
     QVector<double> x(2048), y(2048);
     unsigned int yUInt;
 
-    int i, k=0, SampleFactor, T_AD;
+    int i, k=0, SampleFactor, T_AD, hInt;
     float xStepSize, yRange;
     double yDouble, xMin, xDouble;
     QByteArray hcontainer;
 
-    // 1. allocate mutex or wait until the allocation was sucessful
-    while(mutexPlot.tryLock()){
 
-    }
-
-
-
-    // 2. clear plot bzw unten replot beim ersten plot Teil
-
-
+    qDebug() << "Plot 1";
 
     // 3. read yRange = EntranceArea out
         // später auslagern in Slot "void scaleAxes(QByteArray CommandLine);"
-    hcontainer[0] = data[3];         // 2nd CommandLine element = EntranceArea
-    hcontainer.toInt();
-    switch(hcontainer.toInt()){
+    hcontainer.append(data[3]);         // 2nd CommandLine element = EntranceArea
+    //hInt = hcontainer.toInt();
+    hInt =(int) hcontainer[0];
+    //hInt = hcontainer;
+    switch(hInt){
         case 1: yRange =10;
         case 2: yRange =3;
         case 3: yRange =1;
@@ -138,7 +136,7 @@ void MainWindow::plot(QByteArray data){
         //default:
     }
 
-
+    qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hInt;
 
     // 4. determine yValues
     for(i=12; i<4108; i=i+2){
@@ -151,7 +149,7 @@ void MainWindow::plot(QByteArray data){
         k++;
     }
 
-
+    qDebug() << "Plot 3";
 
     // 5. determine corresponding xValues
     SampleFactor = ((int) data[5]) + ((int) data[6]<<8);          //combine high & low byte   // cast erlaubt? Hilfsvar???
@@ -160,23 +158,43 @@ void MainWindow::plot(QByteArray data){
 
     xMin = (T_AD/2) - T_AD;
     x[0] = xMin;
-    for(i=1; i<=2048; i++){
+    qDebug() << "Plot 3.1";
+    for(i=1; i<2048; i++){
 
         xDouble = xMin + (xStepSize * i);
 
         x[i] = xDouble;
     }
 
+    qDebug() << "Plot 4";
+
+
+
+
+    // 1. allocate mutex or wait until the allocation was sucessful         // nach unten verschieben, daten können vorbereitet werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //while(mutexPlot.tryLock()){
+
+    //}
+
+
+
+    // 2. clear plot bzw unten replot beim ersten plot Teil                 // nach unten verschieben, clear unten nach plot!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ui->QCPlot->clearGraphs();
+    ui->QCPlot->addGraph();
+    ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
+
+    qDebug() << "Plot 4.1";
 
 
     // 6. Plotten
     i = 0;
-    QVector<double> xValueMin(1), yValueMin;
+    QVector<double> xValueMin(1), yValueMin(1);
     xValueMin[0] = x[0];
     yValueMin[0] = y[0];
     ui->QCPlot->graph(0)->setData(xValueMin, yValueMin);
     ui->QCPlot->replot();
         // delay(); ???
+    qDebug() << "Plot 4.2";
 
     for (i=1; i<2048; i++) {
         ui->QCPlot->graph(0)->addData(x[i], y[i]);
@@ -184,10 +202,12 @@ void MainWindow::plot(QByteArray data){
             // delay(); ???
     }
 
-
+    qDebug() << "Plot 5";
 
     // 7. free the mutex
-    mutexPlot.unlock();
+    //mutexPlot.unlock();
+
+    qDebug() << "Plot 6";
 }
 
 

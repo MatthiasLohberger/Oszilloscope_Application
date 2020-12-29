@@ -10,6 +10,17 @@
     <height>1200</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Calibri</family>
+    <pointsize>18</pointsize>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+    <stylestrategy>NoAntialias</stylestrategy>
+    <kerning>false</kerning>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -21,82 +32,11 @@ color: rgb(0, 0, 0);
  
 </string>
   </property>
-  <widget class="QGroupBox" name="BluetoothDeviceBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>120</y>
-     <width>2101</width>
-     <height>201</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 0);
-background-color: rgb(195, 195, 195);</string>
-   </property>
-   <layout class="QHBoxLayout" name="TitleBox">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <item>
-     <widget class="QLabel" name="LableBtDevice">
-      <property name="text">
-       <string>Bluetooth Device: </string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="BtDeviceSelect"/>
-    </item>
-    <item>
-     <widget class="QPushButton" name="SearchButton">
-      <property name="text">
-       <string>Search</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="ConnectButton">
-      <property name="text">
-       <string>Connect</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="horizontalGroupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>810</y>
-     <width>571</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 0);</string>
-   </property>
-   <layout class="QHBoxLayout" name="TitleBox_3">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
-    </property>
-    <item>
-     <widget class="QLabel" name="LableInputBuffer">
-      <property name="text">
-       <string>Input Buffer: </string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLCDNumber" name="InputBufferBoxTitle"/>
-    </item>
-   </layout>
-  </widget>
   <widget class="QLabel" name="Title">
    <property name="geometry">
     <rect>
-     <x>23</x>
-     <y>10</y>
+     <x>40</x>
+     <y>30</y>
      <width>491</width>
      <height>55</height>
     </rect>
@@ -111,201 +51,13 @@ text-decoration: underline;</string>
     <string>EAS Oszilloscope</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="DataBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>450</y>
-     <width>2171</width>
-     <height>341</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-color: rgb(0, 0, 0);
-color: rgb(0, 0, 0);
-background-color: rgb(195, 195, 195);</string>
-   </property>
-   <property name="title">
-    <string>Data Telegram:</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QGroupBox" name="DataTelegramBox">
-      <property name="styleSheet">
-       <string notr="true"> 
- 
-background-color: rgb(185, 185, 185);</string>
-      </property>
-      <layout class="QHBoxLayout" name="TitleBox_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_DataTelegram">
-         <property name="text">
-          <string>Data Telegram: </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_V">
-         <property name="text">
-          <string> 'V'</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_EntranceArea">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_H">
-         <property name="text">
-          <string> 'H'</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_N_Low">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_N_High">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_T">
-         <property name="text">
-          <string> 'T'</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerLow">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerHigh">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerMode">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>+</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_TriggerEdge">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(195, 195, 195);</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="SendButton">
-      <property name="text">
-       <string>Send</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="DefaultButton">
-      <property name="text">
-       <string>Default</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
-     <x>1930</x>
-     <y>10</y>
+     <x>1820</x>
+     <y>40</y>
      <width>241</width>
-     <height>61</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="text">
@@ -315,8 +67,8 @@ background-color: rgb(185, 185, 185);</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>970</y>
+     <x>1770</x>
+     <y>780</y>
      <width>221</width>
      <height>221</height>
     </rect>
@@ -346,10 +98,10 @@ background-color: rgb(185, 185, 185);</string>
   <widget class="QFrame" name="verticalFrame">
    <property name="geometry">
     <rect>
-     <x>910</x>
+     <x>340</x>
      <y>810</y>
-     <width>221</width>
-     <height>301</height>
+     <width>341</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -392,29 +144,15 @@ color: rgb(0, 0, 0);
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>(Trigger-</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_15">
-      <property name="text">
-       <string>mode)</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QFrame" name="verticalFrame_2">
    <property name="geometry">
     <rect>
-     <x>660</x>
-     <y>840</y>
+     <x>30</x>
+     <y>810</y>
      <width>221</width>
-     <height>261</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -437,21 +175,324 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="SendButton">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>760</y>
+     <width>221</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Send</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DefaultButton">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>900</y>
+     <width>221</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LableBtDevice">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>140</y>
+     <width>231</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bluetooth Device: </string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="BtDeviceSelect">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>130</y>
+     <width>571</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <stylestrategy>NoAntialias</stylestrategy>
+     <kerning>false</kerning>
+    </font>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="SearchButton">
+   <property name="geometry">
+    <rect>
+     <x>950</x>
+     <y>130</y>
+     <width>331</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ConnectButton">
+   <property name="geometry">
+    <rect>
+     <x>1350</x>
+     <y>130</y>
+     <width>371</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>1350</x>
+     <y>250</y>
+     <width>371</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>430</y>
+     <width>1651</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Data Telegram (current configuration running on the EAS-Board):</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="DataTelegramBox">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>484</y>
+     <width>2147</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> 
+ 
+background-color: rgb(185, 185, 185);</string>
+   </property>
+   <layout class="QHBoxLayout" name="TitleBox_2">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
     <item>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_V">
       <property name="text">
-       <string>(Trigger-</string>
+       <string> 'V'</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="label_7">
       <property name="text">
-       <string>edge)</string>
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_EntranceArea">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_H">
+      <property name="text">
+       <string> 'H'</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_N_Low">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_N_High">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_T">
+      <property name="text">
+       <string> 'T'</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_TriggerLow">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_TriggerHigh">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_TriggerMode">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_TriggerEdge">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(195, 195, 195);</string>
       </property>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>720</y>
+     <width>323</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Triggermode</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>720</y>
+     <width>211</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Triggeredge</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>1040</x>
+     <y>910</y>
+     <width>1081</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>(c) Matthias Lohberger, HAW Landshut, 29.12.2020, Oscilloscope Application for the EAS-Board</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>1190</x>
+     <y>760</y>
+     <width>221</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Info</string>
+   </property>
   </widget>
  </widget>
  <resources/>

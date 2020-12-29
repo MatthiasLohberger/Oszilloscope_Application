@@ -96,6 +96,8 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);
     BluetoothThread.start();
+    OsziMainWindow.moveToThread(&PlotThread);
+    PlotThread.start();
     qDebug() << "Treads started!";
 
 
@@ -121,8 +123,9 @@ void Oscilloscope::startOscilloscope(){
     connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
             this, SLOT(ReceiveData(QByteArray)));
 
+    connect(this, SIGNAL(DataReadyToPlot(QByteArray)),
+            &OsziMainWindow, SLOT(plot(QByteArray)));
 
-    //Plot starten
 
     //Send buttons enablen in beiden Windows
     emit EnableSendButtonBtWindow();
@@ -222,6 +225,8 @@ void Oscilloscope::ReceiveData(QByteArray message){
         .connect_readyRead();
         }
         */
+        emit DataReadyToPlot(message);
+
      }
 }
 

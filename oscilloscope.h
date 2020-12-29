@@ -53,6 +53,7 @@ signals:
     void synchronizeSocket();
     void sendDefaultCommanLine(ConfigData);
     void connectSocketToReadyRead();
+    void DataReadyToPlot(QByteArray);
 };
 
 #endif // OSCILLOSCOPE_H

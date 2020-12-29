@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     o.showOscilloscopeMainWindow();
 
 
+
     // Test Konsolenausgabe
     qDebug() << "Welcome to the Bluetooth Oscilloscope Application for the EAS Board of the Hochschule Lanshut!";
     qDebug() << "Starting Application...";
