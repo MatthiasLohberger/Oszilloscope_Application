@@ -47,6 +47,11 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(connectSocketToReadyRead()),
             &bluetoothSocket, SLOT(connectReadyRead()));
 
+    connect(this, SIGNAL(disconnectSocketFromReadyRead()),
+            &bluetoothSocket, SLOT(disconnect_readyRead()));
+
+
+
     connect(&bluetoothSocket, SIGNAL(StartNormalTransmission()),
             this, SLOT(startOscilloscope()));
 
@@ -96,8 +101,8 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);
     BluetoothThread.start();
-    OsziMainWindow.moveToThread(&PlotThread);
-    PlotThread.start();
+    //OsziMainWindow.moveToThread(&PlotThread);
+    //PlotThread.start();
     qDebug() << "Treads started!";
 
 
@@ -197,7 +202,10 @@ void Oscilloscope::ReceiveData(QByteArray message){
     // Header Check
     qDebug() << "Header Check: ";
     if(checkHeader(header) == false){
-        qDebug() << "Wrong Header received!";                 
+        qDebug() << "Wrong Header received!";
+
+        StopAndRestartOscilloscope();
+
         //Aufruf Slot für
                 // Plot stoppen
                 // Bluetooth Übertragung stoppen
@@ -378,5 +386,59 @@ void Oscilloscope::ReceiveData(QByteArray message){
     }
 }
 */
+
+
+
+
+void Oscilloscope::stopOszilloscope(){
+    // Disconnect der Signale für receive Data und Plot
+    disconnect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+            this, SLOT(ReceiveData(QByteArray)));
+
+    disconnect(this, SIGNAL(DataReadyToPlot(QByteArray)),
+            &OsziMainWindow, SLOT(plot(QByteArray)));
+
+
+    emit disconnectSocketFromReadyRead();
+
+
+    // Treads stoppen
+    BluetoothThread.exit();
+        //PlotThread.exit();
+
+
+    // Send Buttons disablen
+    BluetoothWindow.Disable_SendButton();
+    OsziMainWindow.DisableSendButton();
+
+     qDebug() << "Signals disconnected, Buttons disabled, Threads stopped!";
+
+    // Plot leeren
+    OsziMainWindow.ClearPlot();
+
+    // (set default values)
+        // scale Axes and
+}
+
+
+void Oscilloscope::StopAndRestartOscilloscope(){
+    qDebug() << "Stop normal Transmission";
+    stopOszilloscope();
+
+     qDebug() << "Try Resynchronisation!";
+    bluetoothSocket.SocketSynchronisation();
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

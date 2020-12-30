@@ -27,7 +27,7 @@ public:
 
     QByteArray ReadSocketForSync(int);
     void connect_readyRead();
-    void disconnect_readyRead();
+
 
 
 public slots:
@@ -35,6 +35,8 @@ public slots:
     void SocketSynchronisation();
     void connectReadyRead();
     void setDefaultCommanLine(ConfigData);
+    void disconnect_readyRead();
+
 
 
 signals:

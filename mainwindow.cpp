@@ -57,6 +57,10 @@ void MainWindow::EnableSendButton(){
     ui->SendButton->setEnabled(true);
 }
 
+void MainWindow::DisableSendButton(){
+    ui->SendButton->setEnabled(false);
+}
+
 
 
 
@@ -83,6 +87,7 @@ void MainWindow::SetUpPlot(){
         //ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
     //ui->QCustomPlotTestW->addGraph(0)->setBrush()
 
+
     // axe labels
     ui->QCPlot->xAxis->setLabel("Time [µs]");
     ui->QCPlot->xAxis->setLabelColor(Qt::white);
@@ -92,7 +97,7 @@ void MainWindow::SetUpPlot(){
     ui->QCPlot->yAxis->setLabelColor(Qt::white);
     ui->QCPlot->yAxis->setTickLabelColor(Qt::white);
     // axe ranges
-    ui->QCPlot->xAxis->setRange(-1, 1);       //anpassen!!!!!!!!!!!!!!!
+    ui->QCPlot->xAxis->setRange(-0.128, 0.128);       //anpassen!!!!!!!!!!!!!!!
     ui->QCPlot->xAxis->setBasePen(QColor(255, 255, 255));
     ui->QCPlot->yAxis->setRange(-12, 12);
     ui->QCPlot->yAxis->setBasePen(QColor(255, 255, 255));
@@ -104,6 +109,30 @@ void MainWindow::SetUpPlot(){
     ui->QCPlot->yAxis->grid()->setSubGridVisible(false);
 
     // ticks
+
+
+    //example
+
+    // generate some data:
+    QVector<double> x(101), y(101); // initialize with entries 0..100
+    for (int i=0; i<101; ++i)
+    {
+      x[i] = i/50.0 - 1; // x goes from -1 to 1
+      y[i] = x[i]*x[i]; // let's plot a quadratic function
+    }
+    // create graph and assign data to it:
+    ui->QCPlot->addGraph();
+    ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
+    ui->QCPlot->graph(0)->setData(x, y);
+/*
+    // give the axes some labels:
+    ui->QCPlot->xAxis->setLabel("x");
+    ui->QCPlot->yAxis->setLabel("y");
+    // set axes ranges, so we see all data:
+    ui->QCPlot->xAxis->setRange(-1, 1);
+    ui->QCPlot->yAxis->setRange(0, 1);
+   */
+    ui->QCPlot->replot();
 }
 
 
@@ -112,15 +141,21 @@ void MainWindow::SetUpPlot(){
 
 void MainWindow::plot(QByteArray data){
     QVector<double> x(2048), y(2048);
+    //QVector<double> x(2040), y(2040);
     unsigned int yUInt;
 
-    int i, k=0, SampleFactor, T_AD, hInt;
-    float xStepSize, yRange;
-    double yDouble, xMin, xDouble;
+    int i, j, k=0, l, SampleFactor, t, hInt;
+    float yRange, xMin, xStepSize, T_AD;
+    double yDouble, xDouble;
     QByteArray hcontainer;
 
-
+    qDebug() << " ";
     qDebug() << "Plot 1";
+
+
+
+
+
 
     // 3. read yRange = EntranceArea out
         // später auslagern in Slot "void scaleAxes(QByteArray CommandLine);"
@@ -129,12 +164,19 @@ void MainWindow::plot(QByteArray data){
     hInt =(int) hcontainer[0];
     //hInt = hcontainer;
     switch(hInt){
-        case 1: yRange =10;
-        case 2: yRange =3;
-        case 3: yRange =1;
-        case 4: yRange =0.3;
+        case 1: yRange =10; break;
+        case 2: yRange =3; break;
+        case 3: yRange =1; break;
+        case 4: yRange =0.3; break;
         //default:
     }
+
+
+
+
+
+
+
 
     qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hInt;
 
@@ -149,20 +191,33 @@ void MainWindow::plot(QByteArray data){
         k++;
     }
 
+
+
+
+
+
+
+
     qDebug() << "Plot 3";
 
     // 5. determine corresponding xValues
     SampleFactor = ((int) data[5]) + ((int) data[6]<<8);          //combine high & low byte   // cast erlaubt? Hilfsvar???
     T_AD = T_AD0 * SampleFactor;                                // T_AD0 const Attribut von MAinWindos
-    xStepSize = T_AD/2048;
+    xStepSize = T_AD/2048.0;
 
-    xMin = (T_AD/2) - T_AD;
+    t = 2048*T_AD;
+
+    xMin = ((t/2) - t);
+
+    qDebug() << "SampleFactor = " << SampleFactor << "  T_AD = " << T_AD << "   xStepsize = " << xStepSize
+             << "   + t = " << t << "    xMin = " << xMin;
+
     x[0] = xMin;
     qDebug() << "Plot 3.1";
     for(i=1; i<2048; i++){
 
         xDouble = xMin + (xStepSize * i);
-
+        qDebug() << "x[" << i << "] = " << xDouble;
         x[i] = xDouble;
     }
 
@@ -171,7 +226,11 @@ void MainWindow::plot(QByteArray data){
 
 
 
-    // 1. allocate mutex or wait until the allocation was sucessful         // nach unten verschieben, daten können vorbereitet werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+    // 1. allocate mutex or wait until the allocation was successful         // nach unten verschieben, daten können vorbereitet werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //while(mutexPlot.tryLock()){
 
     //}
@@ -180,12 +239,15 @@ void MainWindow::plot(QByteArray data){
 
     // 2. clear plot bzw unten replot beim ersten plot Teil                 // nach unten verschieben, clear unten nach plot!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ui->QCPlot->clearGraphs();
-    ui->QCPlot->addGraph();
+    ui->QCPlot->addGraph(0);
     ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
+
+    //ui->QCPlot->graph(0)->moveToThread()
+
 
     qDebug() << "Plot 4.1";
 
-
+/*
     // 6. Plotten
     i = 0;
     QVector<double> xValueMin(1), yValueMin(1);
@@ -201,6 +263,72 @@ void MainWindow::plot(QByteArray data){
         ui->QCPlot->replot();
             // delay(); ???
     }
+
+    qDebug() << "Plot 5";
+
+    // 7. free the mutex
+    //mutexPlot.unlock();
+
+    qDebug() << "Plot 6";
+*/
+
+
+
+
+
+
+
+
+
+    // 6. Plotten
+
+
+
+
+        //die ersten 8 Werte (0 bis 7)
+    /*
+    //i = 0;
+    QVector<double> xValueMin(8), yValueMin(8);
+    for (i=0; i<=7; i++) {
+        xValueMin[i] = x[i];
+        yValueMin[i] = y[i];
+    }
+    qDebug() << "Plot 4.2";
+    ui->QCPlot->graph()->setData(xValueMin, yValueMin);
+    ui->QCPlot->replot();
+    // delay(); ???
+    */
+    qDebug() << "Size of xVektor = " << x.size();
+    qDebug() << "Size of yVektor = " << y.size();
+    qDebug() << "Plot 4.2";
+    int PlotStepSize = 32;
+
+    for (i=0; i<=2047; i=i+PlotStepSize) {
+        qDebug() << "Wert[" << i << "] = " << y[i];
+        qDebug() << "Plot 4.3(for1)";
+        qDebug() << "i = " <<i;
+
+        /*
+        for(j=i; j<j+PlotStepSize; j++){
+            //qDebug() << "j = " <<j;
+            ui->QCPlot->graph()->addData(x[j], y[j]);
+        }
+        */
+
+
+        for(j=0; j<PlotStepSize; j++){
+            //qDebug() << "j = " <<j;
+            l = i +j;
+            ui->QCPlot->graph(0)->addData(x[l], y[l]);
+        }
+
+
+
+        qDebug() << "Plot 4.4(for2)";
+        ui->QCPlot->replot();
+        // delay(); ???
+    }
+    qDebug() << "i = " << i;
 
     qDebug() << "Plot 5";
 
@@ -280,6 +408,10 @@ void MainWindow::CaptureTimeMinusButtonClicked(){
         CaptureTimeWidgetManagement(-1);
 }
 
+
+void MainWindow::ClearPlot(){
+    ui->QCPlot->clearGraphs();
+}
 
 
 

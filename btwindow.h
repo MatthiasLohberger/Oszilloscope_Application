@@ -61,6 +61,7 @@ public slots:
     void CloseButtonPressed();
     void ConnectButtonPressed();
     void Enable_SendButton();
+    void Disable_SendButton();
 
     void setTextConnectButton();
     void newDataForPlainTextWidget(ConfigDataString &);

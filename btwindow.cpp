@@ -114,6 +114,11 @@ void BtWindow::Enable_SendButton(){
 }
 
 
+void BtWindow::Disable_SendButton(){
+     ui->SendButton->setEnabled(false);
+}
+
+
 
 //[Slot Funktionen] Buttons Pressed/Selected   End
 

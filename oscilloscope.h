@@ -34,7 +34,7 @@ private:
     BluetoothSocket bluetoothSocket;
     int flag_connect_readyRead;
 
-    QByteArray ReceiveBuffer;
+    //QByteArray ReceiveBuffer;
 
 
 public slots:
@@ -45,6 +45,9 @@ public slots:
                                                                     //Starting threads for bluetooth transmission and plot
     void startOscilloscope();
 
+    void stopOszilloscope();
+    void StopAndRestartOscilloscope();
+
 
 signals:
     void ChangeTextConnectButton();
@@ -53,6 +56,7 @@ signals:
     void synchronizeSocket();
     void sendDefaultCommanLine(ConfigData);
     void connectSocketToReadyRead();
+    void disconnectSocketFromReadyRead();
     void DataReadyToPlot(QByteArray);
 };
 

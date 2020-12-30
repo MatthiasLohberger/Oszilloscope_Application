@@ -32,7 +32,7 @@ private:
     Ui::MainWindow *ui;
 
     QMutex mutexPlot;
-    const int T_AD0=125;            //Grundsamplezeit in [ns]
+    const double T_AD0=125/1000000000;            //Grundsamplezeit in [ns]
 
     int N_SampleFactor;
     int M_new;
@@ -42,6 +42,9 @@ private:
 
 public slots:
     void EnableSendButton();
+    void DisableSendButton();
+
+    void ClearPlot();
 
     void plot(QByteArray data);
     // void scaleAxes(QByteArray CommandLine);
