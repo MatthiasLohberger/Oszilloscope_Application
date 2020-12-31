@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //default Values   --> delete later
-    N_SampleFactor = 1;
+    //N_SampleFactor = 1;
     M_new = 1;
     ui->CaptureTimeLabel->setText("Capture Time [µs]");
     ui->CaptureTimeLcdDisplay->display(200);
@@ -89,18 +89,18 @@ void MainWindow::SetUpPlot(){
 
 
     // axe labels
-    ui->QCPlot->xAxis->setLabel("Time [µs]");
-    ui->QCPlot->xAxis->setLabelColor(Qt::white);
-    ui->QCPlot->xAxis->setTickLabelColor(Qt::white);
+//    ui->QCPlot->xAxis->setLabel("Time [µs]");
+//    ui->QCPlot->xAxis->setLabelColor(Qt::white);
+//    ui->QCPlot->xAxis->setTickLabelColor(Qt::white);
 
-    ui->QCPlot->yAxis->setLabel("Voltage [V]");
-    ui->QCPlot->yAxis->setLabelColor(Qt::white);
-    ui->QCPlot->yAxis->setTickLabelColor(Qt::white);
+//    ui->QCPlot->yAxis->setLabel("Voltage [V]");
+//    ui->QCPlot->yAxis->setLabelColor(Qt::white);
+//    ui->QCPlot->yAxis->setTickLabelColor(Qt::white);
     // axe ranges
-    ui->QCPlot->xAxis->setRange(-0.128, 0.128);       //anpassen!!!!!!!!!!!!!!!
-    ui->QCPlot->xAxis->setBasePen(QColor(255, 255, 255));
-    ui->QCPlot->yAxis->setRange(-12, 12);
-    ui->QCPlot->yAxis->setBasePen(QColor(255, 255, 255));
+//    ui->QCPlot->xAxis->setRange(-0.128, 0.128);       //anpassen!!!!!!!!!!!!!!!
+//    ui->QCPlot->xAxis->setBasePen(QColor(255, 255, 255));
+//    ui->QCPlot->yAxis->setRange(-12, 12);
+//    ui->QCPlot->yAxis->setBasePen(QColor(255, 255, 255));
 
     // grid
     ui->QCPlot->xAxis->grid();
@@ -112,7 +112,7 @@ void MainWindow::SetUpPlot(){
 
 
     //example
-
+/*
     // generate some data:
     QVector<double> x(101), y(101); // initialize with entries 0..100
     for (int i=0; i<101; ++i)
@@ -124,15 +124,16 @@ void MainWindow::SetUpPlot(){
     ui->QCPlot->addGraph();
     ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
     ui->QCPlot->graph(0)->setData(x, y);
-/*
+
     // give the axes some labels:
     ui->QCPlot->xAxis->setLabel("x");
     ui->QCPlot->yAxis->setLabel("y");
     // set axes ranges, so we see all data:
     ui->QCPlot->xAxis->setRange(-1, 1);
     ui->QCPlot->yAxis->setRange(0, 1);
-   */
+
     ui->QCPlot->replot();
+    */
 }
 
 
@@ -144,8 +145,10 @@ void MainWindow::plot(QByteArray data){
     //QVector<double> x(2040), y(2040);
     unsigned int yUInt;
 
-    int i, j, k=0, l, SampleFactor, t, hInt;
-    float yRange, xMin, xStepSize, T_AD;
+    int i, j, k=0, l;
+    //int t, hInt;
+    //int SampleFactor
+    //float yRange, xMin, xStepSize, T_AD;
     double yDouble, xDouble;
     QByteArray hcontainer;
 
@@ -156,7 +159,7 @@ void MainWindow::plot(QByteArray data){
 
 
 
-
+/*
     // 3. read yRange = EntranceArea out
         // später auslagern in Slot "void scaleAxes(QByteArray CommandLine);"
     hcontainer.append(data[3]);         // 2nd CommandLine element = EntranceArea
@@ -172,20 +175,20 @@ void MainWindow::plot(QByteArray data){
     }
 
 
+qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hInt;
+*/
 
 
 
 
 
-
-    qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hInt;
 
     // 4. determine yValues
     for(i=12; i<4108; i=i+2){
         yUInt = ((unsigned int) data[i]) + ((unsigned int)data[i+1]<<8);     //QByteArray to unsigned int mit cast erlaubt???
         yUInt = yUInt & 0x0FFF;                                             // 12 Bit max lenght
 
-        yDouble = yUInt*((2*yRange)/4096) - yRange;
+        yDouble = yUInt*((2*y_OneSidedEntranceVoltage)/4096) - y_OneSidedEntranceVoltage;
 
         y[k] = yDouble;                             // Zugriff auf Vektor so ok? oder mit append(...)
         k++;
@@ -200,6 +203,7 @@ void MainWindow::plot(QByteArray data){
 
     qDebug() << "Plot 3";
 
+/*
     // 5. determine corresponding xValues
     SampleFactor = ((int) data[5]) + ((int) data[6]<<8);          //combine high & low byte   // cast erlaubt? Hilfsvar???
     T_AD = T_AD0 * SampleFactor;                                // T_AD0 const Attribut von MAinWindos
@@ -212,11 +216,12 @@ void MainWindow::plot(QByteArray data){
     qDebug() << "SampleFactor = " << SampleFactor << "  T_AD = " << T_AD << "   xStepsize = " << xStepSize
              << "   + t = " << t << "    xMin = " << xMin;
 
+*/
     x[0] = xMin;
     qDebug() << "Plot 3.1";
     for(i=1; i<2048; i++){
 
-        xDouble = xMin + (xStepSize * i);
+        xDouble = xMin + (T_AD * i);
         qDebug() << "x[" << i << "] = " << xDouble;
         x[i] = xDouble;
     }
@@ -414,6 +419,107 @@ void MainWindow::ClearPlot(){
 }
 
 
+
+
+
+
+
+void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
+       float y_OneSidedEntranceVoltage_withOffset;
+       float t;
+       float xMax, xMax_Axis, xMin_Axis;
+
+
+    // 1. determine y_OneSidedEntranceVoltage
+
+    switch(CommandLine.EntranceArea){
+        case 1: y_OneSidedEntranceVoltage =10; break;
+        case 2: y_OneSidedEntranceVoltage =3; break;
+        case 3: y_OneSidedEntranceVoltage =1; break;
+        case 4: y_OneSidedEntranceVoltage =0.3; break;
+        //default:
+    }
+
+    if(y_OneSidedEntranceVoltage == 10 || y_OneSidedEntranceVoltage == 3){      // 12V or 5V
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 2;
+    }
+    else if(y_OneSidedEntranceVoltage == 1){
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 1;   // 2V
+    }
+    else if(y_OneSidedEntranceVoltage == 0.3){
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 0.2; // 0,5V
+    }
+
+
+    // 2. scale y-Axis
+
+    ui->QCPlot->yAxis->setLabel("Voltage [V]");
+    ui->QCPlot->yAxis->setLabelColor(Qt::white);
+    ui->QCPlot->yAxis->setTickLabelColor(Qt::white);
+
+    ui->QCPlot->yAxis->setRange(-y_OneSidedEntranceVoltage_withOffset,
+                                y_OneSidedEntranceVoltage_withOffset);
+    ui->QCPlot->yAxis->setBasePen(QColor(255, 255, 255));
+
+    qDebug() << "yAxis:     y_OneSidedEntranceVoltage = " << y_OneSidedEntranceVoltage
+             << "   y_OneSidedEntranceVoltage_withOffset = " << y_OneSidedEntranceVoltage_withOffset;
+
+
+
+    // 3. determine xRange, T_AD, t, ...
+
+    N_SampleFactor = CommandLine.N;
+
+    T_AD = T_AD0 * N_SampleFactor;         // T_AD0 const Attribut von MAinWindos
+
+    t = T_AD * 2048;
+
+    xMax = t/2;
+    xMin = -xMax;
+
+
+
+    qDebug() << "xAxis:     N_SampleFactor = " << N_SampleFactor << "  T_AD0 = " << T_AD0
+             << "   T_AD = " << T_AD << "   t = " << t << "    xMin = " << xMin;
+
+
+
+    // 4. scale x-Axis and change the Lable
+        // display the right prefix of the unit und rescale the xMin/xMax values (view e.g.)
+    if(t < 1*pow(10, -3)){
+        xMax_Axis = xMax *1*pow(10, 6);                    // e.g. xMax_Axis = 125 [µs] while xMax = 0.000125 [µs]
+        xMin_Axis = -xMax_Axis;
+        ui->QCPlot->xAxis->setLabel("Time [µs]");
+    }
+    else if(t >= 1*pow(10, -3) && t < 0){
+        xMax_Axis = xMax *1*pow(10, 3);                    // e.g. xMax_Axis = 125 [ms] while xMax = 0.125 [ms]
+        xMin_Axis = -xMax_Axis;
+        ui->QCPlot->xAxis->setLabel("Time [ms]");
+    }
+    else if(t >= 0){
+        xMax_Axis = xMax;                                   // e.g. xMax_Axis = 1 [s] while xMax = 1 [s]
+        xMin_Axis = -xMax_Axis;
+        ui->QCPlot->xAxis->setLabel("Time [s]");
+    }
+    qDebug() << "xAxis:     xMax_Axis = " << xMax_Axis << " - xMin_Axis = " << xMin_Axis;
+
+    ui->QCPlot->xAxis->setLabelColor(Qt::white);
+    ui->QCPlot->xAxis->setTickLabelColor(Qt::white);
+
+    ui->QCPlot->xAxis->setRange(xMin_Axis, xMax_Axis);
+    ui->QCPlot->xAxis->setBasePen(QColor(255, 255, 255));
+
+
+
+    // 5. grid
+    ui->QCPlot->xAxis->grid();
+    ui->QCPlot->xAxis->grid()->setSubGridVisible(false);
+    ui->QCPlot->yAxis->grid();
+    ui->QCPlot->yAxis->grid()->setSubGridVisible(false);
+
+
+    ui->QCPlot->replot();
+}
 
 
 

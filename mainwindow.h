@@ -7,6 +7,8 @@
 #include "commandline_eas_board.h"
 #include "qcustomplot.h"
 
+#include "math.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,7 +25,7 @@ public:
     void SetUpPlot();
     //void startPlot();
     //void stopPlot();
-    //void clearPlot();
+
 
 
 
@@ -32,9 +34,16 @@ private:
     Ui::MainWindow *ui;
 
     QMutex mutexPlot;
-    const double T_AD0=125/1000000000;            //Grundsamplezeit in [ns]
 
+
+    //scale axes and range
+    const float T_AD0=125*pow(10, -9);  //Grundsamplezeit 125 [ns]
     int N_SampleFactor;
+    float y_OneSidedEntranceVoltage;
+    float xMin;
+    float T_AD;                         // Sample ziet pro Wert(T_AD = TAD0*N)
+
+    // Capture Time Widget
     int M_new;
     int M_old;
     int step_down = -1, step_up = 1;
@@ -47,7 +56,7 @@ public slots:
     void ClearPlot();
 
     void plot(QByteArray data);
-    // void scaleAxes(QByteArray CommandLine);
+    void scaleAxesAndRange(ConfigData);
 
 
 

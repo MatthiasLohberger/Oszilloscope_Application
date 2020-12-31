@@ -127,10 +127,10 @@ void Oscilloscope::startOscilloscope(){
 
     connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
             this, SLOT(ReceiveData(QByteArray)));
-
+/*
     connect(this, SIGNAL(DataReadyToPlot(QByteArray)),
             &OsziMainWindow, SLOT(plot(QByteArray)));
-
+*/
 
     //Send buttons enablen in beiden Windows
     emit EnableSendButtonBtWindow();
@@ -181,6 +181,8 @@ void Oscilloscope::SendMessage(){
 
 
      bluetoothSocket.sendMessage(message);  //calls the real Fnkt.
+
+     OsziMainWindow.scaleAxesAndRange(CommandLine);
 
 }
 
