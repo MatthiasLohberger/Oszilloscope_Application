@@ -241,6 +241,8 @@ void BtWindow::startServiceSearch(){
     //BluetoothDeviceFinder HBluetoothDeviceFinder(adapter);
     //bluetoothDeviceFinder = HBluetoothDeviceFinder;
 
+    ui->SearchButton->setText("Searching...");
+
     connect(&bluetoothServiceFinder, SIGNAL(ShowServiceDiscovered(const QBluetoothServiceInfo)),
             this, SLOT(ShowNewBtService(const QBluetoothServiceInfo)));
 

@@ -40,8 +40,10 @@ private:
     const float T_AD0=125*pow(10, -9);  //Grundsamplezeit 125 [ns]
     int N_SampleFactor;
     float y_OneSidedEntranceVoltage;
+    float t;
     float xMin;
-    float T_AD;                         // Sample ziet pro Wert(T_AD = TAD0*N)
+    float T_AD;                         // Sample Zeit pro Wert(T_AD = TAD0*N)
+    int CorrectionFactor;
 
     // Capture Time Widget
     int M_new;

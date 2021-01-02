@@ -54,9 +54,9 @@ text-decoration: underline;</string>
   <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
-     <x>1820</x>
-     <y>40</y>
-     <width>241</width>
+     <x>1690</x>
+     <y>10</y>
+     <width>371</width>
      <height>111</height>
     </rect>
    </property>
@@ -242,7 +242,7 @@ color: rgb(0, 0, 0);</string>
     <rect>
      <x>950</x>
      <y>130</y>
-     <width>331</width>
+     <width>471</width>
      <height>111</height>
     </rect>
    </property>
@@ -253,7 +253,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="ConnectButton">
    <property name="geometry">
     <rect>
-     <x>1350</x>
+     <x>1560</x>
      <y>130</y>
      <width>371</width>
      <height>111</height>
@@ -266,7 +266,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>1350</x>
+     <x>1560</x>
      <y>250</y>
      <width>371</width>
      <height>111</height>

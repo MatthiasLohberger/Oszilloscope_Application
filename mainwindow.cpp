@@ -146,44 +146,18 @@ void MainWindow::plot(QByteArray data){
     unsigned int yUInt;
 
     int i, j, k=0, l;
-    //int t, hInt;
-    //int SampleFactor
-    //float yRange, xMin, xStepSize, T_AD;
     double yDouble, xDouble;
     QByteArray hcontainer;
 
-    qDebug() << " ";
+
+
+
+
+
+    // 1. determine yValues --> read data, combine high and low byte to an uint variable,
+    //                          cast the value to 12 Bit max and compute the corresponding double value
     qDebug() << "Plot 1";
 
-
-
-
-
-/*
-    // 3. read yRange = EntranceArea out
-        // später auslagern in Slot "void scaleAxes(QByteArray CommandLine);"
-    hcontainer.append(data[3]);         // 2nd CommandLine element = EntranceArea
-    //hInt = hcontainer.toInt();
-    hInt =(int) hcontainer[0];
-    //hInt = hcontainer;
-    switch(hInt){
-        case 1: yRange =10; break;
-        case 2: yRange =3; break;
-        case 3: yRange =1; break;
-        case 4: yRange =0.3; break;
-        //default:
-    }
-
-
-qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hInt;
-*/
-
-
-
-
-
-
-    // 4. determine yValues
     for(i=12; i<4108; i=i+2){
         yUInt = ((unsigned int) data[i]) + ((unsigned int)data[i+1]<<8);     //QByteArray to unsigned int mit cast erlaubt???
         yUInt = yUInt & 0x0FFF;                                             // 12 Bit max lenght
@@ -198,35 +172,16 @@ qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hIn
 
 
 
+    // 2. determine corresponding xValues
+    qDebug() << "Plot 2";
 
+    for(i=0; i<2048; i++){
 
-
-    qDebug() << "Plot 3";
-
-/*
-    // 5. determine corresponding xValues
-    SampleFactor = ((int) data[5]) + ((int) data[6]<<8);          //combine high & low byte   // cast erlaubt? Hilfsvar???
-    T_AD = T_AD0 * SampleFactor;                                // T_AD0 const Attribut von MAinWindos
-    xStepSize = T_AD/2048.0;
-
-    t = 2048*T_AD;
-
-    xMin = ((t/2) - t);
-
-    qDebug() << "SampleFactor = " << SampleFactor << "  T_AD = " << T_AD << "   xStepsize = " << xStepSize
-             << "   + t = " << t << "    xMin = " << xMin;
-
-*/
-    x[0] = xMin;
-    qDebug() << "Plot 3.1";
-    for(i=1; i<2048; i++){
-
-        xDouble = xMin + (T_AD * i);
-        qDebug() << "x[" << i << "] = " << xDouble;
+        xDouble = (xMin + (T_AD * i)) * CorrectionFactor;
         x[i] = xDouble;
+        //qDebug() << "x[" << i << "] = " << x.at(i);
     }
 
-    qDebug() << "Plot 4";
 
 
 
@@ -235,6 +190,7 @@ qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hIn
 
 
 
+     qDebug() << "Plot 3";
     // 1. allocate mutex or wait until the allocation was successful         // nach unten verschieben, daten können vorbereitet werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //while(mutexPlot.tryLock()){
 
@@ -291,7 +247,7 @@ qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hIn
 
 
         //die ersten 8 Werte (0 bis 7)
-    /*
+/*
     //i = 0;
     QVector<double> xValueMin(8), yValueMin(8);
     for (i=0; i<=7; i++) {
@@ -302,16 +258,21 @@ qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hIn
     ui->QCPlot->graph()->setData(xValueMin, yValueMin);
     ui->QCPlot->replot();
     // delay(); ???
-    */
+*/
+
+
+
     qDebug() << "Size of xVektor = " << x.size();
     qDebug() << "Size of yVektor = " << y.size();
     qDebug() << "Plot 4.2";
     int PlotStepSize = 32;
 
     for (i=0; i<=2047; i=i+PlotStepSize) {
-        qDebug() << "Wert[" << i << "] = " << y[i];
+        qDebug() << "Plot[" << i << "] = "
+                 << "       yWert = " << y[i]
+                 << "       xWert = " << x[i];
         qDebug() << "Plot 4.3(for1)";
-        qDebug() << "i = " <<i;
+
 
         /*
         for(j=i; j<j+PlotStepSize; j++){
@@ -323,7 +284,7 @@ qDebug() << "Plot 2" << "Range: " << yRange << "  " << hcontainer << "  " << hIn
 
         for(j=0; j<PlotStepSize; j++){
             //qDebug() << "j = " <<j;
-            l = i +j;
+            l = i + j;
             ui->QCPlot->graph(0)->addData(x[l], y[l]);
         }
 
@@ -426,7 +387,6 @@ void MainWindow::ClearPlot(){
 
 void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
        float y_OneSidedEntranceVoltage_withOffset;
-       float t;
        float xMax, xMax_Axis, xMin_Axis;
 
 
@@ -487,17 +447,20 @@ void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
     // 4. scale x-Axis and change the Lable
         // display the right prefix of the unit und rescale the xMin/xMax values (view e.g.)
     if(t < 1*pow(10, -3)){
-        xMax_Axis = xMax *1*pow(10, 6);                    // e.g. xMax_Axis = 125 [µs] while xMax = 0.000125 [µs]
+        CorrectionFactor = 1*pow(10, 6);
+        xMax_Axis = xMax * CorrectionFactor;                    // e.g. xMax_Axis = 125 [µs] while xMax = 0.000125 [µs]
         xMin_Axis = -xMax_Axis;
         ui->QCPlot->xAxis->setLabel("Time [µs]");
     }
     else if(t >= 1*pow(10, -3) && t < 0){
-        xMax_Axis = xMax *1*pow(10, 3);                    // e.g. xMax_Axis = 125 [ms] while xMax = 0.125 [ms]
+        CorrectionFactor = 1*pow(10, 3);
+        xMax_Axis = xMax * CorrectionFactor;                    // e.g. xMax_Axis = 125 [ms] while xMax = 0.125 [ms]
         xMin_Axis = -xMax_Axis;
         ui->QCPlot->xAxis->setLabel("Time [ms]");
     }
     else if(t >= 0){
-        xMax_Axis = xMax;                                   // e.g. xMax_Axis = 1 [s] while xMax = 1 [s]
+        CorrectionFactor = 1;
+        xMax_Axis = xMax * CorrectionFactor;                                   // e.g. xMax_Axis = 1 [s] while xMax = 1 [s]
         xMin_Axis = -xMax_Axis;
         ui->QCPlot->xAxis->setLabel("Time [s]");
     }
