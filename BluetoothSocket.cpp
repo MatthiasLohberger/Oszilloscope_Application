@@ -144,7 +144,9 @@ QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
 */
 
 void BluetoothSocket::disconnect_readyRead(){
-    disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+    //disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+    disconnect(socket, &QBluetoothSocket::readyRead,
+               this, &BluetoothSocket::readSocket);
 }
 
 
@@ -311,7 +313,16 @@ void BluetoothSocket::setDefaultCommanLine(ConfigData CommandLine){
 
 
 
-
+void BluetoothSocket::Resync(){
+    QByteArray neglect;
+    int BytesNeglected = 10;
+    for(int i=0; i<BytesNeglected; i++){
+        while(socket->bytesAvailable() < 4108){}
+        neglect = socket->read(4108);
+    }
+    // after 10 times data was neglected, the sync can start
+    SocketSynchronisation();
+}
 
 
 

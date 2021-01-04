@@ -47,11 +47,6 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(connectSocketToReadyRead()),
             &bluetoothSocket, SLOT(connectReadyRead()));
 
-    connect(this, SIGNAL(disconnectSocketFromReadyRead()),
-            &bluetoothSocket, SLOT(disconnect_readyRead()));
-
-
-
     connect(&bluetoothSocket, SIGNAL(StartNormalTransmission()),
             this, SLOT(startOscilloscope()));
 
@@ -207,7 +202,7 @@ void Oscilloscope::ReceiveData(QByteArray message){
         qDebug() << "Wrong Header received!";
 
         StopAndRestartOscilloscope();
-
+        return;
         //Aufruf Slot für
                 // Plot stoppen
                 // Bluetooth Übertragung stoppen
@@ -394,17 +389,17 @@ void Oscilloscope::ReceiveData(QByteArray message){
 
 void Oscilloscope::stopOszilloscope(){
     // Disconnect der Signale für receive Data und Plot
-    disconnect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
-            this, SLOT(ReceiveData(QByteArray)));
+    bluetoothSocket.disconnect_readyRead();
 
     disconnect(this, SIGNAL(DataReadyToPlot(QByteArray)),
             &OsziMainWindow, SLOT(plot(QByteArray)));
 
+    disconnect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
+            this, SLOT(ReceiveData(QByteArray)));
 
-    emit disconnectSocketFromReadyRead();
 
 
-    // Treads stoppen
+    // Treads stoppen, wird später sowieso wieder gestartet
     BluetoothThread.exit();
         //PlotThread.exit();
 
@@ -427,8 +422,8 @@ void Oscilloscope::StopAndRestartOscilloscope(){
     qDebug() << "Stop normal Transmission";
     stopOszilloscope();
 
-     qDebug() << "Try Resynchronisation!";
-    bluetoothSocket.SocketSynchronisation();
+    qDebug() << "Try Resynchronisation!";
+    bluetoothSocket.Resync();
 }
 
 

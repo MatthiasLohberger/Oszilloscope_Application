@@ -36,6 +36,7 @@ public slots:
     void connectReadyRead();
     void setDefaultCommanLine(ConfigData);
     void disconnect_readyRead();
+    void Resync();
 
 
 
