@@ -54,7 +54,7 @@ text-decoration: underline;</string>
   <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
-     <x>1690</x>
+     <x>1810</x>
      <y>10</y>
      <width>371</width>
      <height>111</height>
@@ -67,10 +67,10 @@ text-decoration: underline;</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>1770</x>
-     <y>780</y>
-     <width>221</width>
-     <height>221</height>
+     <x>1940</x>
+     <y>760</y>
+     <width>241</width>
+     <height>241</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -95,18 +95,18 @@ text-decoration: underline;</string>
     <set>Qt::NoTextInteraction</set>
    </property>
   </widget>
-  <widget class="QFrame" name="verticalFrame">
+  <widget class="QFrame" name="verticalFrame_TrigMode">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>810</y>
+     <x>1020</x>
+     <y>760</y>
      <width>341</width>
      <height>241</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">border-color: rgb(0, 0, 0);
-background-color: rgb(150, 150, 150);
+ background-color: rgb(185, 185, 185);
 color: rgb(0, 0, 0);
  </string>
    </property>
@@ -124,21 +124,21 @@ color: rgb(0, 0, 0);
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioButton_TrigModeAuto">
       <property name="text">
        <string>Auto</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton_3">
+     <widget class="QRadioButton" name="radioButton_TrigModeNormal">
       <property name="text">
        <string>Normal</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="radioButton_TrigModeSingle">
       <property name="text">
        <string>Single</string>
       </property>
@@ -146,32 +146,32 @@ color: rgb(0, 0, 0);
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="verticalFrame_2">
+  <widget class="QFrame" name="verticalFrame_TrigEdge">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>810</y>
-     <width>221</width>
+     <x>340</x>
+     <y>760</y>
+     <width>311</width>
      <height>241</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">border-color: rgb(0, 0, 0);
-background-color: rgb(150, 150, 150);
+ background-color: rgb(185, 185, 185);
 color: rgb(0, 0, 0);</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QRadioButton" name="radioButton_4">
+     <widget class="QRadioButton" name="radioButton_TrigEdgePositive">
       <property name="text">
-       <string>Pos</string>
+       <string>Positive</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton_5">
+     <widget class="QRadioButton" name="radioButton_TrigEdgeNegative">
       <property name="text">
-       <string>Neg</string>
+       <string>Negative</string>
       </property>
      </widget>
     </item>
@@ -180,7 +180,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="SendButton">
    <property name="geometry">
     <rect>
-     <x>750</x>
+     <x>1390</x>
      <y>760</y>
      <width>221</width>
      <height>111</height>
@@ -193,8 +193,8 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="DefaultButton">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>900</y>
+     <x>1390</x>
+     <y>890</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -240,7 +240,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="SearchButton">
    <property name="geometry">
     <rect>
-     <x>950</x>
+     <x>910</x>
      <y>130</y>
      <width>471</width>
      <height>111</height>
@@ -253,7 +253,7 @@ color: rgb(0, 0, 0);</string>
   <widget class="QPushButton" name="ConnectButton">
    <property name="geometry">
     <rect>
-     <x>1560</x>
+     <x>1410</x>
      <y>130</y>
      <width>371</width>
      <height>111</height>
@@ -263,11 +263,11 @@ color: rgb(0, 0, 0);</string>
     <string>Connect</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="DisconnectButton">
    <property name="geometry">
     <rect>
-     <x>1560</x>
-     <y>250</y>
+     <x>1810</x>
+     <y>130</y>
      <width>371</width>
      <height>111</height>
     </rect>
@@ -276,7 +276,7 @@ color: rgb(0, 0, 0);</string>
     <string>Disconnect</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_DataTelegram">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -299,9 +299,7 @@ color: rgb(0, 0, 0);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true"> 
- 
-background-color: rgb(185, 185, 185);</string>
+    <string notr="true"> background-color: rgb(185, 185, 185);</string>
    </property>
    <layout class="QHBoxLayout" name="TitleBox_2">
     <property name="sizeConstraint">
@@ -442,38 +440,38 @@ background-color: rgb(185, 185, 185);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_TrigMode">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>720</y>
+     <x>690</x>
+     <y>840</y>
      <width>323</width>
-     <height>81</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
     <string>Triggermode</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_TrigEdge">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>720</y>
-     <width>211</width>
-     <height>81</height>
+     <x>70</x>
+     <y>830</y>
+     <width>221</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
-    <string>Triggeredge</string>
+    <string>Triggeredge:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>1040</x>
-     <y>910</y>
-     <width>1081</width>
+     <x>1740</x>
+     <y>780</y>
+     <width>121</width>
      <height>91</height>
     </rect>
    </property>
@@ -481,17 +479,43 @@ background-color: rgb(185, 185, 185);</string>
     <string>(c) Matthias Lohberger, HAW Landshut, 29.12.2020, Oscilloscope Application for the EAS-Board</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="InfoButton">
    <property name="geometry">
     <rect>
-     <x>1190</x>
-     <y>760</y>
+     <x>1690</x>
+     <y>890</y>
      <width>221</width>
      <height>111</height>
     </rect>
    </property>
    <property name="text">
     <string>Info</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LableStatus">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>260</y>
+     <width>231</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_StatusBar">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>270</y>
+     <width>1471</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(195, 195, 195);</string>
    </property>
   </widget>
  </widget>

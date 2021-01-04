@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFont f("Calibri", 18);
+    QFont f("Helvetica", 12, QFont::Normal);
     f.setCapitalization(QFont::MixedCase);
     this->setFont(f);
 
@@ -26,13 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->CaptureTimeMinusButton, SIGNAL(clicked()),
             this, SLOT(CaptureTimeMinusButtonClicked()));
 
+    connect(ui->EntranceVoltagePlusButton, SIGNAL(clicked()),
+            this, SLOT(EntranceVoltagePlusButtonClicked()));
+    connect(ui->EntranceVoltageMinusButton, SIGNAL(clicked()),
+            this, SLOT(EntranceVoltageMinusButtonClicked()));
+
 
     //default Values   --> delete later
-    //N_SampleFactor = 1;
-    M_new = 1;
-    ui->CaptureTimeLabel->setText("Capture Time [µs]");
-    ui->CaptureTimeLcdDisplay->display(200);
-
+    setDefaultValuesManually();
 
 
 
@@ -148,6 +149,7 @@ void MainWindow::plot(QByteArray data){
     int i, j, k=0, l;
     double yDouble, xDouble;
     QByteArray hcontainer;
+    QPen PlotPen;
 
 
 
@@ -201,7 +203,10 @@ void MainWindow::plot(QByteArray data){
     // 2. clear plot bzw unten replot beim ersten plot Teil                 // nach unten verschieben, clear unten nach plot!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ui->QCPlot->clearGraphs();
     ui->QCPlot->addGraph(0);
-    ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
+    PlotPen.setWidth(3);
+    PlotPen.setColor(Qt::green);
+    //PlotPen.setStyle();
+    ui->QCPlot->graph(0)->setPen(PlotPen);
 
     //ui->QCPlot->graph(0)->moveToThread()
 
@@ -322,57 +327,7 @@ void MainWindow::plot(QByteArray data){
 
 
 
-// Buttons and Displays
 
-void MainWindow::CaptureTimeWidgetManagement(int step){
-    if((M_new==0 && step==-1)||(M_new==16 && step==1)){
-        return;
-    }
-
-
-    M_new = M_new + step;
-
-
-    if(1<=M_new && M_new<= 2){
-        ui->CaptureTimeLabel->setText("Capture Time [µs]");
-    }
-    else if(3<=M_new && M_new<= 11){
-        ui->CaptureTimeLabel->setText("Capture Time [ms]");
-    }
-    else if(12<=M_new && M_new<= 16){
-        ui->CaptureTimeLabel->setText("Capture Time [s]");
-    }
-
-
-    switch (M_new) {
-        case 1: ui->CaptureTimeLcdDisplay->display(200); break;
-        case 2: ui->CaptureTimeLcdDisplay->display(500); break;
-        case 3: ui->CaptureTimeLcdDisplay->display(1); break;
-        case 4: ui->CaptureTimeLcdDisplay->display(2); break;
-        case 5: ui->CaptureTimeLcdDisplay->display(5); break;
-        case 6: ui->CaptureTimeLcdDisplay->display(10); break;
-        case 7: ui->CaptureTimeLcdDisplay->display(20); break;
-        case 8: ui->CaptureTimeLcdDisplay->display(50); break;
-        case 9: ui->CaptureTimeLcdDisplay->display(100); break;
-        case 10: ui->CaptureTimeLcdDisplay->display(200); break;
-        case 11: ui->CaptureTimeLcdDisplay->display(500); break;
-        case 12: ui->CaptureTimeLcdDisplay->display(1); break;
-        case 13: ui->CaptureTimeLcdDisplay->display(2); break;
-        case 14: ui->CaptureTimeLcdDisplay->display(5); break;
-        case 15: ui->CaptureTimeLcdDisplay->display(10); break;
-        case 16: ui->CaptureTimeLcdDisplay->display(20); break;
-
-    }
-}
-
-
-void MainWindow::CaptureTimePlusButtonClicked(){
-        CaptureTimeWidgetManagement(1);
-}
-
-void MainWindow::CaptureTimeMinusButtonClicked(){
-        CaptureTimeWidgetManagement(-1);
-}
 
 
 void MainWindow::ClearPlot(){
@@ -483,6 +438,125 @@ void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
 
     ui->QCPlot->replot();
 }
+
+
+
+
+
+
+
+
+
+
+
+// Buttons and Displays
+
+void MainWindow::setDefaultValuesManually(){
+    //später unnötig
+
+    //[CaptureTimeLCDWidget]
+    //N_SampleFactor = 1;
+    CaptureTimeCounter_new = 1;
+    ui->CaptureTimeLabel->setText("Capture Time [µs]");
+    ui->CaptureTimeLcdDisplay->display(200);
+
+    //[EntranceVoltageLCDWidget]
+    EntranceVoltageCounter = 1;
+    ui->EntranceVoltageLcdDisplay->display("±10");
+
+}
+
+
+
+
+
+
+    //[CaptureTimeLCDWidget]
+void MainWindow::CaptureTimeWidgetManagement(int step){
+    if((CaptureTimeCounter_new==1 && step==-1)||(CaptureTimeCounter_new==16 && step==1)){
+        return;
+    }
+
+
+    CaptureTimeCounter_new = CaptureTimeCounter_new + step;
+
+
+    if(1<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 2){
+        ui->CaptureTimeLabel->setText("Capture Time [µs]");
+    }
+    else if(3<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 11){
+        ui->CaptureTimeLabel->setText("Capture Time [ms]");
+    }
+    else if(12<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 16){
+        ui->CaptureTimeLabel->setText("Capture Time [s]");
+    }
+
+
+    switch (CaptureTimeCounter_new) {
+        case 1: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 2: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 3: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 4: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 5: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 6: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 7: ui->CaptureTimeLcdDisplay->display(20); break;
+        case 8: ui->CaptureTimeLcdDisplay->display(50); break;
+        case 9: ui->CaptureTimeLcdDisplay->display(100); break;
+        case 10: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 11: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 12: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 13: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 14: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 15: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 16: ui->CaptureTimeLcdDisplay->display(20); break;
+
+    }
+}
+
+void MainWindow::CaptureTimePlusButtonClicked(){
+        CaptureTimeWidgetManagement(1);
+}
+void MainWindow::CaptureTimeMinusButtonClicked(){
+        CaptureTimeWidgetManagement(-1);
+}
+
+
+
+
+    //[EntranceVoltageLCDWidget]
+void MainWindow::EntranceVoltageWidgetManagement(int step){
+    int real_step = - step;
+    if((EntranceVoltageCounter==1 && real_step==-1)||(EntranceVoltageCounter==4 && real_step==1)){
+        return;
+    }
+
+
+    EntranceVoltageCounter = EntranceVoltageCounter + real_step;
+
+
+    switch(EntranceVoltageCounter) {
+        case 1: ui->EntranceVoltageLcdDisplay->display("10"); break;
+        case 2: ui->EntranceVoltageLcdDisplay->display("3"); break;
+        case 3: ui->EntranceVoltageLcdDisplay->display("1"); break;
+        case 4: ui->EntranceVoltageLcdDisplay->display("0.3"); break;
+    }
+}
+
+
+void MainWindow::EntranceVoltagePlusButtonClicked(){
+    EntranceVoltageWidgetManagement(1);
+}
+void MainWindow::EntranceVoltageMinusButtonClicked(){
+    EntranceVoltageWidgetManagement(-1);
+}
+
+
+
+
+
+
+
+
 
 
 

@@ -9,6 +9,11 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QFont f("Helvetica", 12, QFont::Normal);
+    f.setCapitalization(QFont::MixedCase);
+    ui->SendButton->setFont(f);
+    this->setFont(f);
+
     ui->SendButton->setEnabled(false);
 
     // [Construct UI]
@@ -42,9 +47,7 @@ BtWindow::BtWindow(QWidget *parent) :
 
     // [Construct UI] End
 
-    QFont f("Calibri", 18);
-    f.setCapitalization(QFont::MixedCase);
-    ui->SendButton->setFont(f);
+
 
 
 

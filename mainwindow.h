@@ -46,9 +46,12 @@ private:
     int CorrectionFactor;
 
     // Capture Time Widget
-    int M_new;
-    int M_old;
-    int step_down = -1, step_up = 1;
+    int CaptureTimeCounter_new;
+        //int CaptureTimeCounter_old;
+        //int step_down = -1, step_up = 1;
+
+    // EntranceVoltage Widget
+    int EntranceVoltageCounter;
 
 
 public slots:
@@ -60,12 +63,19 @@ public slots:
     void plot(QByteArray data);
     void scaleAxesAndRange(ConfigData);
 
+    void setDefaultValuesManually();
+    //void setDefaultValues(ConfigData);
+
 
 
 private slots:
     void CaptureTimeWidgetManagement(int step);
     void CaptureTimePlusButtonClicked();
     void CaptureTimeMinusButtonClicked();
+
+    void EntranceVoltageWidgetManagement(int step);
+    void EntranceVoltagePlusButtonClicked();
+    void EntranceVoltageMinusButtonClicked();
 
 
 
