@@ -105,11 +105,13 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     bluetoothSocket.startClient(service);
 
     emit ChangeTextConnectButton();
-
+    BluetoothWindow.setTextStatusBar(">Connected");
+    BluetoothWindow.DisableBtDeviceSelect();
 
     //Kommandline das erste mal senden
     SendMessage();
 
+    BluetoothWindow.setTextStatusBar(">Synchronisation");
     emit synchronizeSocket();
 
 }
@@ -119,6 +121,7 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
 
 void Oscilloscope::startOscilloscope(){
     qDebug() << "Starting plot and transmission...";
+    BluetoothWindow.setTextStatusBar(">Plot and Transmission running");
 
     connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
             this, SLOT(ReceiveData(QByteArray)));
@@ -415,6 +418,8 @@ void Oscilloscope::stopOszilloscope(){
 
     // (set default values)
         // scale Axes and
+
+    BluetoothWindow.setTextStatusBar(">Oszilloscope stopped");
 }
 
 
@@ -423,6 +428,7 @@ void Oscilloscope::StopAndRestartOscilloscope(){
     stopOszilloscope();
 
     qDebug() << "Try Resynchronisation!";
+    BluetoothWindow.setTextStatusBar(">Resynchronisation");
     bluetoothSocket.Resync();
 }
 

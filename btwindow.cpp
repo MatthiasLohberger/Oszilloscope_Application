@@ -9,7 +9,7 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QFont f("Helvetica", 12, QFont::Normal);
+    QFont f("Arial", 12, QFont::Normal);
     f.setCapitalization(QFont::MixedCase);
     ui->SendButton->setFont(f);
     this->setFont(f);
@@ -44,6 +44,9 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->lineEdit_TriggerLow->setReadOnly(true);
     ui->lineEdit_TriggerEdge->setReadOnly(true);
     ui->lineEdit_TriggerMode->setReadOnly(true);
+
+    ui->lineEdit_StatusBar->setReadOnly(true);
+    ui->lineEdit_StatusBar->setText(">Starting Application");
 
     // [Construct UI] End
 
@@ -122,6 +125,10 @@ void BtWindow::Disable_SendButton(){
 }
 
 
+void BtWindow::setTextStatusBar(QString text){
+    ui->lineEdit_StatusBar->setText(text);
+}
+
 
 //[Slot Funktionen] Buttons Pressed/Selected   End
 
@@ -141,6 +148,8 @@ void BtWindow::NewValuesToSet(QString text){
     QString HilfUseless = text;
 
     // Alle QTestEdit Felder händtisch auslesen
+
+    // Funktion nicht auskodieren
 }
 
 
@@ -240,6 +249,7 @@ void BtWindow::startServiceSearch(){
     ui->SearchButton->setEnabled(false);
 
     qDebug() << "Start Discovery";
+    setTextStatusBar(">Search for new Bluetooth Services");
     //const QBluetoothAddress adapter = localDevice.address();
     //BluetoothDeviceFinder HBluetoothDeviceFinder(adapter);
     //bluetoothDeviceFinder = HBluetoothDeviceFinder;
@@ -285,7 +295,9 @@ void BtWindow::ConnectButtonPressed(){
 
 }
 
-
+void BtWindow::DisableBtDeviceSelect(){
+    ui->BtDeviceSelect->setDisabled(true);
+}
 
 
 

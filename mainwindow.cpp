@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFont f("Helvetica", 12, QFont::Normal);
+    QFont f("Arial", 12, QFont::Normal);
     f.setCapitalization(QFont::MixedCase);
     this->setFont(f);
 

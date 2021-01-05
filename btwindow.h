@@ -66,6 +66,8 @@ public slots:
     void setTextConnectButton();
     void newDataForPlainTextWidget(ConfigDataString &);
     void showBluetoothWindow();
+    void setTextStatusBar(QString);
+    void DisableBtDeviceSelect();
 
 
 private slots:
