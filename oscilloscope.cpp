@@ -15,6 +15,9 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 
 
     // Buttons und Textausgaben
+    connect(&BluetoothWindow, SIGNAL(DefaultButtonClicked()),
+            this, SLOT(DefaultButtonClicked()));
+
     connect(&BluetoothWindow, SIGNAL(DefaultButtonPressed()),
             &OsziConfigData, SLOT(DefaultValues()));
 
@@ -30,6 +33,12 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &OsziMainWindow, SLOT(EnableSendButton()));
     connect(this, SIGNAL(EnableSendButtonBtWindow()),
             &BluetoothWindow, SLOT(Enable_SendButton()));
+
+
+    // OsziMainWindow.setValuesWidgetsMainWindow(OsziConfigData.getData());
+    // BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData.getData());
+
+
 
 
     // Bluetooth Service Suche
@@ -435,6 +444,18 @@ void Oscilloscope::StopAndRestartOscilloscope(){
 
 
 
+
+
+
+void Oscilloscope::DefaultButtonClicked(){
+    ConfigData OsziConfigData_new;
+
+    OsziConfigData.setDefaultValues();
+    OsziConfigData_new = OsziConfigData.getData();
+
+    OsziMainWindow.setValuesWidgetsMainWindow(OsziConfigData_new);
+    BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData_new);
+}
 
 
 

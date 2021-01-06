@@ -84,6 +84,7 @@ signals:
     void DefaultButtonPressed();
     void SendButtonPressed();
     void ServiceSelectedForConnection(const QBluetoothServiceInfo &);
+    void DefaultButtonClicked();
 
     //void newDataToPlotReceived(const QByteArray &);
 

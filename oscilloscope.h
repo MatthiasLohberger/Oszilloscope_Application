@@ -48,6 +48,8 @@ public slots:
     void stopOszilloscope();
     void StopAndRestartOscilloscope();
 
+    void DefaultButtonClicked();
+
 
 signals:
     void ChangeTextConnectButton();

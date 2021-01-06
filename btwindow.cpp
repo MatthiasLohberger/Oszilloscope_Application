@@ -17,11 +17,12 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->SendButton->setEnabled(false);
 
     // [Construct UI]
-    connect(ui->SearchButton,  SIGNAL(clicked()),   this, SLOT(startServiceSearch()));
+    connect(ui->SearchButton,  SIGNAL(clicked()), this, SLOT(startServiceSearch()));
     connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectButtonPressed()));
-    connect(ui->SendButton, SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
+    connect(ui->SendButton,    SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
+    connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonClicked()));
 
 
 
