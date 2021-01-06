@@ -301,6 +301,87 @@ void BtWindow::DisableBtDeviceSelect(){
 
 
 
+// ---------------------------------------------------------------------------
+// send, default Button and Widgets for Triggermode and TriggerEdge
+
+
+
+ConfigDataValuesBtWin BtWindow::readValuesWidgetsBtWindow(){
+    ConfigDataValuesBtWin ConfigDataPartBtWin;
+
+    if(ui->radioButton_TrigEdgeNegative->isChecked() == true &&
+       ui->radioButton_TrigEdgePositive->isChecked() == false){
+       ConfigDataPartBtWin.TriggerEdge = 'n';
+    } else{
+       ConfigDataPartBtWin.TriggerEdge = 'p';
+    }
+
+
+    if(ui->radioButton_TrigModeAuto->isChecked() == true &&
+       ui->radioButton_TrigModeNormal->isChecked() == false &&
+       ui->radioButton_TrigModeSingle->isChecked() == false){
+
+        ConfigDataPartBtWin.TriggerMode = 'A';
+
+    } else if(ui->radioButton_TrigModeAuto->isChecked() == false &&
+              ui->radioButton_TrigModeNormal->isChecked() == true &&
+              ui->radioButton_TrigModeSingle->isChecked() == false){
+        ConfigDataPartBtWin.TriggerMode = 'N';
+
+    } else{
+        ConfigDataPartBtWin.TriggerMode = 'S';
+    }
+
+    return ConfigDataPartBtWin;
+}
+
+
+
+void BtWindow::setValuesWidgetsBtWindow(ConfigData OsziConfigData){
+
+    switch (OsziConfigData.TriggerEdge) {
+    case 'n': ui->radioButton_TrigEdgeNegative->setChecked(true);
+              ui->radioButton_TrigEdgePositive->setChecked(false); break;
+
+    case 'p': ui->radioButton_TrigEdgeNegative->setChecked(false);
+              ui->radioButton_TrigEdgePositive->setChecked(true); break;
+    }
+
+
+    switch (OsziConfigData.TriggerMode) {
+    case 'A': ui->radioButton_TrigModeAuto->setChecked(true);
+              ui->radioButton_TrigModeNormal->setChecked(false);
+              ui->radioButton_TrigModeSingle->setChecked(false); break;
+
+    case 'N': ui->radioButton_TrigModeAuto->setChecked(false);
+              ui->radioButton_TrigModeNormal->setChecked(true);
+              ui->radioButton_TrigModeSingle->setChecked(false); break;
+
+    case 'S': ui->radioButton_TrigModeAuto->setChecked(false);
+              ui->radioButton_TrigModeNormal->setChecked(false);
+              ui->radioButton_TrigModeSingle->setChecked(true); break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

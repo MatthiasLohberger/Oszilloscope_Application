@@ -69,6 +69,9 @@ public slots:
     void setTextStatusBar(QString);
     void DisableBtDeviceSelect();
 
+    ConfigDataValuesBtWin readValuesWidgetsBtWindow();
+    void setValuesWidgetsBtWindow(ConfigData);
+
 
 private slots:
     // fertig kodiert:

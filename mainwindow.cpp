@@ -54,19 +54,6 @@ MainWindow::~MainWindow()
 // ------------------------------------------------------------------------------------
 
 
-void MainWindow::EnableSendButton(){
-    ui->SendButton->setEnabled(true);
-}
-
-void MainWindow::DisableSendButton(){
-    ui->SendButton->setEnabled(false);
-}
-
-
-
-
-
-//-----------------------------------------------------------
 
 
 
@@ -443,7 +430,7 @@ void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
 
 
 
-
+//------------------------------------------------------------------------------------
 
 
 
@@ -552,6 +539,87 @@ void MainWindow::EntranceVoltageMinusButtonClicked(){
 
 
 
+void MainWindow::EnableSendButton(){
+    ui->SendButton->setEnabled(true);
+}
+
+void MainWindow::DisableSendButton(){
+    ui->SendButton->setEnabled(false);
+}
+
+
+
+
+ConfigDataValuesMainWin MainWindow::readValuesWidgetsMainWindow(){
+    ConfigDataValuesMainWin ConfigDataDataPartMainWin;
+
+    ConfigDataDataPartMainWin.EntranceVoltageCounter = EntranceVoltageCounter;
+    //ConfigDataDataPartMainWin.TriggerCounter =
+    ConfigDataDataPartMainWin.CaptureTimeCounter = EntranceVoltageCounter;
+
+    return ConfigDataDataPartMainWin;
+}
+
+
+
+void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
+    EntranceVoltageCounter = OsziConfigData.EntranceArea;
+    //TriggerCounter = OsziConfigData.Trigger;
+    CaptureTimeCounter_new = OsziConfigData.N;
+
+
+
+    switch(EntranceVoltageCounter) {
+        case 1: ui->EntranceVoltageLcdDisplay->display("10"); break;
+        case 2: ui->EntranceVoltageLcdDisplay->display("3"); break;
+        case 3: ui->EntranceVoltageLcdDisplay->display("1"); break;
+        case 4: ui->EntranceVoltageLcdDisplay->display("0.3"); break;
+    }
+
+
+
+    // Trigger set
+
+
+
+    if(1<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 2){
+        ui->CaptureTimeLabel->setText("Capture Time [µs]");
+    }
+    else if(3<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 11){
+        ui->CaptureTimeLabel->setText("Capture Time [ms]");
+    }
+    else if(12<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 16){
+        ui->CaptureTimeLabel->setText("Capture Time [s]");
+    }
+    switch (CaptureTimeCounter_new) {
+        case 1: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 2: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 3: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 4: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 5: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 6: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 7: ui->CaptureTimeLcdDisplay->display(20); break;
+        case 8: ui->CaptureTimeLcdDisplay->display(50); break;
+        case 9: ui->CaptureTimeLcdDisplay->display(100); break;
+        case 10: ui->CaptureTimeLcdDisplay->display(200); break;
+        case 11: ui->CaptureTimeLcdDisplay->display(500); break;
+        case 12: ui->CaptureTimeLcdDisplay->display(1); break;
+        case 13: ui->CaptureTimeLcdDisplay->display(2); break;
+        case 14: ui->CaptureTimeLcdDisplay->display(5); break;
+        case 15: ui->CaptureTimeLcdDisplay->display(10); break;
+        case 16: ui->CaptureTimeLcdDisplay->display(20); break;
+
+    }
+
+
+
+
+}
+
+
+
+
+//-----------------------------------------------------------
 
 
 

@@ -105,5 +105,19 @@ struct UIntHeader{
     QByteArray element8 = "";
     QByteArray element9 = "";
 };
+
+
+
+struct ConfigDataValuesMainWin{
+    int CaptureTimeCounter;
+    int TriggerCounter;
+    int EntranceVoltageCounter;
+
+};
+
+struct ConfigDataValuesBtWin{
+    char TriggerMode;
+    char TriggerEdge;
+};
 #endif // COMMANDLINE_EAS_BOARD_H
 

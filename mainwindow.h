@@ -65,6 +65,8 @@ public slots:
 
     void setDefaultValuesManually();
     //void setDefaultValues(ConfigData);
+    ConfigDataValuesMainWin readValuesWidgetsMainWindow();
+    void setValuesWidgetsMainWindow(ConfigData);
 
 
 
