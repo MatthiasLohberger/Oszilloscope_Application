@@ -31,8 +31,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->EntranceVoltageMinusButton, SIGNAL(clicked()),
             this, SLOT(EntranceVoltageMinusButtonClicked()));
 
+    connect(ui->TriggerPlusButton, SIGNAL(pressed()),
+            this, SLOT(TriggerPlusButtonClicked()));
+    connect(ui->TriggerMinusButton, SIGNAL(pressed()),
+            this, SLOT(TriggerMinusButtonClicked()));
+
     connect(ui->FreezeButton, SIGNAL(clicked()),
             this, SIGNAL(FreezeButtonClicked()));
+
+
 
 
     //default Values   --> delete later
@@ -557,7 +564,7 @@ ConfigDataValuesMainWin MainWindow::readValuesWidgetsMainWindow(){
     ConfigDataValuesMainWin ConfigDataDataPartMainWin;
 
     ConfigDataDataPartMainWin.EntranceVoltageCounter = EntranceVoltageCounter;
-    //ConfigDataDataPartMainWin.TriggerCounter =
+    ConfigDataDataPartMainWin.TriggerCounter = TriggerCounter;
     ConfigDataDataPartMainWin.CaptureTimeCounter = EntranceVoltageCounter;
 
     return ConfigDataDataPartMainWin;
@@ -567,11 +574,11 @@ ConfigDataValuesMainWin MainWindow::readValuesWidgetsMainWindow(){
 
 void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
     EntranceVoltageCounter = OsziConfigData.EntranceArea;
-    //TriggerCounter = OsziConfigData.Trigger;
+    TriggerCounter = OsziConfigData.Trigger;
     CaptureTimeCounter_new = OsziConfigData.N;
 
 
-
+    // EntranceArea
     switch(EntranceVoltageCounter) {
         case 1: ui->EntranceVoltageLcdDisplay->display("10"); break;
         case 2: ui->EntranceVoltageLcdDisplay->display("3"); break;
@@ -581,10 +588,14 @@ void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
 
 
 
-    // Trigger set
+    // Trigger
+    TriggerVoltage =  (TriggerCounter * TriggerVoltageStep)
+            - (2048 * TriggerVoltageStep);
+    ui->TriggerLcdDisplay->display(TriggerVoltage);
 
 
 
+    // CaptureTime
     if(1<=CaptureTimeCounter_new && CaptureTimeCounter_new<= 2){
         ui->CaptureTimeLabel->setText("Capture Time [µs]");
     }
@@ -612,6 +623,7 @@ void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
         case 15: ui->CaptureTimeLcdDisplay->display(10); break;
         case 16: ui->CaptureTimeLcdDisplay->display(20); break;
     }
+
 }
 
 
@@ -619,6 +631,42 @@ void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
 
 void MainWindow::setTextFreezeButton(QString text){
     ui->FreezeButton->setText(text);
+}
+
+
+
+
+
+void MainWindow::TriggerWidgetManagement(int step){
+    if((step==1 && TriggerCounter == 65535) ||(step==-1 && TriggerCounter==0)){
+        return;
+    }
+
+
+    if(step==1){
+        TriggerCounter++;
+        TriggerVoltage =  (TriggerCounter * TriggerVoltageStep)
+                - (2048 * TriggerVoltageStep);
+        ui->TriggerLcdDisplay->display(TriggerVoltage);
+    } else{
+        TriggerCounter--;
+        TriggerVoltage =  (TriggerCounter * TriggerVoltageStep)
+                - (2048 * TriggerVoltageStep);
+        ui->TriggerLcdDisplay->display(TriggerVoltage);
+    }
+}
+void MainWindow::TriggerPlusButtonClicked(){
+    //while (ui->TriggerPlusButton->isDown() == true) {
+        TriggerWidgetManagement(+1);
+    //}
+    qDebug() << "+TriggerCounter = " << TriggerCounter;
+}
+void MainWindow::TriggerMinusButtonClicked(){
+     //do {
+        TriggerWidgetManagement(-1);
+    //} while (ui->TriggerMinusButton->isDown() == true);
+
+    qDebug() << "-TriggerCounter = " << TriggerCounter;
 }
 
 

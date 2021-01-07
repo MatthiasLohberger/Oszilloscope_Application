@@ -116,9 +116,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QLCDNumber" name="TriggerLcdDisplay">
     <property name="geometry">
      <rect>
-      <x>1690</x>
-      <y>440</y>
-      <width>301</width>
+      <x>1640</x>
+      <y>430</y>
+      <width>351</width>
       <height>121</height>
      </rect>
     </property>

@@ -55,6 +55,11 @@ private:
     // EntranceVoltage Widget
     int EntranceVoltageCounter;
 
+    // Trigger Widget
+    int TriggerCounter;
+    double TriggerVoltage;
+    double TriggerVoltageStep = 0.0049;
+
 
 public slots:
     void EnableSendButton();
@@ -74,6 +79,7 @@ public slots:
 
 
 
+
 private slots:
     void CaptureTimeWidgetManagement(int step);
     void CaptureTimePlusButtonClicked();
@@ -82,6 +88,10 @@ private slots:
     void EntranceVoltageWidgetManagement(int step);
     void EntranceVoltagePlusButtonClicked();
     void EntranceVoltageMinusButtonClicked();
+
+    void TriggerWidgetManagement(int step);
+    void TriggerPlusButtonClicked();
+    void TriggerMinusButtonClicked();
 
 
 
