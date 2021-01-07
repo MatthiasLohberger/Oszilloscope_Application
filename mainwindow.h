@@ -23,6 +23,8 @@ public:
     ~MainWindow();
 
     void SetUpPlot();
+
+    void setTextFreezeButton(QString);
     //void startPlot();
     //void stopPlot();
 
@@ -70,6 +72,8 @@ public slots:
 
 
 
+
+
 private slots:
     void CaptureTimeWidgetManagement(int step);
     void CaptureTimePlusButtonClicked();
@@ -84,6 +88,7 @@ private slots:
 signals:
     void BtSettingsButtonPressed();
     void SendButton_Pressed();
+    void FreezeButtonClicked();
 
 };
 #endif // MAINWINDOW_H

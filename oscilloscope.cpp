@@ -34,12 +34,15 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(EnableSendButtonBtWindow()),
             &BluetoothWindow, SLOT(Enable_SendButton()));
 
-
-    // OsziMainWindow.setValuesWidgetsMainWindow(OsziConfigData.getData());
-    // BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData.getData());
-
+    connect(&OsziMainWindow, SIGNAL(FreezeButtonClicked()),
+            this, SLOT(FreezePlot()));
 
 
+        //OsziMainWindow.setValuesWidgetsMainWindow(OsziConfigData.getData());
+        //BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData.getData());
+    DefaultButtonClicked(); // zum setzen der Default Werte in den Widgets und der zentralen ConfigDaten
+
+        //OsziConfigData.setDefaultValues();
 
     // Bluetooth Service Suche
     connect(&BluetoothWindow, SIGNAL(ServiceSelectedForConnection(const QBluetoothServiceInfo &)),
@@ -64,7 +67,7 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     //connect(&bluetoothSocket, SIGNAL(newDataReceived(QByteArray)),
     //       this, SLOT(ReceiveData(QByteArray)));
 
-    OsziConfigData.setDefaultValues();
+     FreezeFlag = false;
 
 }
 
@@ -457,6 +460,20 @@ void Oscilloscope::DefaultButtonClicked(){
     BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData_new);
 }
 
+
+void Oscilloscope::FreezePlot(){
+    if (FreezeFlag == true){
+        disconnect(this, SIGNAL(DataReadyToPlot(QByteArray)),
+                &OsziMainWindow, SLOT(plot(QByteArray)));
+        OsziMainWindow.setTextFreezeButton("Unfreeze");
+        FreezeFlag = false;
+    } else {
+        connect(this, SIGNAL(DataReadyToPlot(QByteArray)),
+                &OsziMainWindow, SLOT(plot(QByteArray)));
+        OsziMainWindow.setTextFreezeButton("Freeze");
+        FreezeFlag = true;
+    }
+}
 
 
 

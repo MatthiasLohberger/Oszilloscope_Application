@@ -31,9 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->EntranceVoltageMinusButton, SIGNAL(clicked()),
             this, SLOT(EntranceVoltageMinusButtonClicked()));
 
+    connect(ui->FreezeButton, SIGNAL(clicked()),
+            this, SIGNAL(FreezeButtonClicked()));
+
 
     //default Values   --> delete later
-    setDefaultValuesManually();
+    //setDefaultValuesManually();
 
 
 
@@ -608,14 +611,15 @@ void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
         case 14: ui->CaptureTimeLcdDisplay->display(5); break;
         case 15: ui->CaptureTimeLcdDisplay->display(10); break;
         case 16: ui->CaptureTimeLcdDisplay->display(20); break;
-
     }
-
-
-
-
 }
 
+
+
+
+void MainWindow::setTextFreezeButton(QString text){
+    ui->FreezeButton->setText(text);
+}
 
 
 

@@ -33,6 +33,7 @@ private:
 
     BluetoothSocket bluetoothSocket;
     int flag_connect_readyRead;
+    bool FreezeFlag;        //true = unfreezed, false = freezed
 
     //QByteArray ReceiveBuffer;
 
@@ -49,6 +50,9 @@ public slots:
     void StopAndRestartOscilloscope();
 
     void DefaultButtonClicked();
+
+    void FreezePlot();      //Freeze Button MainWinClicked
+
 
 
 signals:
