@@ -30,7 +30,7 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
     CommandLine.EntranceArea = 1;
     CommandLine.N = 1;
-    CommandLine.TriggerThreshold = 2050;    //LowByte eig 0x02 und High eig 0x08
+    CommandLine.TriggerThreshold = 2048;    //LowByte eig 0x02 und High eig 0x08
     CommandLine.TriggerMode = 'A';
     CommandLine.TriggerEdge = 'p';
 

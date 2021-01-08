@@ -338,8 +338,8 @@ void MainWindow::ClearPlot(){
 
 
 void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
-       float y_OneSidedEntranceVoltage_withOffset;
-       float xMax, xMax_Axis, xMin_Axis;
+       float y_OneSidedEntranceVoltage_withOffset = 0;
+       float xMax, xMax_Axis = 0, xMin_Axis = 0;
 
 
     // 1. determine y_OneSidedEntranceVoltage
@@ -574,7 +574,7 @@ ConfigDataValuesMainWin MainWindow::readValuesWidgetsMainWindow(){
 
 void MainWindow::setValuesWidgetsMainWindow(ConfigData OsziConfigData){
     EntranceVoltageCounter = OsziConfigData.EntranceArea;
-    TriggerCounter = OsziConfigData.Trigger;
+    TriggerCounter = OsziConfigData.TriggerThreshold;
     CaptureTimeCounter_new = OsziConfigData.N;
 
 

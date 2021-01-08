@@ -7,7 +7,6 @@ BluetoothSocket::BluetoothSocket(QObject *parent)
     :   QObject(parent)
 {
 
-
 }
 
 
@@ -41,8 +40,8 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
     //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
     //connect(socket, &QBluetoothSocket::disconnected, this, &ChatClient::disconnected);
-    //connect(socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
-     //       this, &ChatClient::onSocketErrorOccurred);
+    connect(socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
+            this, &BluetoothSocket::onSocketErrorOccurred);
 
 }
 //! [startClient]
@@ -60,7 +59,28 @@ void BluetoothSocket::stopClient()
 
 
 
+void BluetoothSocket::DisconnectFromService(){
+    //int ByteNumber;
+    qDebug() << "Socket reset 1";
+    socket->disconnectFromService();
+    qDebug() << "Socket reset 2";
+    //ByteNumber = socket->bytesAvailable();
 
+    socket->readAll();
+    qDebug() << "Socket reset 3";
+    //socket = nullptr;
+    qDebug() << "Socket reset done!";
+}
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------
+    // read, wirte and Synchronsiation
 
 //! [readSocket]
 void BluetoothSocket::readSocket()
@@ -101,7 +121,7 @@ void BluetoothSocket::sendMessage(const QByteArray &message)
 
 
 
-/*
+
 
 void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 {
@@ -112,7 +132,9 @@ void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
     QString errorString = socket->peerName() + QLatin1Char(' ')
             + metaEnum.valueToKey(error) + QLatin1String(" occurred");
 
-    emit socketErrorOccurred(errorString);
+    qDebug() << errorString;
+
+    //emit socketErrorOccurred(errorString);
 }
 
 
@@ -121,7 +143,7 @@ void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 
 
 
-
+/*
 //! [connected]
 void BluetoothSocket::connected()
 {
@@ -324,6 +346,12 @@ void BluetoothSocket::Resync(){
     SocketSynchronisation();
 }
 
+/*
+void BluetoothSocket::ConnectDisconnectSignal(){
+    connect(socket, &QBluetoothSocket::disconnected,
+        this, &BluetoothSocket::ConnectionToServiceLost);
+}
+*/
 
 
 

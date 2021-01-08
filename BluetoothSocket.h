@@ -38,22 +38,28 @@ public slots:
     void disconnect_readyRead();
     void Resync();
 
+    void DisconnectFromService();
+
+    //void ConnectDisconnectSignal();
+
 
 
 signals:
     //void messageReceived(const QString &sender, const QString &message);
     //void connected(const QString &name);
     //void disconnected();
-    //void socketErrorOccurred(const QString &errorString);
+    void socketErrorOccurred(const QString &errorString);
     void newDataReceived(QByteArray);
     void StartNormalTransmission();
+
+    void ConnectionToServiceLost();
 
 
 
 private slots:
     void readSocket();
     //void connected();
-    //void onSocketErrorOccurred(QBluetoothSocket::SocketError);
+    void onSocketErrorOccurred(QBluetoothSocket::SocketError);
 
 
 

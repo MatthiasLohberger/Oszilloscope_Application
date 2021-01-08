@@ -62,8 +62,10 @@ public slots:
     void ConnectButtonPressed();
     void Enable_SendButton();
     void Disable_SendButton();
+    void Enable_DisconnectButton();
 
     void setTextConnectButton();
+    void setTextSearchButton();
     void newDataForPlainTextWidget(ConfigDataString &);
     void showBluetoothWindow();
     void setTextStatusBar(QString);
@@ -71,6 +73,8 @@ public slots:
 
     ConfigDataValuesBtWin readValuesWidgetsBtWindow();
     void setValuesWidgetsBtWindow(ConfigData);
+
+    void BtWinPrepareForNewDiscovery(ConfigDataString &);
 
 
 private slots:
@@ -85,6 +89,8 @@ signals:
     void SendButtonPressed();
     void ServiceSelectedForConnection(const QBluetoothServiceInfo &);
     void DefaultButtonClicked();
+    void DisconnectButtonClicked();
+
 
     //void newDataToPlotReceived(const QByteArray &);
 

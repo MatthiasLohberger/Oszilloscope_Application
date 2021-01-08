@@ -17,16 +17,21 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->SendButton->setEnabled(false);
 
     // [Construct UI]
+
+        // Buttons
     connect(ui->SearchButton,  SIGNAL(clicked()), this, SLOT(startServiceSearch()));
     connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectButtonPressed()));
     connect(ui->SendButton,    SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
     connect(ui->CloseButton,   SIGNAL(clicked()), this, SLOT(CloseButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonClicked()));
+    connect(ui->DisconnectButton, SIGNAL(clicked()), this, SIGNAL(DisconnectButtonClicked()));
+
+    ui->DisconnectButton->setEnabled(false);
 
 
 
-
+        // Comand Line Byte/ Hex Visualisation
     connect(ui->lineEdit_EntranceArea, SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
     connect(ui->lineEdit_N_High,       SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
     connect(ui->lineEdit_N_Low,        SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
@@ -34,9 +39,6 @@ BtWindow::BtWindow(QWidget *parent) :
     connect(ui->lineEdit_TriggerLow,   SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
     connect(ui->lineEdit_TriggerEdge,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
     connect(ui->lineEdit_TriggerMode,  SIGNAL(textEdited(QString)), this, SLOT(NewValuesToSet(QString)));
-
-
-
 
     ui->lineEdit_EntranceArea->setReadOnly(true);
     ui->lineEdit_N_High->setReadOnly(true);
@@ -46,6 +48,9 @@ BtWindow::BtWindow(QWidget *parent) :
     ui->lineEdit_TriggerEdge->setReadOnly(true);
     ui->lineEdit_TriggerMode->setReadOnly(true);
 
+
+
+        // StatusBar
     ui->lineEdit_StatusBar->setReadOnly(true);
     ui->lineEdit_StatusBar->setText(">Starting Application");
 
@@ -131,6 +136,16 @@ void BtWindow::setTextStatusBar(QString text){
 }
 
 
+void BtWindow::Enable_DisconnectButton(){
+     ui->DisconnectButton->setEnabled(true);
+}
+
+
+void BtWindow::setTextSearchButton(){
+    ui->SearchButton->setText("Search");
+}
+
+
 //[Slot Funktionen] Buttons Pressed/Selected   End
 
 
@@ -196,7 +211,7 @@ QString BtWindow::HexNumAsString(QString StringNum){
     HexStringNum.append(StringNum);
 
     if (HexStringNum.length() == 3){
-        HexStringNum.insert(2, "0");        //wenn z.B. 1 dann wird aus 0x1 -> 0x01
+        HexStringNum.insert(2, "0");        //z.B. bei 1(hex) wird aus 0x1 -> 0x01
         return HexStringNum;
     } else {
         return HexStringNum;
@@ -363,6 +378,40 @@ void BtWindow::setValuesWidgetsBtWindow(ConfigData OsziConfigData){
               ui->radioButton_TrigModeSingle->setChecked(true); break;
     }
 }
+
+
+
+
+//----------------------------------
+    //[Service Disconnect]
+
+
+void BtWindow::BtWinPrepareForNewDiscovery(ConfigDataString & CommandLineStringRef){
+    ui->BtDeviceSelect->clear();
+    DiscoveredDevicesList.clear();
+
+    ui->DisconnectButton->setEnabled(false);
+
+    ui->ConnectButton->setText("Connect");
+    ui->ConnectButton->setEnabled(false);
+
+        //ui->SendButton->setEnabled(false);    // in Oscilloscope stop function
+
+    ui->lineEdit_StatusBar->setText(">Disconnected");
+
+    newDataForPlainTextWidget(CommandLineStringRef);
+
+    ui->BtDeviceSelect->setEnabled(true);
+
+    ui->SearchButton->setEnabled(true);
+}
+
+
+
+
+
+
+
 
 
 

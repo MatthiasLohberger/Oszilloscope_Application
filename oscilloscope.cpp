@@ -37,6 +37,9 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(&OsziMainWindow, SIGNAL(FreezeButtonClicked()),
             this, SLOT(FreezePlot()));
 
+    connect(&BluetoothWindow, SIGNAL(DisconnectButtonClicked()),
+            this, SLOT(DisconnectButtonClicked()));
+
 
         //OsziMainWindow.setValuesWidgetsMainWindow(OsziConfigData.getData());
         //BluetoothWindow.setValuesWidgetsBtWindow(OsziConfigData.getData());
@@ -61,6 +64,10 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 
     connect(&bluetoothSocket, SIGNAL(StartNormalTransmission()),
             this, SLOT(startOscilloscope()));
+
+    // Bluetooth Socket disconnect
+    connect(&bluetoothSocket, SIGNAL(ConnectionToServiceLost()),
+            this, SLOT(ConnectionToServiceLost()));
 
 
 
@@ -141,10 +148,14 @@ void Oscilloscope::startOscilloscope(){
     connect(this, SIGNAL(DataReadyToPlot(QByteArray)),
             &OsziMainWindow, SLOT(plot(QByteArray)));
 
+    //bluetoothSocket.ConnectDisconnectSignal();
+    BluetoothWindow.setTextSearchButton();
 
     //Send buttons enablen in beiden Windows
     emit EnableSendButtonBtWindow();
     emit EnableSendOsziMainWindowBtWindow();
+
+    BluetoothWindow.Enable_DisconnectButton();
 
     //Connect Sinal readyRead von socket
     emit connectSocketToReadyRead();
@@ -476,10 +487,56 @@ void Oscilloscope::FreezePlot(){
 }
 
 
+//-------------------------------------------
+    // [Disconnect Slots]
 
 
 
 
 
+void Oscilloscope::ConnectionToServiceLost(){
+    // Connection Lost, call through Signal from BtSocket
+    // No extra disconnection needed
+
+    qDebug() << "Connection to Service lost!";
+    DisconnectServiceAndPrepareForNewDiscovery();
+}
+
+
+void Oscilloscope::DisconnectButtonClicked(){
+    // Disconnect Button clicked
+    // Disconnection must be done here:
+
+    qDebug() << "Disconnect Button clicked!";
+
+    DisconnectServiceAndPrepareForNewDiscovery();
+    bluetoothSocket.DisconnectFromService();
+}
+
+
+void Oscilloscope::DisconnectServiceAndPrepareForNewDiscovery(){
+    ConfigDataString CommandLineStringRef;
+    ConfigData CommandLineRef;
+
+    stopOszilloscope();
+
+    // Default Values
+    // Set all Widgets, which affect the CommandLine (in MainWin and BtWin) to default Values
+    DefaultButtonClicked();
+
+    CommandLineStringRef = OsziConfigData.getDataString();
+    CommandLineRef = OsziConfigData.getData();
+    // Set Command Line Widegt to default & dis-/ enable different Buttons
+    BluetoothWindow.BtWinPrepareForNewDiscovery(CommandLineStringRef);
+
+
+    // Main Win Oszi Reset und Send Button disablen
+    OsziMainWindow.scaleAxesAndRange(CommandLineRef);
+        // OsziMainWindow.DisableSendButton();
+
+   qDebug() << "Disconnected from Service, all Widgets, Buttons, Values etc. have been set to default!";
+   qDebug() << "New Discovery possible!";
+
+}
 
 

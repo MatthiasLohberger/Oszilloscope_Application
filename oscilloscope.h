@@ -53,6 +53,11 @@ public slots:
 
     void FreezePlot();      //Freeze Button MainWinClicked
 
+    void ConnectionToServiceLost();
+    void DisconnectButtonClicked();
+    void DisconnectServiceAndPrepareForNewDiscovery();
+
+
 
 
 signals:
