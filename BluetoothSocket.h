@@ -30,13 +30,20 @@ public:
 
 
 
+    bool getConnectOrUnblockFlag();
+    void resetConnectOrUnblockFlag();
+    void unblockSocketSignals();
+
+
 public slots:
     void sendMessage(const QByteArray &message);
-    void SocketSynchronisation();
+    //void SocketSynchronisation();
     void connectReadyRead();
     void setDefaultCommanLine(ConfigData);
     void disconnect_readyRead();
-    void Resync();
+
+    void SocketSynchronisation();
+    void Resync(ConfigData);
 
     void DisconnectFromService();
 
@@ -63,10 +70,15 @@ private slots:
 
 
 
+
 private:
     QBluetoothSocket *socket = nullptr;
 
-    ConfigData CommandLineDefault;
+    ConfigData CommandLineForSync;
+
+    bool ConnectOrUnblockFlag;
+    bool SocketFlag;
+
 };
 //! [declaration]
 

@@ -69,6 +69,7 @@ public:
 
     //set Attributes
     void setDefaultValues();
+    void setConfigData(ConfigData );
     void convertToByteArray();
     void convertToString();
 
@@ -109,7 +110,7 @@ struct UIntHeader{
 
 
 struct ConfigDataValuesMainWin{
-    int CaptureTimeCounter;
+    int CaptureTime_N;
     int TriggerCounter;
     int EntranceVoltageCounter;
 

@@ -562,10 +562,31 @@ void MainWindow::DisableSendButton(){
 
 ConfigDataValuesMainWin MainWindow::readValuesWidgetsMainWindow(){
     ConfigDataValuesMainWin ConfigDataDataPartMainWin;
+    int CaptureTime_N;
+    switch (CaptureTimeCounter_new) {
+        case 1: CaptureTime_N  = 1;       break;
+        case 2: CaptureTime_N  = 2;       break;
+        case 3: CaptureTime_N  = 4;       break;
+        case 4: CaptureTime_N  = 8;       break;
+        case 5: CaptureTime_N  = 20;      break;
+        case 6: CaptureTime_N  = 40;      break;
+        case 7: CaptureTime_N  = 80;      break;
+        case 8: CaptureTime_N  = 200;     break;
+        case 9: CaptureTime_N  = 400;     break;
+        case 10: CaptureTime_N = 800;     break;
+        case 11: CaptureTime_N = 2000;    break;
+        case 12: CaptureTime_N = 4000;    break;
+        case 13: CaptureTime_N = 8000;    break;
+        case 14: CaptureTime_N = 20000;   break;
+        case 15: CaptureTime_N = 40000;   break;
+        case 16: CaptureTime_N = 65535;   break;
+    }
+
+
 
     ConfigDataDataPartMainWin.EntranceVoltageCounter = EntranceVoltageCounter;
     ConfigDataDataPartMainWin.TriggerCounter = TriggerCounter;
-    ConfigDataDataPartMainWin.CaptureTimeCounter = EntranceVoltageCounter;
+    ConfigDataDataPartMainWin.CaptureTime_N = CaptureTime_N;
 
     return ConfigDataDataPartMainWin;
 }

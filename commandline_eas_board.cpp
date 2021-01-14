@@ -53,6 +53,26 @@ void CommandLine_EAS_Board::setDefaultValues(){
 
 
 
+void CommandLine_EAS_Board::setConfigData(ConfigData NewConfigData){
+    CommandLine.EntranceArea = NewConfigData.EntranceArea;
+    CommandLine.N = NewConfigData.N;
+
+    CommandLine.TriggerThreshold = NewConfigData.TriggerThreshold;    //LowByte eig 0x02 und High eig 0x08
+    CommandLine.TriggerMode = NewConfigData.TriggerMode;
+    CommandLine.TriggerEdge = NewConfigData.TriggerEdge;
+
+    convertToString();
+    // in this method the high and lowm bytes are also determined
+
+    emit newConfigData(CommandLine_String);       //Signal aussenden
+
+    qDebug() << "CommandLine set to new Values!";
+    qDebug() << "N = " << NewConfigData.N;
+}
+
+
+
+
 
 void CommandLine_EAS_Board::convertToString(){
 

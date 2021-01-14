@@ -25,9 +25,9 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &BluetoothWindow, SLOT(setTextConnectButton()));
 
     connect(&OsziMainWindow, SIGNAL(SendButton_Pressed()),
-            this, SLOT(SendMessage()));
+            this, SLOT(SendButtonPressed()));
     connect(&BluetoothWindow, SIGNAL(SendButtonPressed()),
-            this, SLOT(SendMessage()));
+            this, SLOT(SendButtonPressed()));
 
     connect(this, SIGNAL(EnableSendOsziMainWindowBtWindow()),
             &OsziMainWindow, SLOT(EnableSendButton()));
@@ -53,6 +53,7 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
 
 
     //Bluetooth Socket
+
     connect(this, SIGNAL(synchronizeSocket()),
             &bluetoothSocket, SLOT(SocketSynchronisation()));
 
@@ -132,7 +133,7 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
 
     BluetoothWindow.setTextStatusBar(">Synchronisation");
     emit synchronizeSocket();
-
+    //bluetoothSocket.SocketSynchronisation(OsziConfigData.getData());
 }
 
 
@@ -158,7 +159,12 @@ void Oscilloscope::startOscilloscope(){
     BluetoothWindow.Enable_DisconnectButton();
 
     //Connect Sinal readyRead von socket
-    emit connectSocketToReadyRead();
+        //emit connectSocketToReadyRead();
+
+    if(bluetoothSocket.getConnectOrUnblockFlag() == 1){
+        bluetoothSocket.unblockSocketSignals();
+    }
+    bluetoothSocket.connect_readyRead();
 }
 
 
@@ -203,7 +209,7 @@ void Oscilloscope::SendMessage(){
 
      bluetoothSocket.sendMessage(message);  //calls the real Fnkt.
 
-     OsziMainWindow.scaleAxesAndRange(CommandLine);
+     //OsziMainWindow.scaleAxesAndRange(CommandLine);
 
 }
 
@@ -228,7 +234,7 @@ void Oscilloscope::ReceiveData(QByteArray message){
         qDebug() << "Wrong Header received!";
 
         StopAndRestartOscilloscope();
-        return;
+        //return;
         //Aufruf Slot für
                 // Plot stoppen
                 // Bluetooth Übertragung stoppen
@@ -426,7 +432,7 @@ void Oscilloscope::stopOszilloscope(){
 
 
     // Treads stoppen, wird später sowieso wieder gestartet
-    BluetoothThread.exit();
+    //BluetoothThread.exit();
         //PlotThread.exit();
 
 
@@ -452,7 +458,7 @@ void Oscilloscope::StopAndRestartOscilloscope(){
 
     qDebug() << "Try Resynchronisation!";
     BluetoothWindow.setTextStatusBar(">Resynchronisation");
-    bluetoothSocket.Resync();
+    bluetoothSocket.Resync(OsziConfigData.getData());
 }
 
 
@@ -537,6 +543,42 @@ void Oscilloscope::DisconnectServiceAndPrepareForNewDiscovery(){
    qDebug() << "Disconnected from Service, all Widgets, Buttons, Values etc. have been set to default!";
    qDebug() << "New Discovery possible!";
 
+}
+
+
+
+void Oscilloscope::SendButtonPressed(){
+    ConfigDataValuesMainWin ValuesMainWin;
+    ConfigDataValuesBtWin ValuesBtWin;
+    ConfigData NewConfigDataToSet, ConfigDataToSend;
+
+    ValuesMainWin = OsziMainWindow.readValuesWidgetsMainWindow();
+    ValuesBtWin = BluetoothWindow.readValuesWidgetsBtWindow();
+
+    NewConfigDataToSet.EntranceArea = ValuesMainWin.EntranceVoltageCounter;
+    NewConfigDataToSet.N = ValuesMainWin.CaptureTime_N;
+    NewConfigDataToSet.TriggerThreshold = ValuesMainWin.TriggerCounter;
+    NewConfigDataToSet.TriggerEdge = ValuesBtWin.TriggerEdge;
+    NewConfigDataToSet.TriggerMode = ValuesBtWin.TriggerMode;
+
+
+    OsziConfigData.setConfigData(NewConfigDataToSet);
+    // in this methode the central CommandLine is updated, Converted to string,
+    //the high and low bytes are determined and a signal is emitted which calls a slot
+    //in the BtWin for updating the CommandLine-Widgets
+
+    ConfigDataToSend = OsziConfigData.getData();
+
+    qDebug() << "CaptureTimeCounter = " << ValuesMainWin.CaptureTime_N;
+    qDebug() << "Header to send: ";
+    qDebug() << ConfigDataToSend.Horizontal << ConfigDataToSend.EntranceArea
+             << ConfigDataToSend.Vertical << ConfigDataToSend.N << ConfigDataToSend.N_Low << ConfigDataToSend.N_High
+             << ConfigDataToSend.Trigger << ConfigDataToSend.TriggerThreshold << ConfigDataToSend.TriggerThreshold_Low
+             << ConfigDataToSend.TriggerThreshold_High << ConfigDataToSend.TriggerMode << ConfigDataToSend.TriggerEdge;
+
+    SendMessage();
+
+    OsziMainWindow.scaleAxesAndRange(ConfigDataToSend);
 }
 
 

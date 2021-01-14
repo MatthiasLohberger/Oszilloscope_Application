@@ -6,7 +6,8 @@
 BluetoothSocket::BluetoothSocket(QObject *parent)
     :   QObject(parent)
 {
-
+    ConnectOrUnblockFlag = 0;
+    SocketFlag = 0;
 }
 
 
@@ -85,8 +86,9 @@ void BluetoothSocket::DisconnectFromService(){
 //! [readSocket]
 void BluetoothSocket::readSocket()
 {
-    if (!socket)
+    if (!socket || SocketFlag == 1){
         return;
+    }
 
     qDebug() << "New Data avialable!";
 
@@ -167,19 +169,50 @@ QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
 
 void BluetoothSocket::disconnect_readyRead(){
     //disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+
     disconnect(socket, &QBluetoothSocket::readyRead,
                this, &BluetoothSocket::readSocket);
+
+    socket->blockSignals(true);
+    ConnectOrUnblockFlag = 1;
+    SocketFlag = 1;
+
 }
 
 
 void BluetoothSocket::connect_readyRead(){
     connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+
 }
 
 
 void BluetoothSocket::connectReadyRead(){
     connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 }
+
+
+
+bool BluetoothSocket::getConnectOrUnblockFlag(){
+    return ConnectOrUnblockFlag;
+}
+void BluetoothSocket::resetConnectOrUnblockFlag(){
+    ConnectOrUnblockFlag = 0;
+    SocketFlag = 0;
+}
+
+
+
+void BluetoothSocket::unblockSocketSignals(){
+    socket->blockSignals(false);
+    resetConnectOrUnblockFlag();
+
+}
+
+
+
+
+
+
 
 
 
@@ -220,7 +253,7 @@ void BluetoothSocket::SocketSynchronisation(){
                 h++;
 
 
-                if(byte.at(0) == CommandLineDefault.Vertical){
+                if(byte.at(0) == CommandLineForSync.Vertical){
                     qDebug() << "Header[" << h << "] "<< "/Vertical = " << byte.at(0);
                     byte = socket->read(9);
                     //qDebug() << "Bytes read: " << byte.size();
@@ -229,7 +262,7 @@ void BluetoothSocket::SocketSynchronisation(){
                     byte.toInt();
 
 
-                    if(byte.size() == 9 && byte.at(0) == (char)CommandLineDefault.EntranceArea){
+                    if(byte.size() == 9 && byte.at(0) == (char)CommandLineForSync.EntranceArea){
                         byte.toInt();
                         helpInt = byte[0];
                         qDebug() << "Header[" << h << "] "<< "/EntranceArea = " << helpInt;
@@ -237,13 +270,13 @@ void BluetoothSocket::SocketSynchronisation(){
                         i++;
                         h++;
 
-                        if(byte.at(1) == CommandLineDefault.Horizontal){
+                        if(byte.at(1) == CommandLineForSync.Horizontal){
                             qDebug() << "Header[" << h << "] "<< "/Horizontal = " << ((char)byte.at(1));
                             //byte = socket->read(1);
                             i++;
                             h++;
 
-                            if(byte.at(2) == (char)CommandLineDefault.N_Low){
+                            if(byte.at(2) == (char)CommandLineForSync.N_Low){
                                 //byte.toInt();
                                 helpInt = byte[2];
                                 qDebug() << "Header[" << h << "] "<< "/N_Low = " << helpInt;
@@ -251,7 +284,7 @@ void BluetoothSocket::SocketSynchronisation(){
                                 i++;
                                 h++;
 
-                                if(byte.at(3) == (char)CommandLineDefault.N_High){
+                                if(byte.at(3) == (char)CommandLineForSync.N_High){
                                     //byte.toInt();
                                     helpInt = byte[3];
                                     qDebug() << "Header[" << h << "] "<< "/N_High = " << helpInt;
@@ -259,14 +292,14 @@ void BluetoothSocket::SocketSynchronisation(){
                                     i++;
                                     h++;
 
-                                    if(byte.at(4) == CommandLineDefault.Trigger){
+                                    if(byte.at(4) == CommandLineForSync.Trigger){
                                         qDebug() << "Header[" << h << "] "<< "/Trigger = " << ((char)byte.at(4));
                                         //byte.clear();
                                         //byte = socket->read(2);
                                         i++;
                                         h++;
 
-                                        //if(byte.at(5) == (char)CommandLineDefault.TriggerThreshold_Low){                  //hier tritt ein Fehler auf, Trig_Thres_Low liefer 0 anstatt richtigen wert???
+                                        //if(byte.at(5) == (char)CommandLineForSync.TriggerThreshold_Low){                  //hier tritt ein Fehler auf, Trig_Thres_Low liefer 0 anstatt richtigen wert???
                                         if(byte.at(5) == (char)0){
                                             //byte.toInt();
                                             helpInt = byte[5];
@@ -275,7 +308,7 @@ void BluetoothSocket::SocketSynchronisation(){
                                             i++;
                                             h++;
 
-                                            if(byte.at(6) == (char)CommandLineDefault.TriggerThreshold_High){
+                                            if(byte.at(6) == (char)CommandLineForSync.TriggerThreshold_High){
                                                 //byte.toInt();
                                                 helpInt = byte[6];
                                                 qDebug() << "Header[" << h << "] "<< "/TriggerThreshold_High = " << helpInt;
@@ -284,13 +317,13 @@ void BluetoothSocket::SocketSynchronisation(){
                                                 i++;
                                                 h++;
 
-                                                if(byte.at(7) == CommandLineDefault.TriggerMode){
+                                                if(byte.at(7) == CommandLineForSync.TriggerMode){
                                                     qDebug() << "Header[" << h << "] "<< "/TriggerMode = " << ((char)byte.at(7));
                                                     //byte = socket->read(1);
                                                     i++;
                                                     h++;
 
-                                                    if(byte.at(8) == CommandLineDefault.TriggerEdge){
+                                                    if(byte.at(8) == CommandLineForSync.TriggerEdge){
                                                         qDebug() << "Header[" << h << "] "<< "/TriggerEdge = " << ((char)byte.at(8));
 
                                                         qDebug() << "$$$$$$   Complete header found   $$$$$$";
@@ -330,19 +363,21 @@ void BluetoothSocket::SocketSynchronisation(){
 
 
 void BluetoothSocket::setDefaultCommanLine(ConfigData CommandLine){
-    CommandLineDefault = CommandLine;
+    CommandLineForSync = CommandLine;
 }
 
 
 
-void BluetoothSocket::Resync(){
+void BluetoothSocket::Resync(ConfigData CommandLine){
     QByteArray neglect;
-    int BytesNeglected = 10;
-    for(int i=0; i<BytesNeglected; i++){
+    int DataFramesNeglected = 10;
+
+    for(int i=0; i<DataFramesNeglected; i++){
         while(socket->bytesAvailable() < 4108){}
         neglect = socket->read(4108);
     }
     // after 10 times data was neglected, the sync can start
+    CommandLineForSync = CommandLine;
     SocketSynchronisation();
 }
 
@@ -352,6 +387,9 @@ void BluetoothSocket::ConnectDisconnectSignal(){
         this, &BluetoothSocket::ConnectionToServiceLost);
 }
 */
+
+
+
 
 
 

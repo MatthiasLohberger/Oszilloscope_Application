@@ -38,6 +38,7 @@ private:
     //QByteArray ReceiveBuffer;
 
 
+
 public slots:
     void SendMessage();                                     //Sending a message via socket
     void ReceiveData(QByteArray);                           //Receive Data via socket
@@ -50,12 +51,15 @@ public slots:
     void StopAndRestartOscilloscope();
 
     void DefaultButtonClicked();
+    void SendButtonPressed();
 
     void FreezePlot();      //Freeze Button MainWinClicked
 
     void ConnectionToServiceLost();
     void DisconnectButtonClicked();
     void DisconnectServiceAndPrepareForNewDiscovery();
+
+
 
 
 
