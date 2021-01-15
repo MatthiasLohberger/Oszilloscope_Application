@@ -362,7 +362,7 @@ void BluetoothSocket::SocketSynchronisation(){
 
 
 
-void BluetoothSocket::setDefaultCommanLine(ConfigData CommandLine){
+void BluetoothSocket::setDefaultCommandLine(ConfigData CommandLine){
     CommandLineForSync = CommandLine;
 }
 

@@ -7,13 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>2200</width>
-    <height>1150</height>
+    <height>1500</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <family>Calibri</family>
     <pointsize>12</pointsize>
+    <kerning>false</kerning>
    </font>
   </property>
   <property name="windowTitle">
@@ -26,9 +27,9 @@
    <widget class="QToolButton" name="BtSettingsButton">
     <property name="geometry">
      <rect>
-      <x>1690</x>
+      <x>1650</x>
       <y>20</y>
-      <width>441</width>
+      <width>481</width>
       <height>111</height>
      </rect>
     </property>
@@ -46,9 +47,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>70</y>
+      <y>20</y>
       <width>1611</width>
-      <height>931</height>
+      <height>1021</height>
      </rect>
     </property>
     <property name="font">
@@ -64,9 +65,9 @@
    <widget class="QLCDNumber" name="CaptureTimeLcdDisplay">
     <property name="geometry">
      <rect>
-      <x>1690</x>
+      <x>1650</x>
       <y>140</y>
-      <width>301</width>
+      <width>321</width>
       <height>191</height>
      </rect>
     </property>
@@ -90,9 +91,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="CaptureTimePlusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
+      <x>1980</x>
       <y>140</y>
-      <width>131</width>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>
@@ -103,9 +104,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="CaptureTimeMinusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
+      <x>1980</x>
       <y>240</y>
-      <width>131</width>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>
@@ -116,10 +117,10 @@ color: rgb(0, 170, 0);</string>
    <widget class="QLCDNumber" name="TriggerLcdDisplay">
     <property name="geometry">
      <rect>
-      <x>1640</x>
-      <y>430</y>
-      <width>351</width>
-      <height>121</height>
+      <x>1650</x>
+      <y>400</y>
+      <width>321</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -130,9 +131,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="TriggerPlusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
+      <x>1980</x>
       <y>400</y>
-      <width>131</width>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>
@@ -143,9 +144,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="TriggerMinusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
+      <x>1980</x>
       <y>500</y>
-      <width>131</width>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>
@@ -176,9 +177,9 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1700</x>
-      <y>850</y>
+      <y>860</y>
       <width>321</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -197,8 +198,8 @@ color: rgb(0, 170, 0);</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>1710</x>
-      <y>570</y>
+      <x>1690</x>
+      <y>600</y>
       <width>231</width>
       <height>41</height>
      </rect>
@@ -217,9 +218,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="SendButton">
     <property name="geometry">
      <rect>
-      <x>1690</x>
-      <y>920</y>
-      <width>201</width>
+      <x>1650</x>
+      <y>930</y>
+      <width>221</width>
       <height>111</height>
      </rect>
     </property>
@@ -239,9 +240,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QToolButton" name="FreezeButton">
     <property name="geometry">
      <rect>
-      <x>1930</x>
-      <y>920</y>
-      <width>201</width>
+      <x>1910</x>
+      <y>930</y>
+      <width>221</width>
       <height>111</height>
      </rect>
     </property>
@@ -261,9 +262,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QLCDNumber" name="EntranceVoltageLcdDisplay">
     <property name="geometry">
      <rect>
-      <x>1690</x>
-      <y>650</y>
-      <width>301</width>
+      <x>1650</x>
+      <y>660</y>
+      <width>321</width>
       <height>191</height>
      </rect>
     </property>
@@ -275,9 +276,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="EntranceVoltagePlusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
-      <y>650</y>
-      <width>131</width>
+      <x>1980</x>
+      <y>660</y>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>
@@ -288,9 +289,9 @@ color: rgb(0, 170, 0);</string>
    <widget class="QPushButton" name="EntranceVoltageMinusButton">
     <property name="geometry">
      <rect>
-      <x>2000</x>
-      <y>750</y>
-      <width>131</width>
+      <x>1980</x>
+      <y>760</y>
+      <width>151</width>
       <height>91</height>
      </rect>
     </property>

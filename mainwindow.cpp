@@ -352,14 +352,17 @@ void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
         //default:
     }
 
-    if(y_OneSidedEntranceVoltage == 10 || y_OneSidedEntranceVoltage == 3){      // 12V or 5V
+    if(y_OneSidedEntranceVoltage == 10){      // 12V
         y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 2;
     }
+    else if(y_OneSidedEntranceVoltage == 3){
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 0.5;   // 3.5V
+    }
     else if(y_OneSidedEntranceVoltage == 1){
-        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 1;   // 2V
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 0.2;   // 1.2V
     }
     else if(y_OneSidedEntranceVoltage == 0.3){
-        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 0.2; // 0,5V
+        y_OneSidedEntranceVoltage_withOffset = y_OneSidedEntranceVoltage + 0.1; // 0.4V
     }
 
 
@@ -404,13 +407,13 @@ void MainWindow::scaleAxesAndRange(ConfigData CommandLine){
         xMin_Axis = -xMax_Axis;
         ui->QCPlot->xAxis->setLabel("Time [µs]");
     }
-    else if(t >= 1*pow(10, -3) && t < 0){
+    else if(t >= 1*pow(10, -3) && t < 1){
         CorrectionFactor = 1*pow(10, 3);
         xMax_Axis = xMax * CorrectionFactor;                    // e.g. xMax_Axis = 125 [ms] while xMax = 0.125 [ms]
         xMin_Axis = -xMax_Axis;
         ui->QCPlot->xAxis->setLabel("Time [ms]");
     }
-    else if(t >= 0){
+    else if(t >= 1){
         CorrectionFactor = 1;
         xMax_Axis = xMax * CorrectionFactor;                                   // e.g. xMax_Axis = 1 [s] while xMax = 1 [s]
         xMin_Axis = -xMax_Axis;

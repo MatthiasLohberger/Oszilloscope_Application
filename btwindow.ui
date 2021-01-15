@@ -68,7 +68,7 @@ text-decoration: underline;</string>
    <property name="geometry">
     <rect>
      <x>1940</x>
-     <y>760</y>
+     <y>800</y>
      <width>241</width>
      <height>241</height>
     </rect>
@@ -98,8 +98,8 @@ text-decoration: underline;</string>
   <widget class="QFrame" name="verticalFrame_TrigMode">
    <property name="geometry">
     <rect>
-     <x>1020</x>
-     <y>760</y>
+     <x>1010</x>
+     <y>800</y>
      <width>341</width>
      <height>241</height>
     </rect>
@@ -150,7 +150,7 @@ color: rgb(0, 0, 0);
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>760</y>
+     <y>800</y>
      <width>311</width>
      <height>241</height>
     </rect>
@@ -181,7 +181,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>1390</x>
-     <y>760</y>
+     <y>800</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -194,7 +194,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>1390</x>
-     <y>890</y>
+     <y>930</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -207,20 +207,20 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>140</y>
-     <width>231</width>
+     <y>180</y>
+     <width>261</width>
      <height>81</height>
     </rect>
    </property>
    <property name="text">
-    <string>Bluetooth Device: </string>
+    <string>Bt Service: </string>
    </property>
   </widget>
   <widget class="QComboBox" name="BtDeviceSelect">
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>130</y>
+     <y>170</y>
      <width>571</width>
      <height>111</height>
     </rect>
@@ -241,7 +241,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>910</x>
-     <y>130</y>
+     <y>170</y>
      <width>471</width>
      <height>111</height>
     </rect>
@@ -254,7 +254,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>1410</x>
-     <y>130</y>
+     <y>170</y>
      <width>371</width>
      <height>111</height>
     </rect>
@@ -267,7 +267,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>1810</x>
-     <y>130</y>
+     <y>170</y>
      <width>371</width>
      <height>111</height>
     </rect>
@@ -280,22 +280,34 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>430</y>
+     <y>420</y>
      <width>1651</width>
-     <height>41</height>
+     <height>61</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>true</underline>
+     <stylestrategy>PreferDefault</stylestrategy>
+     <kerning>true</kerning>
+    </font>
+   </property>
    <property name="text">
-    <string>Data Telegram (current configuration running on the EAS-Board):</string>
+    <string>2. Data Telegram (current configuration running on the EAS-Board):</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="DataTelegramBox">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>484</y>
+     <y>490</y>
      <width>2147</width>
-     <height>231</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -443,21 +455,21 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="label_TrigMode">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>840</y>
+     <x>670</x>
+     <y>870</y>
      <width>323</width>
      <height>91</height>
     </rect>
    </property>
    <property name="text">
-    <string>Triggermode</string>
+    <string>Triggermode:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_TrigEdge">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>830</y>
+     <y>870</y>
      <width>281</width>
      <height>91</height>
     </rect>
@@ -469,8 +481,8 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>1740</x>
-     <y>780</y>
+     <x>1730</x>
+     <y>800</y>
      <width>121</width>
      <height>91</height>
     </rect>
@@ -483,7 +495,7 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>1690</x>
-     <y>890</y>
+     <y>930</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -495,8 +507,8 @@ color: rgb(0, 0, 0);</string>
   <widget class="QLabel" name="LableStatus">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>260</y>
+     <x>40</x>
+     <y>290</y>
      <width>231</width>
      <height>81</height>
     </rect>
@@ -509,13 +521,61 @@ color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>270</y>
+     <y>300</y>
      <width>1471</width>
      <height>71</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(195, 195, 195);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_TrigEdge_2">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>720</y>
+     <width>931</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>true</underline>
+     <stylestrategy>PreferDefault</stylestrategy>
+     <kerning>true</kerning>
+    </font>
+   </property>
+   <property name="text">
+    <string>3. Additional Oscilloscope Settings</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LableBtDevice_2">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>90</y>
+     <width>351</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Calibri</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <underline>true</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string>1. Bluetooth</string>
    </property>
   </widget>
  </widget>

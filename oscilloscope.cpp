@@ -57,8 +57,8 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
     connect(this, SIGNAL(synchronizeSocket()),
             &bluetoothSocket, SLOT(SocketSynchronisation()));
 
-    connect(this, SIGNAL(sendDefaultCommanLine(ConfigData)),
-            &bluetoothSocket, SLOT(setDefaultCommanLine(ConfigData)));
+    connect(this, SIGNAL(sendDefaultCommandLine(ConfigData)),
+            &bluetoothSocket, SLOT(setDefaultCommandLine(ConfigData)));
 
     connect(this, SIGNAL(connectSocketToReadyRead()),
             &bluetoothSocket, SLOT(connectReadyRead()));
@@ -111,7 +111,7 @@ void Oscilloscope::showOscilloscopeMainWindow(){
 
 void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     qDebug() << "Start Oscilloscope!";
-    emit sendDefaultCommanLine(OsziConfigData.getData());
+    emit sendDefaultCommandLine(OsziConfigData.getData());
 
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);

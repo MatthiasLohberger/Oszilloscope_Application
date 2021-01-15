@@ -69,7 +69,7 @@ signals:
     void EnableSendButtonBtWindow();
     void EnableSendOsziMainWindowBtWindow();
     void synchronizeSocket();
-    void sendDefaultCommanLine(ConfigData);
+    void sendDefaultCommandLine(ConfigData);
     void connectSocketToReadyRead();
     void disconnectSocketFromReadyRead();
     void DataReadyToPlot(QByteArray);

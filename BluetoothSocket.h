@@ -39,7 +39,7 @@ public slots:
     void sendMessage(const QByteArray &message);
     //void SocketSynchronisation();
     void connectReadyRead();
-    void setDefaultCommanLine(ConfigData);
+    void setDefaultCommandLine(ConfigData);
     void disconnect_readyRead();
 
     void SocketSynchronisation();
