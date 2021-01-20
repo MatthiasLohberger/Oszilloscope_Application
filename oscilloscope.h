@@ -12,7 +12,7 @@
 class Oscilloscope : public QObject
 {
     Q_OBJECT
-    QThread PlotThread;
+    //QThread PlotThread;
     QThread BluetoothThread;
 
 public:

@@ -57,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    PlotThread.quit();
+    PlotThread.wait();
+
     delete ui;
 }
 
@@ -270,11 +273,11 @@ void MainWindow::plot(QByteArray data){
     int PlotStepSize = 32;
 
     for (i=0; i<=2047; i=i+PlotStepSize) {
-        qDebug() << "Plot[" << i << "] = "
+        /*qDebug() << "Plot[" << i << "] = "
                  << "       yWert = " << y[i]
                  << "       xWert = " << x[i];
         qDebug() << "Plot 4.3(for1)";
-
+        */
 
         /*
         for(j=i; j<j+PlotStepSize; j++){
@@ -292,18 +295,18 @@ void MainWindow::plot(QByteArray data){
 
 
 
-        qDebug() << "Plot 4.4(for2)";
+        //qDebug() << "Plot 4.4(for2)";
         ui->QCPlot->replot();
         // delay(); ???
     }
-    qDebug() << "i = " << i;
+    //qDebug() << "i = " << i;
 
-    qDebug() << "Plot 5";
+    //qDebug() << "Plot 5";
 
     // 7. free the mutex
     //mutexPlot.unlock();
 
-    qDebug() << "Plot 6";
+    //qDebug() << "Plot 6";
 }
 
 
@@ -697,7 +700,15 @@ void MainWindow::TriggerMinusButtonClicked(){
 
 //-----------------------------------------------------------
 
+// [Plot Tread]
 
+void MainWindow::Plot_MoveToThread(){
+    ui->QCPlot->moveToThread(&PlotThread);
+    PlotThread.start();
+}
+void MainWindow::Plot_QuitTread(){
+    PlotThread.quit();
+}
 
 
 

@@ -17,6 +17,7 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    QThread PlotThread;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -25,6 +26,8 @@ public:
     void SetUpPlot();
 
     void setTextFreezeButton(QString);
+    void Plot_MoveToThread();
+    void Plot_QuitTread();
     //void startPlot();
     //void stopPlot();
 

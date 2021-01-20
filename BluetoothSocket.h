@@ -76,7 +76,7 @@ private:
 
     ConfigData CommandLineForSync;
 
-    bool ConnectOrUnblockFlag;
+    //bool ConnectOrUnblockFlag;
     bool SocketFlag;
 
 };

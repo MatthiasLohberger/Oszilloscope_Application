@@ -6,7 +6,7 @@
 BluetoothSocket::BluetoothSocket(QObject *parent)
     :   QObject(parent)
 {
-    ConnectOrUnblockFlag = 0;
+    //ConnectOrUnblockFlag = 0;
     SocketFlag = 0;
 }
 
@@ -168,13 +168,15 @@ QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
 */
 
 void BluetoothSocket::disconnect_readyRead(){
-    //disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+    /*
+    disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
 
     disconnect(socket, &QBluetoothSocket::readyRead,
                this, &BluetoothSocket::readSocket);
 
     socket->blockSignals(true);
-    ConnectOrUnblockFlag = 1;
+    */
+    //ConnectOrUnblockFlag = 1;
     SocketFlag = 1;
 
 }
@@ -191,19 +193,21 @@ void BluetoothSocket::connectReadyRead(){
 }
 
 
-
+/*
 bool BluetoothSocket::getConnectOrUnblockFlag(){
     return ConnectOrUnblockFlag;
 }
+*/
+
 void BluetoothSocket::resetConnectOrUnblockFlag(){
-    ConnectOrUnblockFlag = 0;
+    //ConnectOrUnblockFlag = 0;
     SocketFlag = 0;
 }
 
 
 
 void BluetoothSocket::unblockSocketSignals(){
-    socket->blockSignals(false);
+    //socket->blockSignals(false);
     resetConnectOrUnblockFlag();
 
 }
@@ -370,7 +374,7 @@ void BluetoothSocket::setDefaultCommandLine(ConfigData CommandLine){
 
 void BluetoothSocket::Resync(ConfigData CommandLine){
     QByteArray neglect;
-    int DataFramesNeglected = 10;
+    int DataFramesNeglected = 5;        //  works with 10, but then there`s a little delay
 
     for(int i=0; i<DataFramesNeglected; i++){
         while(socket->bytesAvailable() < 4108){}

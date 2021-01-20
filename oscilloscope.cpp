@@ -116,6 +116,8 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     //starting the threads
     bluetoothSocket.moveToThread(&BluetoothThread);
     BluetoothThread.start();
+
+    OsziMainWindow.Plot_MoveToThread();
     //OsziMainWindow.moveToThread(&PlotThread);
     //PlotThread.start();
     qDebug() << "Treads started!";
@@ -128,7 +130,10 @@ void Oscilloscope::SetUpOscilloscope(const QBluetoothServiceInfo &service){
     BluetoothWindow.setTextStatusBar(">Connected");
     BluetoothWindow.DisableBtDeviceSelect();
 
-    //Kommandline das erste mal senden
+    // scaleAxesAndRange
+    OsziMainWindow.scaleAxesAndRange(OsziConfigData.getData());
+
+    //send Commandline for the first time
     SendMessage();
 
     BluetoothWindow.setTextStatusBar(">Synchronisation");
@@ -161,9 +166,11 @@ void Oscilloscope::startOscilloscope(){
     //Connect Sinal readyRead von socket
         //emit connectSocketToReadyRead();
 
+    /*
     if(bluetoothSocket.getConnectOrUnblockFlag() == 1){
         bluetoothSocket.unblockSocketSignals();
     }
+    */
     bluetoothSocket.connect_readyRead();
 }
 
