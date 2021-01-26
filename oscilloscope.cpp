@@ -172,6 +172,7 @@ void Oscilloscope::startOscilloscope(){
     }
     */
     bluetoothSocket.connect_readyRead();
+    qDebug() << "Started!";
 }
 
 

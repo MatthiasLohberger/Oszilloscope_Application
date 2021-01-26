@@ -233,6 +233,11 @@ void BluetoothSocket::SocketSynchronisation(){
 
 
     while(i <= 4096 || flagHeaderComplete == 0){
+        if(flagHeaderComplete == 1){
+            qDebug() << "Break, because flagHeaderComplete = " << flagHeaderComplete;
+            break;
+        }
+
         h = 0;
 
         byte = socket->read(1);
@@ -330,8 +335,8 @@ void BluetoothSocket::SocketSynchronisation(){
                                                     if(byte.at(8) == CommandLineForSync.TriggerEdge){
                                                         qDebug() << "Header[" << h << "] "<< "/TriggerEdge = " << ((char)byte.at(8));
 
-                                                        qDebug() << "$$$$$$   Complete header found   $$$$$$";
                                                         flagHeaderComplete = 1;
+                                                        qDebug() << "$$$$$$   Complete header found   $$$$$$";
 
                                                     }
                                                 }
@@ -382,6 +387,13 @@ void BluetoothSocket::Resync(ConfigData CommandLine){
     }
     // after 10 times data was neglected, the sync can start
     CommandLineForSync = CommandLine;
+
+    qDebug() << "Header for verify: ";
+    qDebug() << CommandLineForSync.Vertical  << CommandLineForSync.EntranceArea
+             << CommandLineForSync.Horizontal << CommandLineForSync.N << CommandLineForSync.N_Low << CommandLineForSync.N_High
+             << CommandLineForSync.Trigger << CommandLineForSync.TriggerThreshold << CommandLineForSync.TriggerThreshold_Low
+             << CommandLineForSync.TriggerThreshold_High << CommandLineForSync.TriggerMode << CommandLineForSync.TriggerEdge;
+
     SocketSynchronisation();
 }
 
