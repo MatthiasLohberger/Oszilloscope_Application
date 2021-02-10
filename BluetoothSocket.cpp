@@ -167,6 +167,8 @@ QByteArray BluetoothSocket::ReadSocketForSync(int PosFirstSyncByte){
 }
 */
 
+
+
 void BluetoothSocket::disconnect_readyRead(){
     /*
     disconnect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
@@ -177,7 +179,6 @@ void BluetoothSocket::disconnect_readyRead(){
     socket->blockSignals(true);
     */
     //ConnectOrUnblockFlag = 1;
-    SocketFlag = 1;
 
 }
 
@@ -188,29 +189,23 @@ void BluetoothSocket::connect_readyRead(){
 }
 
 
-void BluetoothSocket::connectReadyRead(){
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
+
+bool BluetoothSocket::getSocketFlag(){
+    return SocketFlag;
+}
+
+void BluetoothSocket::setSocketFlag(){
+    SocketFlag = 1;
 }
 
 
-/*
-bool BluetoothSocket::getConnectOrUnblockFlag(){
-    return ConnectOrUnblockFlag;
-}
-*/
-
-void BluetoothSocket::resetConnectOrUnblockFlag(){
-    //ConnectOrUnblockFlag = 0;
+void BluetoothSocket::resetSocketFlag(){
     SocketFlag = 0;
 }
 
 
 
-void BluetoothSocket::unblockSocketSignals(){
-    //socket->blockSignals(false);
-    resetConnectOrUnblockFlag();
 
-}
 
 
 

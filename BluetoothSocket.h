@@ -26,21 +26,24 @@ public:
     void stopClient();
 
     QByteArray ReadSocketForSync(int);
-    void connect_readyRead();
+    //void connect_readyRead();
 
 
 
-    bool getConnectOrUnblockFlag();
-    void resetConnectOrUnblockFlag();
-    void unblockSocketSignals();
+    bool getSocketFlag();
+    void resetSocketFlag();
+    void setSocketFlag();
 
 
 public slots:
     void sendMessage(const QByteArray &message);
     //void SocketSynchronisation();
-    void connectReadyRead();
+
     void setDefaultCommandLine(ConfigData);
+
     void disconnect_readyRead();
+    void connect_readyRead();
+
 
     void SocketSynchronisation();
     void Resync(ConfigData);

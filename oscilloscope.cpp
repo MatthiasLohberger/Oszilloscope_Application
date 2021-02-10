@@ -61,7 +61,7 @@ Oscilloscope::Oscilloscope(QObject *parent) : QObject(parent)
             &bluetoothSocket, SLOT(setDefaultCommandLine(ConfigData)));
 
     connect(this, SIGNAL(connectSocketToReadyRead()),
-            &bluetoothSocket, SLOT(connectReadyRead()));
+            &bluetoothSocket, SLOT(connect_readyRead()));
 
     connect(&bluetoothSocket, SIGNAL(StartNormalTransmission()),
             this, SLOT(startOscilloscope()));
@@ -164,15 +164,15 @@ void Oscilloscope::startOscilloscope(){
     BluetoothWindow.Enable_DisconnectButton();
 
     //Connect Sinal readyRead von socket
-        //emit connectSocketToReadyRead();
-
-    /*
-    if(bluetoothSocket.getConnectOrUnblockFlag() == 1){
-        bluetoothSocket.unblockSocketSignals();
+    if(bluetoothSocket.getSocketFlag() == 1){
+        bluetoothSocket.resetSocketFlag();
+        qDebug() << "Restarted!";
     }
-    */
-    bluetoothSocket.connect_readyRead();
-    qDebug() << "Started!";
+    else{
+        bluetoothSocket.connect_readyRead();
+        qDebug() << "Started!";
+    }
+
 }
 
 
@@ -429,7 +429,8 @@ void Oscilloscope::ReceiveData(QByteArray message){
 
 void Oscilloscope::stopOszilloscope(){
     // Disconnect der Signale für receive Data und Plot
-    bluetoothSocket.disconnect_readyRead();
+        //bluetoothSocket.disconnect_readyRead();
+    bluetoothSocket.setSocketFlag();
 
     disconnect(this, SIGNAL(DataReadyToPlot(QByteArray)),
             &OsziMainWindow, SLOT(plot(QByteArray)));
