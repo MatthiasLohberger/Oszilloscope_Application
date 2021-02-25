@@ -3,8 +3,8 @@
 #include <QApplication>
 #include <QDebug>
 
-#include<QByteArray>
-#include<QString>
+#include <QByteArray>
+#include <QString>
 
 #include "oscilloscope.h"
 
@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     //app.setPalette(Qt::darkGray);
 
 
-    QFont f("Arial", 12, QFont::Normal);
-    f.setCapitalization(QFont::MixedCase);
+    QFont f("Helvetica", 12, QFont::Normal);
+    //f.setCapitalization(QFont::MixedCase);
 
     app.setFont(f);
 

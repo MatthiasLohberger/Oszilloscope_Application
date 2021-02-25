@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QList>
+#include <QMessageBox>
 
 //#include<QBluetoothDeviceInfo>
 #include<QBluetoothAddress>
@@ -10,7 +11,7 @@
 //#include<QBluetoothHostInfo>
 
 #include "commandline_eas_board.h"
- #include"BluetoothServiceFinder.h"
+#include"BluetoothServiceFinder.h"
 
 namespace Ui {
 class BtWindow;
@@ -50,6 +51,8 @@ private:
     QString localDeviceName;
     BluetoothServiceFinder bluetoothServiceFinder;
 
+    QMessageBox MsgBox;
+
 
 
 
@@ -75,6 +78,9 @@ public slots:
     void setValuesWidgetsBtWindow(ConfigData);
 
     void BtWinPrepareForNewDiscovery(ConfigDataString &);
+
+    void SearchButtonClicked();
+    void MsgBox_ButtonClicked(QAbstractButton *);
 
 
 private slots:

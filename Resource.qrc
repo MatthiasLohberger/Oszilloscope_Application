@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>HAW_Logo_klein.png</file>
+    </qresource>
+</RCC>

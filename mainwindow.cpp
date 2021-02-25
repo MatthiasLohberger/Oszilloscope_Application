@@ -9,9 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFont f("Arial", 12, QFont::Normal);
-    f.setCapitalization(QFont::MixedCase);
-    this->setFont(f);
+    //QFont f("Arial", 12, QFont::Normal);
+    //f.setCapitalization(QFont::MixedCase);
+    //this->setFont(f);
+
+    QFont f("Helvetica", 12, QFont::Normal);
+    ui->CaptureTimeLabel->setFont(f);
 
     ui->SendButton->setEnabled(false);
 

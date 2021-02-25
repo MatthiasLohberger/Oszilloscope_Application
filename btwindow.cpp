@@ -9,6 +9,13 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //QPixmap pix(":/HAW_Logo_klein.png");
+    //ui->label->setPixmap(pix);
+    //ui->InfoButton->setIcon(QIcon(":/new/prefix1/HAW_Logo_klein.png"));
+    //ui->play->setIcon(QIcon(":/Playericons/icons8-pause-30.png"));
+    //:/new/prefix1/HAW_Logo_klein.png
+
+
     QFont f("Arial", 12, QFont::Normal);
     f.setCapitalization(QFont::MixedCase);
     ui->SendButton->setFont(f);
@@ -19,7 +26,11 @@ BtWindow::BtWindow(QWidget *parent) :
     // [Construct UI]
 
         // Buttons
-    connect(ui->SearchButton,  SIGNAL(clicked()), this, SLOT(startServiceSearch()));
+     connect(ui->SearchButton,  SIGNAL(clicked()), this, SLOT(startServiceSearch()));
+//    connect(ui->SearchButton,  SIGNAL(clicked()), this, SLOT(SearchButtonClicked()));
+//    connect(&MsgBox, SIGNAL(buttonClicked(QAbstractButton *)),
+//            this, SLOT(MsgBox_ButtonClicked(QAbstractButton *)));
+
     connect(ui->ConnectButton, SIGNAL(clicked()), this, SLOT(ConnectButtonPressed()));
     connect(ui->SendButton,    SIGNAL(clicked()), this, SIGNAL(SendButtonPressed()));
     connect(ui->DefaultButton, SIGNAL(clicked()), this, SIGNAL(DefaultButtonPressed()));
@@ -404,6 +415,33 @@ void BtWindow::BtWinPrepareForNewDiscovery(ConfigDataString & CommandLineStringR
     ui->BtDeviceSelect->setEnabled(true);
 
     ui->SearchButton->setEnabled(true);
+}
+
+
+
+
+
+// GPS Message
+
+void BtWindow::SearchButtonClicked(){
+    MsgBox.setText("               ");
+    MsgBox.setInformativeText("Please turn on the location services as well!");
+
+    //MsgBox.setText("Please turn on the location services as well!");
+    MsgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    MsgBox.setDefaultButton(QMessageBox::Ok);
+    MsgBox.blockSignals(false);
+    MsgBox.show();
+    //MsgBox.exec();
+}
+
+void BtWindow::MsgBox_ButtonClicked(QAbstractButton * button){
+    qDebug() << button->text();
+
+    MsgBox.close();
+    //startServiceSearch();
+
+
 }
 
 

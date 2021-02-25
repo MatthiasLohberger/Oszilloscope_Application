@@ -12,7 +12,7 @@
   </property>
   <property name="font">
    <font>
-    <family>Calibri</family>
+    <family>Arial</family>
     <pointsize>12</pointsize>
     <kerning>false</kerning>
    </font>
@@ -28,9 +28,9 @@
     <property name="geometry">
      <rect>
       <x>1650</x>
-      <y>20</y>
+      <y>50</y>
       <width>481</width>
-      <height>111</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="font">
@@ -66,7 +66,7 @@
     <property name="geometry">
      <rect>
       <x>1650</x>
-      <y>140</y>
+      <y>160</y>
       <width>321</width>
       <height>191</height>
      </rect>
@@ -88,24 +88,11 @@ color: rgb(0, 170, 0);</string>
      <number>0</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="CaptureTimePlusButton">
-    <property name="geometry">
-     <rect>
-      <x>1980</x>
-      <y>140</y>
-      <width>151</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>+</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="CaptureTimeMinusButton">
     <property name="geometry">
      <rect>
       <x>1980</x>
-      <y>240</y>
+      <y>260</y>
       <width>151</width>
       <height>91</height>
      </rect>
@@ -118,7 +105,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1650</x>
-      <y>400</y>
+      <y>420</y>
       <width>321</width>
       <height>191</height>
      </rect>
@@ -132,7 +119,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1980</x>
-      <y>400</y>
+      <y>420</y>
       <width>151</width>
       <height>91</height>
      </rect>
@@ -145,7 +132,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1980</x>
-      <y>500</y>
+      <y>520</y>
       <width>151</width>
       <height>91</height>
      </rect>
@@ -157,15 +144,15 @@ color: rgb(0, 170, 0);</string>
    <widget class="QLabel" name="CaptureTimeLabel">
     <property name="geometry">
      <rect>
-      <x>1710</x>
-      <y>340</y>
+      <x>1680</x>
+      <y>360</y>
       <width>431</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Calibri</family>
+      <family>Arial</family>
       <pointsize>12</pointsize>
      </font>
     </property>
@@ -177,7 +164,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1700</x>
-      <y>860</y>
+      <y>870</y>
       <width>321</width>
       <height>51</height>
      </rect>
@@ -199,7 +186,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1690</x>
-      <y>600</y>
+      <y>620</y>
       <width>231</width>
       <height>41</height>
      </rect>
@@ -263,7 +250,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1650</x>
-      <y>660</y>
+      <y>670</y>
       <width>321</width>
       <height>191</height>
      </rect>
@@ -277,7 +264,7 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1980</x>
-      <y>660</y>
+      <y>670</y>
       <width>151</width>
       <height>91</height>
      </rect>
@@ -290,13 +277,26 @@ color: rgb(0, 170, 0);</string>
     <property name="geometry">
      <rect>
       <x>1980</x>
-      <y>760</y>
+      <y>770</y>
       <width>151</width>
       <height>91</height>
      </rect>
     </property>
     <property name="text">
      <string>-</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CaptureTimePlusButton">
+    <property name="geometry">
+     <rect>
+      <x>1980</x>
+      <y>160</y>
+      <width>151</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
     </property>
    </widget>
   </widget>
