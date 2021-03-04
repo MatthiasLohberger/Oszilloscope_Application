@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     QThread PlotThread;
+    QThread MainWindowControlsThread;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -49,6 +50,10 @@ private:
     float xMin;
     float T_AD;                         // Sample Zeit pro Wert(T_AD = TAD0*N)
     int CorrectionFactor;
+    const int NumberOfValues = 512;
+
+    bool PlotFlag;
+    QPen PlotPen;
 
     // Capture Time Widget
     int CaptureTimeCounter_new;
@@ -77,6 +82,8 @@ public slots:
     //void setDefaultValues(ConfigData);
     ConfigDataValuesMainWin readValuesWidgetsMainWindow();
     void setValuesWidgetsMainWindow(ConfigData);
+
+    bool readPlotFlag();
 
 
 

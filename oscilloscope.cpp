@@ -270,8 +270,10 @@ void Oscilloscope::ReceiveData(QByteArray message){
         .connect_readyRead();
         }
         */
-        emit DataReadyToPlot(message);
 
+        if (OsziMainWindow.readPlotFlag() == 0){
+        emit DataReadyToPlot(message);
+        }
      }
 }
 

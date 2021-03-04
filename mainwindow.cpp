@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     //default Values   --> delete later
     //setDefaultValuesManually();
 
-
+    PlotFlag = 0;
 
 
     SetUpPlot();
@@ -62,6 +62,9 @@ MainWindow::~MainWindow()
 {
     PlotThread.quit();
     PlotThread.wait();
+
+    MainWindowControlsThread.quit();
+    MainWindowControlsThread.wait();
 
     delete ui;
 }
@@ -78,7 +81,7 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::SetUpPlot(){
-
+/*
     //ui->horizontalFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     //ui->horizontalFrame->setLineWidth(3);
     //ui->horizontalFrame->setMidLineWidth(1);
@@ -87,7 +90,10 @@ void MainWindow::SetUpPlot(){
         //ui->QCPlot->addGraph();
 
     // look(colors, brush, ...)
+*/
     ui->QCPlot->setBackground(Qt::darkBlue);
+
+/*
         //ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
     //ui->QCustomPlotTestW->addGraph(0)->setBrush()
 
@@ -105,12 +111,15 @@ void MainWindow::SetUpPlot(){
 //    ui->QCPlot->xAxis->setBasePen(QColor(255, 255, 255));
 //    ui->QCPlot->yAxis->setRange(-12, 12);
 //    ui->QCPlot->yAxis->setBasePen(QColor(255, 255, 255));
-
+*/
     // grid
     ui->QCPlot->xAxis->grid();
     ui->QCPlot->xAxis->grid()->setSubGridVisible(false);
     ui->QCPlot->yAxis->grid();
     ui->QCPlot->yAxis->grid()->setSubGridVisible(false);
+
+    PlotPen.setWidth(3);
+    PlotPen.setColor(Qt::green);
 
     // ticks
 
@@ -145,14 +154,20 @@ void MainWindow::SetUpPlot(){
 
 
 void MainWindow::plot(QByteArray data){
-    QVector<double> x(2048), y(2048);
-    //QVector<double> x(2040), y(2040);
+
+    PlotFlag = 1;
+
+    //QVector<double> x(2048), y(2048);
+    QVector<double> x(NumberOfValues), y(NumberOfValues);
+    //QVector<double> x(2040), y(2040);     //false
     unsigned int yUInt;
 
     int i, j, k=0, l;
     double yDouble, xDouble;
+    int PlotStepSize = 32;
+
     QByteArray hcontainer;
-    QPen PlotPen;
+
 
 
 
@@ -161,9 +176,24 @@ void MainWindow::plot(QByteArray data){
 
     // 1. determine yValues --> read data, combine high and low byte to an uint variable,
     //                          cast the value to 12 Bit max and compute the corresponding double value
+
+    // for all 4096 Values (4108 Byte - 21 Byte Header)
+    /*
     qDebug() << "Plot 1";
 
     for(i=12; i<4108; i=i+2){
+        yUInt = ((unsigned int) data[i]) + ((unsigned int)data[i+1]<<8);     //QByteArray to unsigned int mit cast erlaubt???
+        yUInt = yUInt & 0x0FFF;                                             // 12 Bit max lenght
+
+        yDouble = yUInt*((2*y_OneSidedEntranceVoltage)/4096) - y_OneSidedEntranceVoltage;
+
+        y[k] = yDouble;                             // Zugriff auf Vektor so ok? oder mit append(...)
+        k++;
+    }
+    */
+
+    for(i=12; i<4108; i=i+8){
+
         yUInt = ((unsigned int) data[i]) + ((unsigned int)data[i+1]<<8);     //QByteArray to unsigned int mit cast erlaubt???
         yUInt = yUInt & 0x0FFF;                                             // 12 Bit max lenght
 
@@ -178,6 +208,7 @@ void MainWindow::plot(QByteArray data){
 
 
     // 2. determine corresponding xValues
+    /*
     qDebug() << "Plot 2";
 
     for(i=0; i<2048; i++){
@@ -186,8 +217,13 @@ void MainWindow::plot(QByteArray data){
         x[i] = xDouble;
         //qDebug() << "x[" << i << "] = " << x.at(i);
     }
+    */
+    for(i=0; i<NumberOfValues; i++){
 
-
+        xDouble = (xMin + ((T_AD *4) * i)) * CorrectionFactor;
+        x[i] = xDouble;
+        //qDebug() << "x[" << i << "] = " << x.at(i);
+    }
 
 
 
@@ -206,8 +242,7 @@ void MainWindow::plot(QByteArray data){
     // 2. clear plot bzw unten replot beim ersten plot Teil                 // nach unten verschieben, clear unten nach plot!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     ui->QCPlot->clearGraphs();
     ui->QCPlot->addGraph(0);
-    PlotPen.setWidth(3);
-    PlotPen.setColor(Qt::green);
+
     //PlotPen.setStyle();
     ui->QCPlot->graph(0)->setPen(PlotPen);
 
@@ -273,10 +308,10 @@ void MainWindow::plot(QByteArray data){
     qDebug() << "Size of xVektor = " << x.size();
     qDebug() << "Size of yVektor = " << y.size();
     qDebug() << "Plot 4.2";
-    int PlotStepSize = 32;
 
-    for (i=0; i<=2047; i=i+PlotStepSize) {
-        /*qDebug() << "Plot[" << i << "] = "
+    for (i=0; i<NumberOfValues; i=i+PlotStepSize) {
+        /*
+          qDebug() << "Plot[" << i << "] = "
                  << "       yWert = " << y[i]
                  << "       xWert = " << x[i];
         qDebug() << "Plot 4.3(for1)";
@@ -302,6 +337,7 @@ void MainWindow::plot(QByteArray data){
         ui->QCPlot->replot();
         // delay(); ???
     }
+    /*
     //qDebug() << "i = " << i;
 
     //qDebug() << "Plot 5";
@@ -310,6 +346,9 @@ void MainWindow::plot(QByteArray data){
     //mutexPlot.unlock();
 
     //qDebug() << "Plot 6";
+    */
+
+    PlotFlag = 0;
 }
 
 
@@ -708,16 +747,34 @@ void MainWindow::TriggerMinusButtonClicked(){
 void MainWindow::Plot_MoveToThread(){
     ui->QCPlot->moveToThread(&PlotThread);
     PlotThread.start();
+
+
+    ui->BtSettingsButton->moveToThread(&MainWindowControlsThread);
+    ui->FreezeButton->moveToThread(&MainWindowControlsThread);
+    ui->SendButton->moveToThread(&MainWindowControlsThread);
+
+    ui->CaptureTimeLcdDisplay->moveToThread(&MainWindowControlsThread);
+    ui->CaptureTimeMinusButton->moveToThread(&MainWindowControlsThread);
+    ui->CaptureTimePlusButton->moveToThread(&MainWindowControlsThread);
+
+    ui->EntranceVoltageLcdDisplay->moveToThread(&MainWindowControlsThread);
+    ui->EntranceVoltageMinusButton->moveToThread(&MainWindowControlsThread);
+    ui->EntranceVoltagePlusButton->moveToThread(&MainWindowControlsThread);
+
+    ui->TriggerLcdDisplay->moveToThread(&MainWindowControlsThread);
+    ui->TriggerMinusButton->moveToThread(&MainWindowControlsThread);
+    ui->TriggerPlusButton->moveToThread(&MainWindowControlsThread);
+
+    MainWindowControlsThread.start();
+
+
 }
 void MainWindow::Plot_QuitTread(){
     PlotThread.quit();
+    MainWindowControlsThread.quit();
 }
 
 
-
-
-
-
-
-
-
+bool MainWindow::readPlotFlag(){
+    return PlotFlag;
+}
