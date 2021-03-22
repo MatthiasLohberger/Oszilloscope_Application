@@ -309,7 +309,11 @@ void MainWindow::plot(QByteArray data){
     qDebug() << "Size of yVektor = " << y.size();
     qDebug() << "Plot 4.2";
 
-    for (i=0; i<NumberOfValues; i=i+PlotStepSize) {
+
+     ui->QCPlot->graph(0)->setData(x, y, true);
+     ui->QCPlot->replot();
+
+//    for (i=0; i<NumberOfValues; i=i+PlotStepSize) {
         /*
           qDebug() << "Plot[" << i << "] = "
                  << "       yWert = " << y[i]
@@ -325,18 +329,18 @@ void MainWindow::plot(QByteArray data){
         */
 
 
-        for(j=0; j<PlotStepSize; j++){
+//        for(j=0; j<PlotStepSize; j++){
             //qDebug() << "j = " <<j;
-            l = i + j;
-            ui->QCPlot->graph(0)->addData(x[l], y[l]);
-        }
+//            l = i + j;
+//          ui->QCPlot->graph(0)->addData(x[l], y[l]);
+//       }
 
 
 
         //qDebug() << "Plot 4.4(for2)";
-        ui->QCPlot->replot();
+//       ui->QCPlot->replot();
         // delay(); ???
-    }
+//    }
     /*
     //qDebug() << "i = " << i;
 

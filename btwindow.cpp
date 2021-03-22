@@ -16,10 +16,10 @@ BtWindow::BtWindow(QWidget *parent) :
     //:/new/prefix1/HAW_Logo_klein.png
 
 
-    QFont f("Arial", 12, QFont::Normal);
-    f.setCapitalization(QFont::MixedCase);
-    ui->SendButton->setFont(f);
-    this->setFont(f);
+    //QFont f("Arial", 12, QFont::Normal);
+    //f.setCapitalization(QFont::MixedCase);
+    //ui->SendButton->setFont(f);
+    //this->setFont(f);
 
     ui->SendButton->setEnabled(false);
 

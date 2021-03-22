@@ -16,10 +16,10 @@ int main(int argc, char *argv[])
     //app.setPalette(Qt::darkGray);
 
 
-    QFont f("Helvetica", 12, QFont::Normal);
+    //QFont f("Helvetica", 12, QFont::Normal);
     //f.setCapitalization(QFont::MixedCase);
 
-    app.setFont(f);
+    //app.setFont(f);
 
     Oscilloscope o;
     o.showOscilloscopeMainWindow();
