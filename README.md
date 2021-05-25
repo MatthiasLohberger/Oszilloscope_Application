@@ -5,6 +5,7 @@ The application consists of two windows:
 
 The MainWindow holds the central widget, which displays the sampled values of the EAS-Board. On the right side, there are widgets for setting the capture time, the trigger voltage und the entrance voltage:
 ![MainWindow](https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Main_Window.jpg)
+
 The second window is the BluetoothWindow with settings for the Bluetooth Connection, the Oszilloscope status as well as some additional settings for the Oscilloscope:
 ![BluetoothWindow](https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Settings_Window.jpg)
 
