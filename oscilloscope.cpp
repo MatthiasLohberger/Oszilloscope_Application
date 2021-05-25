@@ -308,9 +308,6 @@ bool Oscilloscope::checkHeader(const QByteArray &header){
 }
 
 
-
-
-
 /*
 QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirstSyncByte){
     //Synchronisation through search for the SyncWort
@@ -344,12 +341,6 @@ QByteArray Oscilloscope::SocketSynchronisation(QByteArray &message, int PosFirst
 */
 
 
-
-
-
-
-
-
 /*
 void Oscilloscope::displayHeader(QByteArray header){
 
@@ -358,13 +349,6 @@ void Oscilloscope::displayHeader(QByteArray header){
      }
 }
 */
-
-
-
-
-
-
-
 
 
 /*

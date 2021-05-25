@@ -121,32 +121,6 @@ void MainWindow::SetUpPlot(){
     PlotPen.setWidth(3);
     PlotPen.setColor(Qt::green);
 
-    // ticks
-
-
-    //example
-/*
-    // generate some data:
-    QVector<double> x(101), y(101); // initialize with entries 0..100
-    for (int i=0; i<101; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = x[i]*x[i]; // let's plot a quadratic function
-    }
-    // create graph and assign data to it:
-    ui->QCPlot->addGraph();
-    ui->QCPlot->graph(0)->setPen(QPen(Qt::green));
-    ui->QCPlot->graph(0)->setData(x, y);
-
-    // give the axes some labels:
-    ui->QCPlot->xAxis->setLabel("x");
-    ui->QCPlot->yAxis->setLabel("y");
-    // set axes ranges, so we see all data:
-    ui->QCPlot->xAxis->setRange(-1, 1);
-    ui->QCPlot->yAxis->setRange(0, 1);
-
-    ui->QCPlot->replot();
-    */
 }
 
 
@@ -162,9 +136,9 @@ void MainWindow::plot(QByteArray data){
     //QVector<double> x(2040), y(2040);     //false
     unsigned int yUInt;
 
-    int i, j, k=0, l;
+    int i, k=0;
     double yDouble, xDouble;
-    int PlotStepSize = 32;
+    //int PlotStepSize = 32;
 
     QByteArray hcontainer;
 
@@ -251,58 +225,8 @@ void MainWindow::plot(QByteArray data){
 
     qDebug() << "Plot 4.1";
 
-/*
-    // 6. Plotten
-    i = 0;
-    QVector<double> xValueMin(1), yValueMin(1);
-    xValueMin[0] = x[0];
-    yValueMin[0] = y[0];
-    ui->QCPlot->graph(0)->setData(xValueMin, yValueMin);
-    ui->QCPlot->replot();
-        // delay(); ???
-    qDebug() << "Plot 4.2";
-
-    for (i=1; i<2048; i++) {
-        ui->QCPlot->graph(0)->addData(x[i], y[i]);
-        ui->QCPlot->replot();
-            // delay(); ???
-    }
-
-    qDebug() << "Plot 5";
-
-    // 7. free the mutex
-    //mutexPlot.unlock();
-
-    qDebug() << "Plot 6";
-*/
-
-
-
-
-
-
-
-
 
     // 6. Plotten
-
-
-
-
-        //die ersten 8 Werte (0 bis 7)
-/*
-    //i = 0;
-    QVector<double> xValueMin(8), yValueMin(8);
-    for (i=0; i<=7; i++) {
-        xValueMin[i] = x[i];
-        yValueMin[i] = y[i];
-    }
-    qDebug() << "Plot 4.2";
-    ui->QCPlot->graph()->setData(xValueMin, yValueMin);
-    ui->QCPlot->replot();
-    // delay(); ???
-*/
-
 
 
     qDebug() << "Size of xVektor = " << x.size();
@@ -313,65 +237,12 @@ void MainWindow::plot(QByteArray data){
      ui->QCPlot->graph(0)->setData(x, y, true);
      ui->QCPlot->replot();
 
-//    for (i=0; i<NumberOfValues; i=i+PlotStepSize) {
-        /*
-          qDebug() << "Plot[" << i << "] = "
-                 << "       yWert = " << y[i]
-                 << "       xWert = " << x[i];
-        qDebug() << "Plot 4.3(for1)";
-        */
 
-        /*
-        for(j=i; j<j+PlotStepSize; j++){
-            //qDebug() << "j = " <<j;
-            ui->QCPlot->graph()->addData(x[j], y[j]);
-        }
-        */
-
-
-//        for(j=0; j<PlotStepSize; j++){
-            //qDebug() << "j = " <<j;
-//            l = i + j;
-//          ui->QCPlot->graph(0)->addData(x[l], y[l]);
-//       }
-
-
-
-        //qDebug() << "Plot 4.4(for2)";
-//       ui->QCPlot->replot();
-        // delay(); ???
-//    }
-    /*
-    //qDebug() << "i = " << i;
-
-    //qDebug() << "Plot 5";
-
-    // 7. free the mutex
-    //mutexPlot.unlock();
-
-    //qDebug() << "Plot 6";
-    */
 
     PlotFlag = 0;
 }
 
-
-
-
-
-
-
-
-
-
 // ----------------------------------------------------------
-
-
-
-
-
-
-
 
 
 
@@ -379,9 +250,6 @@ void MainWindow::plot(QByteArray data){
 void MainWindow::ClearPlot(){
     ui->QCPlot->clearGraphs();
 }
-
-
-
 
 
 

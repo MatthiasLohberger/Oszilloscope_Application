@@ -173,24 +173,6 @@ TwoBytes CommandLine_EAS_Board::ValueToHighAndLowByte(int x){
 
 
 
-
-
-
-void CommandLine_EAS_Board:: convertToByteArray(){
-    //CommandLine_Byte[0] =
-    //CommandLine_Byte[1] =
-    //CommandLine_Byte[2] =
-    //CommandLine_Byte[3] =
-    //CommandLine_Byte[4] =
-    //CommandLine_Byte[5] =
-    //CommandLine_Byte[6] =
-    //CommandLine_Byte[7] =
-    //CommandLine_Byte[8] =
-    //CommandLine_Byte[9] =
-
-}
-
-
 //---[Convert Functions] End---
 
 
@@ -205,13 +187,6 @@ void CommandLine_EAS_Board::DefaultValues(){
     qDebug() << "Default ValuesSlot";
     setDefaultValues();
 }
-
-
-
-
-
-
-
 
 
 //----------------------------------------------------------------------------------------

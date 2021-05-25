@@ -73,12 +73,7 @@ void BluetoothServiceFinder::stopDiscovery()
 
 
 
-/*
-QBluetoothServiceInfo RemoteSelector::service() const
-{
-    return m_service;
-}
-*/
+
 
 
 
@@ -139,9 +134,6 @@ void BluetoothServiceFinder::discoveryFinished()
 
 
 
-
-
-
 /*
 void BluetoothServiceFinder::on_remoteDevices_itemActivated(QListWidgetItem *item)
 {
@@ -152,12 +144,6 @@ void BluetoothServiceFinder::on_remoteDevices_itemActivated(QListWidgetItem *ite
 
     accept();
 }
-
-
-
-
-
-
 
 
 void BluetoothServiceFinder::on_cancelButton_clicked()

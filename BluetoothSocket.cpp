@@ -37,10 +37,6 @@ void BluetoothSocket::startClient(const QBluetoothServiceInfo &remoteService)
     qDebug() << "ConnectToService done";
     qDebug() << "Service: " << remoteService.serviceName();
 
-
-    //connect(socket, &QBluetoothSocket::readyRead, this, &ChatClient::readSocket);
-    //connect(socket, &QBluetoothSocket::connected, this, QOverload<>::of(&ChatClient::connected));
-    //connect(socket, &QBluetoothSocket::disconnected, this, &ChatClient::disconnected);
     connect(socket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error),
             this, &BluetoothSocket::onSocketErrorOccurred);
 
@@ -138,9 +134,6 @@ void BluetoothSocket::onSocketErrorOccurred(QBluetoothSocket::SocketError error)
 
     //emit socketErrorOccurred(errorString);
 }
-
-
-
 
 
 

@@ -9,17 +9,6 @@ BtWindow::BtWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //QPixmap pix(":/HAW_Logo_klein.png");
-    //ui->label->setPixmap(pix);
-    //ui->InfoButton->setIcon(QIcon(":/new/prefix1/HAW_Logo_klein.png"));
-    //ui->play->setIcon(QIcon(":/Playericons/icons8-pause-30.png"));
-    //:/new/prefix1/HAW_Logo_klein.png
-
-
-    //QFont f("Arial", 12, QFont::Normal);
-    //f.setCapitalization(QFont::MixedCase);
-    //ui->SendButton->setFont(f);
-    //this->setFont(f);
 
     ui->SendButton->setEnabled(false);
 
@@ -115,11 +104,6 @@ BtWindow::~BtWindow()
 
 //[Slot Funktionen] Buttons Pressed/Selected
 
-/*
-void BtWindow::ConnectButtonPressed(){
-    //Connect to Bt Device
-}
-*/
 
 
 void BtWindow::CloseButtonPressed(){
