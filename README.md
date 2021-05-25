@@ -1,13 +1,10 @@
 # Oszilloscope_Application
 
-This is the corresponding GitHub page to my bachelor’s thesis “Entwicklung einer Android Applikation mit dem Framework Qt in C++ für die Bluetooth-Kommunikation mit einem Oszilloskop” at the HAW Landshut. The EAS Board, the hardware which communicates with the Application via Bluetooth, has been designed by Prof. Dr. paed. Ivanov for the module EAS for the Master Electrical Engineering at the HAW Landshut. 
+This is the corresponding GitHub page to my bachelor’s thesis “Entwicklung einer Android Applikation mit dem Framework Qt in C++ für die Bluetooth-Kommunikation mit einem Oszilloskop” at the HAW Landshut. The EAS Board, the hardware which communicates with the Application via Bluetooth, has been designed by Prof. Dr. paed. Ivanov for the module EAS for the master's course Electrical Engineering at the HAW Landshut. 
 The application consists of two windows:
 
 The MainWindow holds the central widget, which displays the sampled values of the EAS-Board. On the right side, there are widgets for setting the capture time, the trigger voltage und the entrance voltage:
 ![MainWindow](https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Main_Window.jpg)
-!(https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Main_Window.jpg)
-https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Main_Window.jpg
-
 The second window is the BluetoothWindow with settings for the Bluetooth Connection, the Oszilloscope status as well as some additional settings for the Oscilloscope:
 ![BluetoothWindow](https://github.com/MatthiasLohberger/Oszilloscope_Application/tree/Qt/pictures/Settings_Window.jpg)
 
