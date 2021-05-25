@@ -4,7 +4,7 @@ This is the corresponding GitHub page to my bachelor’s thesis “Entwicklung e
 1.	Start the EAS-Board 
 2.	Activate the location settings on your smartphone 
 3.	Start the Oscilloscope Application 
-4.	Confirm the appearing message to activate the Bluetooth settings
+4.	Confirm the appearing message to activate the Bluetooth settings of the application
 5.	Search the EAS-Board in the settings by clicking on the “Search”-Button 
 6.	Choose a device and click “Connect”
 
