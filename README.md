@@ -17,4 +17,8 @@ In order to use the Oscilloscope Application, execute the following steps at the
 5.	Search the EAS-Board in the settings by clicking on the “Search”-Button 
 6.	Choose a device and click “Connect”
 
-The latest release of the application can be downloaded under “releases” at the right side of the GitHub page.
+The latest release of the application can be downloaded under “releases” at the right side of the GitHub page or 
+![here](https://github.com/MatthiasLohberger/Oszilloscope_Application/releases)
+.
+
+ 
